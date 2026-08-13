@@ -1,0 +1,6 @@
+---
+description: Conventions de code TPL-Lab
+globs: ["src/**/*.py", "tests/**/*.py"]
+alwaysApply: false
+---
+Python ≥ 3.11. Cœur : numpy/scipy/ripser seulement ; dépendances lourdes (mne, giotto-tda, allensdk) dans l'extra [full], importées paresseusement. Code et docstrings en anglais, docs/ en français. Chaque docstring de module dit ce que le module teste et ses limites connues. Pas de logique dans notebooks/. Données jamais commitées (data/ gitignoré sauf README).

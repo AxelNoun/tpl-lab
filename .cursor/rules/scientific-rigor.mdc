@@ -1,0 +1,12 @@
+---
+description: Règles scientifiques non négociables du projet TPL-Lab
+alwaysApply: true
+---
+Ce projet FALSIFIE une conjecture (géométrie S⁶/SU(3) des états perceptifs), il ne la défend pas. Source de vérité complète : CLAUDE.md à la racine — la lire avant toute modification.
+Règles dures :
+1. Toute « signature » doit battre un modèle nul de src/tpl/nulls/ (Kuramoto, surrogates). Un test que le nul réussit est déclaré non-discriminant dans docs/RESULTATS_NEGATIFS.md.
+2. Seuils et critères figés dans PREREGISTRATION.md AVANT toute donnée réelle. Ne jamais ajuster un seuil, une fenêtre ou un filtre pour faire apparaître un effet.
+3. Tout artefact simulé porte le préfixe synth_. Ne jamais présenter du synthétique comme empirique.
+4. Reproductibilité : chaque script accepte --seed. Tests pytest obligatoires pour src/tpl/. Lancer pytest -q avant de conclure.
+5. Vocabulaire : « compatible avec » ≠ « démontre ». Bannir « prouve que ».
+6. Faits établis à ne pas re-débattre : dim g2 = 14 et dim su(3) = 8 (vérifiés numériquement, tests/test_g2.py) ; la fermeture de phase en triplets est triviale ou non-discriminante (docs/03) ; b1 direct a une puissance nulle pour d ≥ 3 à n ≤ 3000 (docs/12) — mesures primaires : ranking + contraste ; spectre S⁶ = 4 niveaux exacts 1/7, 2/63, 1/63, 0 (docs/10, corrigé audit v1 — jamais « plateau de 27 » en base brute).

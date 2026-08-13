@@ -1,0 +1,14 @@
+# Glossaire express
+- **S⁶** : sphère unité en dimension 7 (surface de dimension 6).
+- **SU(3)** : matrices unitaires 3×3 de déterminant 1 ; groupe de Lie, 8 générateurs.
+- **G2** : groupe des automorphismes des octonions ; agit sur S⁶ ; G2/SU(3) ≅ S⁶.
+- **Octonions (O)** : algèbre à 8 dimensions, normée, NON associative (table de Fano).
+- **Associateur** : (xy)z − x(yz). Nul ⇔ associatif. Mesure du défaut d'associativité.
+- **Holonomie** : transformation accumulée en transportant un repère le long d'une boucle.
+- **Kuramoto** : modèle standard d'oscillateurs de phase couplés ; notre nul principal.
+- **Surrogate (phase randomisée)** : données de même spectre mais phases mélangées.
+- **Dimension intrinsèque (ID)** : nb de degrés de liberté effectifs d'un nuage de points.
+- **TwoNN** : estimateur d'ID basé sur les ratios de distances aux 2 plus proches voisins.
+- **Homologie persistante** : compte les composantes (H0) et boucles (H1) robustes au bruit.
+- **HARKing** : formuler l'hypothèse après avoir vu les résultats. Interdit ici.
+- **Qualia** : le « ressenti » subjectif (le rouge vécu). Le projet n'en traite que la structure.
