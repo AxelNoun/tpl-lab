@@ -106,10 +106,34 @@
   ponctuelle (delta = −2,27, IC [−2,18 ; −1,30] sur le dry-run) quand les deux conditions
   diffèrent beaucoup en dimension.
 
-### Mesuré, non corrigé — à traiter avant de figer le prereg
+### Cohérence et nuls affaiblis (F9 à F14, corrigés)
 - [audit v2] b1 direct meurt dès d = 3 (T³ : 0 détection sur 30 à n = 2000), pas d = 4
-  comme l'annonce la docstring de `calibration.py` ; docs/12 avait raison. La
-  conservativité tient : 0 faux positif sur 180 essais.
+  comme l'annonçait la docstring de `calibration.py` ; docs/12 avait raison. Docstring
+  corrigée. La conservativité tient : 0 faux positif sur 180 essais.
+- [audit v2] NUL AFFAIBLI : `phase_randomize` tirait une phase indépendante PAR CANAL,
+  ce qui détruisait aussi les corrélations inter-canaux. C'était donc un nul pour « tout
+  couplage », pas pour « autre chose qu'un couplage linéaire » — un adversaire qu'une
+  variété de basse dimension bat gratuitement, ce qui contrevient à l'esprit de la
+  règle 1. Le défaut par défaut est désormais `preserve_cross=True` : une seule phase par
+  fréquence, appliquée à tous les canaux, ce qui conserve l'inter-spectre. Vérifié par
+  test : corrélation croisée moyenne conservée à 0,05 près, contre effondrement sous
+  0,3 avec l'ancien comportement (sur signal LARGE BANDE — sur un signal bande étroite
+  la démonstration est impossible dans un sens comme dans l'autre, deux phases aléatoires
+  à une même fréquence donnant |corr| = |cos Δφ|, de moyenne 2/π).
+  Corrigé au passage : la raie de Nyquist n'était pas forcée réelle en longueur paire,
+  donc `irfft` en jetait silencieusement la partie imaginaire et le spectre de puissance
+  du surrogate ne coïncidait plus avec l'original.
+- [audit v2] `matches_s6_profile` exige des données de norme unité — 1/7, 2/63 et 1/63
+  sont des valeurs absolues, donc un simple facteur d'échelle 2 fait échouer le test sur
+  un S⁶ parfait. Précondition désormais documentée (rotations inoffensives ; passe à
+  bruit 0,05, échoue à 0,10).
+- [audit v2] `THEORY_S6` était du code mort : `matches_s6_profile` redéfinissait ses
+  propres cibles. Source de vérité unique rétablie.
+- [audit v2] `ranking_power` étiquetait les candidats « S6 »/« T6 » alors qu'il balaie
+  d = 2, 3, 4, 6 : la sortie annonçait « S6 » pour une 2-sphère. Étiquettes dérivées de
+  la dimension balayée.
+- [audit v2] « Les 8 chantiers » dans README.md et CLAUDE.md alors que le tableau en
+  liste 12.
 
 ### Revérifié indépendamment et correct
 - [audit v2] Table octonionique (Moufang 2,8×10⁻¹⁴, alternativité 1,1×10⁻¹⁴) ; Leibniz sur

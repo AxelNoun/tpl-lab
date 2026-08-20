@@ -4,8 +4,10 @@ Question: with n samples in intrinsic dimension d, can our pipeline tell
 S^d from T^d at all? Two probes: (a) topological (does betti1 find the torus
 loops?), (b) fingerprint ranking (is the true generator ranked first?).
 First finding (kept in docs/RESULTATS_NEGATIFS.md): direct b1 detection dies
-by d ~ 4 at n <= 3000 — real protocols must rely on ranking/contrast, or on
-circular-coordinate methods, or on far larger n.
+by d = 3 at n <= 3000 (this docstring said d ~ 4 until audit v2 measured it:
+T^3 scored 0 detections out of 30 at n = 2000, while docs/12 had it right) —
+real protocols must rely on ranking/contrast, or on circular-coordinate
+methods, or on far larger n.
 Run a fuller grid: python -m tpl.analysis.calibration --full
 """
 import argparse
@@ -27,13 +29,16 @@ def topo_power(dim, n, n_rep=3, seed=0):
 
 
 def ranking_power(dim, n, n_rep=3, seed=0):
-    cands = {"S6": lambda **k: sphere(dim=dim, **k),
-             "T6": lambda **k: torus_flat(dim=dim, **k)}
+    """Candidates are labelled by the dimension actually being swept: this used
+    to hardcode 'S6'/'T6' and so reported 'S6' for a 2-sphere (audit v2, F14)."""
+    sphere_name, torus_name = f"S{dim}", f"T{dim}"
+    cands = {sphere_name: lambda **k: sphere(dim=dim, **k),
+             torus_name: lambda **k: torus_flat(dim=dim, **k)}
     ok = 0
     for r in range(n_rep):
         data = torus_flat(n, dim=dim, noise=0.05, seed=seed + 200 + r)
         ok += next(iter(rank_candidates(data, n_boot=2, seed=seed + r,
-                                        candidates=cands))) == "T6"
+                                        candidates=cands))) == torus_name
     return ok / n_rep
 
 

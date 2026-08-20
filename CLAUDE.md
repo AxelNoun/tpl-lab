@@ -9,7 +9,7 @@ serait contrainte à une variété de basse dimension liée à SU(3) ⊂ G2 (sph
 Nous ne cherchons PAS à prouver la théorie. Nous cherchons à la rendre falsifiable,
 puis à la confronter aux données. Un résultat négatif propre est un succès du projet.
 
-Les 8 chantiers sont décrits dans `README.md`. L'état d'avancement est dans `docs/ETAT.md`.
+Les 12 chantiers sont décrits dans `README.md`. L'état d'avancement est dans `docs/ETAT.md`.
 
 ## Règles scientifiques — NON NÉGOCIABLES
 
@@ -80,5 +80,5 @@ python -m tpl.demo --seed 42   # pipeline complet sur synthétique
 
 ## Qui fait quoi
 
-- Analyses & théorie : voir `docs/ETAT.md` (tableau des chantiers 1→8).
+- Analyses & théorie : voir `docs/ETAT.md` (tableau des chantiers 1→12).
 - Nouveaux contributeurs : commencer par `docs/onboarding/PARCOURS.md`.

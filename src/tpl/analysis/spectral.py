@@ -22,6 +22,8 @@ before testing is a documented prerequisite (see docs/10, docs/02).
 """
 import numpy as np
 
+# Single source of truth for the four exact levels: matches_s6_profile reads its
+# targets from here rather than restating them (audit v2, F11).
 THEORY_S6 = np.array([1/7]*7 + [2/63]*6 + [1/63]*21 + [0.0])
 
 
@@ -39,15 +41,23 @@ def covariance_spectrum(pts):
 
 
 def matches_s6_profile(evals, rtol=0.15):
-    """Do the sorted eigenvalues match the exact 4-level S^6 theory?"""
+    """Do the sorted eigenvalues match the exact 4-level S^6 theory?
+
+    PRECONDITION: the data must lie on the UNIT sphere. 1/7, 2/63 and 1/63 are
+    absolute values, not ratios, so a uniform rescaling by 2 fails the test on
+    data that is still a perfect S^6 (audit v2, F10). Rotations are harmless.
+    Noise costs power quickly: passes at sigma = 0.05, fails at 0.10.
+    Rescale before calling; the check below only catches the gross case, since
+    a radius that merely drifts still breaks the absolute levels.
+    """
     ev = np.asarray(evals)[:35]
     if ev.size < 35:
         return False
     blocks = [ev[:7], ev[7:13], ev[13:34]]
-    targets = [1/7, 2/63, 1/63]
+    targets = THEORY_S6[[0, 7, 13]]
     lvl = all(abs(b.mean() - t) < rtol * t and np.ptp(b) < 2 * rtol * t
               for b, t in zip(blocks, targets))
-    return bool(lvl and ev[34] < 0.2 * (1/63))
+    return bool(lvl and ev[34] < 0.2 * THEORY_S6[13])
 
 
 def harmonic_features_on(pts):

@@ -12,7 +12,7 @@ géométrie G2/SU(3) ≅ S⁶, avec une dimension intrinsèque prédite de **6**
 (Kuramoto, réseaux récurrents), sans structure octonionique — et reproduit déjà toutes
 les « signatures » proposées par l'article d'origine.
 
-## Les 8 chantiers
+## Les 12 chantiers
 
 | # | Chantier | Statut | Où |
 |---|----------|--------|-----|
@@ -22,7 +22,7 @@ les « signatures » proposées par l'article d'origine.
 | 4 | Modèles nuls (Kuramoto, surrogates) | 🟡 squelette fonctionnel | `src/tpl/nulls/` |
 | 5 | Test de non-associativité (interventionnel) | 🔴 protocole seul — exige un labo | `docs/05-protocole-non-associativite.md` |
 | 6 | Dimension intrinsèque = 6 ou 8 (prédiction rigide) | 🟡 pipeline prêt pour données réelles | `src/tpl/analysis/` |
-| 7 | Pré-enregistrement | 🟡 gabarit à figer | `PREREGISTRATION.md` |
+| 7 | Pré-enregistrement | 🟡 pipeline exécutable, à figer | `PREREGISTRATION.md`, `src/tpl/analysis/run_id.py` |
 | 8 | Psychophysique structurelle | 🔴 protocole seul | `docs/08-psychophysique.md` |
 | 9 | Ranking de géométries (S⁶/T⁶/R⁶) | ✅ acc 1,0 synthétique | `docs/09-geometries-candidates.md` |
 | 10 | Multiplets G2 ; g2/su(3) numériques | ✅ validé | `docs/10-multiplets-spectraux.md` |
