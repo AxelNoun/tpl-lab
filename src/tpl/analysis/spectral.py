@@ -28,7 +28,8 @@ THEORY_S6 = np.array([1/7]*7 + [2/63]*6 + [1/63]*21 + [0.0])
 
 
 def quad_features(pts):
-    x = np.asarray(pts, float)
+    from tpl.analysis.bridge import refuse_reduction
+    x = refuse_reduction(np.asarray(pts, float))
     iu = np.triu_indices(x.shape[1])
     quad = (x[:, :, None] * x[:, None, :])[:, iu[0], iu[1]]
     return np.concatenate([x, quad], axis=1)
@@ -43,15 +44,16 @@ def covariance_spectrum(pts):
 def matches_s6_profile(evals, rtol=0.15):
     """Do the sorted eigenvalues match the exact 4-level S^6 theory?
 
-    PRECONDITION: the data must lie on the UNIT sphere. 1/7, 2/63 and 1/63 are
-    absolute values, not ratios, so a uniform rescaling by 2 fails the test on
-    data that is still a perfect S^6 (audit v2, F10). Rotations are harmless.
-    Noise costs power quickly: passes at sigma = 0.05, fails at 0.10.
-    Rescale before calling; the check below only catches the gross case, since
-    a radius that merely drifts still breaks the absolute levels.
+    PRECONDITION: the data must lie on the UNIT sphere in R^7. 1/7, 2/63 and
+    1/63 are absolute values, not ratios, so a uniform rescaling by 2 fails the
+    test on data that is still a perfect S^6 (audit v2, F10). Rotations are
+    harmless. Noise costs power quickly: passes at sigma = 0.05, fails at 0.10.
+    The spectrum of mixed N-channel recordings is not this test: do not PCA to
+    7 to make it applicable (docs/02). Wrong-sized spectra return False rather
+    than being silently truncated to 35 eigenvalues.
     """
-    ev = np.asarray(evals)[:35]
-    if ev.size < 35:
+    ev = np.asarray(evals)
+    if ev.size != 35:
         return False
     blocks = [ev[:7], ev[7:13], ev[13:34]]
     targets = THEORY_S6[[0, 7, 13]]
@@ -64,7 +66,8 @@ def harmonic_features_on(pts):
     """Orthonormal (w.r.t. uniform S^6 measure) basis of H1 (+) H2: 7 + 27.
     y_i = sqrt(7) x_i ; z_ij = sqrt(63) x_i x_j (i<j) ;
     w_a = sqrt(63/2) sum_i c_ai (x_i^2 - 1/7), {c_a} ON basis of (1,...,1)^perp."""
-    x = np.asarray(pts, float)
+    from tpl.analysis.bridge import refuse_reduction
+    x = refuse_reduction(np.asarray(pts, float))
     d = x.shape[1]
     y = np.sqrt(d) * x
     iu = np.triu_indices(d, k=1)

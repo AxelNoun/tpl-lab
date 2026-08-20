@@ -15,5 +15,9 @@ Esquisse :
   simples ; toute non-linéarité générique doit aussi être écartée — c'est LA difficulté :
   distinguer « non-associatif au sens algébrique » de « non-linéaire banal ».
 
-Prérequis : chantier 2 (que composent exactement A, B, C ?). Sans loi-pont, ce
-protocole reste une métaphore.
+Prérequis : chantier 2. A, B et C composent des déplacements du vecteur de
+population dans R^N (la ligne 1 de la loi-pont), pas des éléments d'une base
+d'octonions — cette identification n'a pas de procédure et n'est donc pas une
+prédiction. Le protocole dit *quoi* on compose ; distinguer « non-associatif au
+sens algébrique » de « non-linéaire banal » reste LA difficulté, et sans elle
+l'expérience reste une métaphore de l'octonion, pas un test.

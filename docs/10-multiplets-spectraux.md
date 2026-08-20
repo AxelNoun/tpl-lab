@@ -26,9 +26,12 @@ l'écart au scalaire par bloc : ~0 pour S⁶ isotrope, grand sous déformation a
 
 ## Limites assumées
 Le mélange linéaire de mesure (réaliste) détruit l'invariance O(7) → le test de Schur
-exige un alignement/whitening préalable (lié à la loi-pont, docs/02). Le profil exact A
-suppose la mesure uniforme — sur données réelles, c'est un idéal de référence, pas une
-attente ferme. Structure fine = prédiction risquée, exploratoire (prereg v2).
+exige un alignement/whitening préalable. La loi-pont (docs/02) **interdit** cet
+alignement : PCA vers 7 fabriquerait la prédiction. `refuse_reduction` fait lever
+`covariance_spectrum` et `harmonic_features_on` si l'ambiant n'est pas déjà 7.
+Conséquence : A et B sont des contrôles du génératif synthétique, inapplicables aux
+enregistrements N-canaux. Structure fine = prédiction risquée, exploratoire, et
+désormais hors H1 empirique.
 
 ## Côté algèbre (durci par l'audit)
 `tpl.utils.g2` : dérivations vérifiées par la propriété de LEIBNIZ D(ab)=D(a)b+aD(b)

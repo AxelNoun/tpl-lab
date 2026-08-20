@@ -17,7 +17,7 @@ les « signatures » proposées par l'article d'origine.
 | # | Chantier | Statut | Où |
 |---|----------|--------|-----|
 | 1 | Hypothèse locale formelle (amputer la TOE) | ✅ rédigé | `docs/01-hypothese.md` |
-| 2 | Loi-pont (neurones → variété) | 🟡 gabarit | `docs/02-loi-pont.md` |
+| 2 | Loi-pont (neurones → variété) | ✅ ligne 1 figée ; 2 et 3 = pas de prédiction | `docs/02-loi-pont.md`, `src/tpl/analysis/bridge.py` |
 | 3 | Modèle génératif S⁶ + projection réaliste | 🟡 squelette fonctionnel | `src/tpl/generative/` |
 | 4 | Modèles nuls (Kuramoto, surrogates, RNN chaotique) | ✅ les trois perdent sur les deux mesures | `src/tpl/nulls/` |
 | 5 | Test de non-associativité (interventionnel) | 🔴 protocole seul — exige un labo | `docs/05-protocole-non-associativite.md` |

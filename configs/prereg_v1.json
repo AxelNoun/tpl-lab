@@ -8,6 +8,16 @@
     "overlapping": false
   },
 
+  "bridge": {
+    "observable": "spike_counts",
+    "one_area": true,
+    "reduce_to_r7": false,
+    "zscore": false,
+    "min_channels": 7,
+    "rate_threshold_hz": 0,
+    "_comment": "A point of the hypothesized manifold is a population spike-count vector in ambient R^N, N = active units in one cortical area, N >= 7. It is NOT a point of S^6 subset R^7. PCA to 7, per-channel z-scoring, and firing-rate cuts are frozen OFF: each would be a researcher degree of freedom that can manufacture d ~ 6. Spectral predictions A/B are therefore not applicable to mixed N-channel recordings (docs/02)."
+  },
+
   "decimation": {
     "criterion": "autocorrelation",
     "threshold": 0.1,

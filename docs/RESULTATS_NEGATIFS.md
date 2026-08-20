@@ -139,6 +139,17 @@ dynamique de basse dimension sans aucune géométrie S⁶. Testé avec 200 unit�
   fixes, même symptôme (d̂ ≈ 58-70). Obtenir une vraie dynamique de rang faible exige
   un recouvrement structuré entre u et v (Mastrogiuseppe & Ostojic 2018).
 
+## Chantier 2 — remplir la loi-pont a rétréci H1, pas élargi
+
+- [loi-pont] « Réduit à R⁷ » était le degré de liberté que le gabarit signalait. Il
+  est gelé à OFF : PCA / z-score / seuil de taux / fusion d'aires sont refusés par
+  `tpl.analysis.bridge`. Conséquence : les prédictions spectrales A/B (docs/10) sont
+  des énoncés sur S⁶ ⊂ R⁷ et **ne s'appliquent pas** aux enregistrements N-canaux.
+  `covariance_spectrum` lève une erreur si l'ambiant ≠ 7 au lieu de tronquer
+  silencieusement le spectre à 35 valeurs. H1 empirique se réduit aux deux mesures
+  primaires (dimension + géométrie du fingerprint) ; SU(3) et les octonions n'ont
+  pas de procédure, donc pas de prédiction (docs/02).
+
 ### Cohérence et nuls affaiblis (F9 à F14, corrigés)
 - [audit v2] b1 direct meurt dès d = 3 (T³ : 0 détection sur 30 à n = 2000), pas d = 4
   comme l'annonçait la docstring de `calibration.py` ; docs/12 avait raison. Docstring

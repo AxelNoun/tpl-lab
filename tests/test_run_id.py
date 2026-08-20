@@ -91,3 +91,9 @@ def test_short_recording_is_declared_undecidable_not_refuted():
     res = run_condition(sample_s6_uniform(300, seed=2), load_config(CONFIG))
     assert res["verdict"] == "indecidable"
     assert "id" not in res, "no estimate may be reported below the power floor"
+
+
+def test_too_few_channels_is_refused_not_padded():
+    """Bridge law: S^6 cannot sit in R^6. Padding or PCA-up is forbidden."""
+    with pytest.raises(ValueError, match="cannot sit"):
+        run_condition(np.ones((500, 6)), load_config(CONFIG))

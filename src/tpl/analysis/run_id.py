@@ -19,6 +19,7 @@ from pathlib import Path
 
 import numpy as np
 
+from tpl.analysis.bridge import prepare_population
 from tpl.analysis.intrinsic_dim import decorrelate, max_lag_for, twonn
 from tpl.analysis.model_comparison import select_geometry
 from tpl.analysis.state_contrast import contrast
@@ -29,6 +30,9 @@ def load_config(path):
     if cfg["geometry"]["max_fit_score"] != 3.0:
         raise ValueError("max_fit_score is calibrated in docs/09; changing it "
                          "post hoc is exactly the HARKing the prereg forbids")
+    if cfg.get("bridge", {}).get("reduce_to_r7", False):
+        raise ValueError("reduce_to_r7 is the degree of freedom docs/02 exists "
+                         "to forbid; turning it on after seeing data is HARKing")
     return cfg
 
 
@@ -65,6 +69,7 @@ def run_condition(points, cfg, label="A"):
     n = 2000. Reporting 'insufficient' is the only honest output there.
     """
     idc = cfg["intrinsic_dimension"]
+    points = prepare_population(points)
     thinned, lag = decorrelate(points, threshold=cfg["decimation"]["threshold"])
     out = {"label": label, "n_raw": len(points), "lag": lag, "n": len(thinned),
            "n_min": idc["min_samples_after_decimation"], "points": thinned}

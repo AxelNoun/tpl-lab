@@ -4,10 +4,15 @@ Une fois figé : tag git `prereg-v1`, dépôt du hash sur OSF, aucune modificati
 
 ## H1 (TPL) 
 Pendant un stimulus perceptif constant (>10 s), la dimension intrinsèque (ID) de la
-dynamique de population corticale, estimée par TwoNN sur les vecteurs de population
-(fenêtres de 50 ms, NON chevauchantes, décimées jusqu'à autocorrélation < 0,1 —
+dynamique de population corticale, estimée par TwoNN sur les vecteurs de **comptage
+de spikes** (fenêtres de 50 ms, NON chevauchantes, une aire à la fois, **sans**
+réduction à R⁷, **sans** z-score par canal, décimées jusqu'à autocorrélation < 0,1 —
 le biais d'autocorrélation sous-estime l'ID, voir tests/test_dim.py), sature à
 **d = 6** (variante : d = 8). Tolérance déclarée : ±0,5.
+
+Loi-pont (docs/02, `tpl.analysis.bridge`) : un « point de la variété » est ce
+vecteur dans R^N, N ≥ 7 = nombre d'unités actives, pas un point de S⁶ ⊂ R⁷. PCA
+vers 7, z-score, racine carrée et seuil de taux sont gelés à OFF.
 
 La décimation est calculée par `intrinsic_dim.decorrelate`, jamais fixée à la
 main : sur une rotation S⁶ de vraie dimension 6, les facteurs 1 / 2 / 5 / 10
@@ -16,7 +21,10 @@ du verdict.
 
 ## H0
 L'ID ne se distingue pas de celle produite par (a) un Kuramoto ajusté aux mêmes
-spectres, (b) des surrogates à phase randomisée des mêmes données.
+spectres, (b) des surrogates à phase randomisée des mêmes données (`preserve_cross=True`),
+(c) un RNN chaotique (`tpl.nulls.rnn`). Les trois perdent déjà sur la mesure 2
+(géométrie) en synthétique ; (a) et le régime sous-échantillonné de (c) passent
+la mesure 1 seule.
 
 ## Critères de réfutation (déclarés à l'avance, révisés audit v2)
 La règle sur l'ID est **exhaustive et sans recouvrement** : tout réel tombe dans
@@ -78,7 +86,10 @@ signal continu**.
    conservateur. Interdiction déclarée à l'avance : ne jamais rapporter la largeur de
    cet intervalle comme barre d'erreur, ni delta ID comme amplitude d'effondrement.
 3. SECONDAIRE : b1 (gap) = 0 attendu ; interprétable seulement si dim effective ≤ 3.
-4. EXPLORATOIRE (risqué, déclaré tel) : multiplets spectraux 7/27 (docs/10).
+4. EXPLORATOIRE (risqué, déclaré tel) : multiplets spectraux 7/27 (docs/10) —
+   **inapplicable aux enregistrements N-canaux mélangés**. La prédiction est un
+   énoncé sur S⁶ ⊂ R⁷ ; la loi-pont (docs/02) interdit de fabriquer ces
+   coordonnées par PCA. Le test reste un contrôle du génératif synthétique.
 
 ## Analyse (figée)
 Pipeline exact, existant et exécutable :
