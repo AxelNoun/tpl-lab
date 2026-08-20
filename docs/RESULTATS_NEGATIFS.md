@@ -39,12 +39,20 @@
   (1,00) en partie sur l'échelle. Correctif : `rescale_to_unit()` en tête de
   `fingerprint()`. Score nul à 10⁻¹⁶ près sous changement d'échelle.
 
+- [audit v2] BUG : `rank_candidates` ne pouvait pas répondre « aucun des trois » — des
+  données S³ étaient déclarées R6, un bruit gaussien 20-D était déclaré T6, et la mesure
+  primaire n°1 partait donc d'une chance de base de 1/3. Correctif : `select_geometry()`
+  applique un seuil d'adéquation absolu `MAX_FIT_SCORE = 3,0`, calibré sur synthétique
+  avant toute donnée réelle et reproductible par
+  `python -m tpl.analysis.calibration --fit-threshold`. Marge de séparation mesurée
+  [2,56 ; 4,05] : 0 % de faux positifs, 0 % de faux négatifs, et le nul de Kuramoto du
+  projet est rejeté (4,20 à K=0, 29,05 à K=2), donc la règle 1 est satisfaite. Branché
+  sur `state_contrast.metrics_for` : l'« anesthésie » simulée renvoie désormais
+  `best_geometry = None` (score 18,72) au lieu d'un R6 nommé par défaut. Limite déclarée
+  dans docs/09 : un vrai S⁶ à bruit ≥ 0,15 est rejeté lui aussi — le test perd sa
+  puissance, il ne se trompe pas.
+
 ### Mesuré, non corrigé — à traiter avant de figer le prereg
-- [audit v2] `rank_candidates` ne peut pas répondre « aucun des trois » : des données S³
-  sont déclarées R6, un bruit gaussien 20-D est déclaré T6. La mesure primaire n°1 part
-  donc d'une chance de base de 1/3. Les scores absolus séparent pourtant nettement
-  (S⁶ 0,26 ; S⁶ non uniforme 1,70 ; S³ 11,29 ; bruit 14,58) : un seuil d'adéquation
-  calibré est possible maintenant que le score est invariant d'échelle.
 - [audit v2] Le pipeline pré-enregistré n'existe pas : ni `tpl.analysis.run_id` ni
   `configs/prereg_v1.yaml`. La décimation « autocorrélation < 0,1 » n'est pas implémentée
   (la démo code en dur `[::10]`) ; sur un vrai d = 6, les facteurs voisins donnent 5,59 à

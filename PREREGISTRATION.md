@@ -22,10 +22,16 @@ spectres, (b) des surrogates à phase randomisée des mêmes données.
 2. IBL Brain-wide Map (Neuropixels, tâche standardisée).
 3. EEG haute densité OpenNeuro avec conditions veille/anesthésie.
 
-## Mesures primaires (révision v2, post-calibration)
-1. PRIMAIRE : `rank_candidates` — S⁶ doit gagner contre T⁶/R⁶ en veille.
-2. PRIMAIRE : `contrast` veille vs anesthésie — delta ID > 0, CI95 excluant 0,
-   et perte du classement S⁶ sous anesthésie.
+## Mesures primaires (révision v3, post-audit v2)
+1. PRIMAIRE : `select_geometry` — S⁶ doit gagner contre T⁶/R⁶ en veille ET passer le
+   seuil d'adéquation absolu `MAX_FIT_SCORE = 3,0` (figé, calibré sur synthétique,
+   docs/09). Gagner ne suffit pas : `rank_candidates` seul désigne toujours un
+   vainqueur, donc « S⁶ a gagné » vaudrait 1 chance sur 3 par défaut. Un score > 3,0
+   se lit « aucune des trois géométries », pas « S⁶ affaibli ».
+2. PRIMAIRE : `contrast` veille vs anesthésie — delta ID > 0 avec CI95 excluant 0
+   (intervalle par SOUS-ÉCHANTILLONNAGE SANS REMISE, n_boot ≥ 1000 : le bootstrap avec
+   remise est invalide pour un estimateur k-NN, audit v2), ET perte de l'acceptation
+   de S⁶ sous anesthésie (`best_geometry` ≠ "S6", y compris None).
 3. SECONDAIRE : b1 (gap) = 0 attendu ; interprétable seulement si dim effective ≤ 3.
 4. EXPLORATOIRE (risqué, déclaré tel) : multiplets spectraux 7/27 (docs/10).
 

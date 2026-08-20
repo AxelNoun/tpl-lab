@@ -56,7 +56,11 @@ def _score(fa, fb):
 
 
 def rank_candidates(data, n_boot=3, seed=0, candidates=None):
-    """Return {name: mean score} — LOWER is better. Sorted dict."""
+    """Return {name: mean score} — LOWER is better. Sorted dict.
+
+    A RANKING only: it always names a winner. Use `select_geometry` when the
+    honest answer may be 'none of these'.
+    """
     candidates = candidates or CANDIDATES
     fd = fingerprint(np.asarray(data, float), seed=seed)
     out = {}
@@ -65,3 +69,35 @@ def rank_candidates(data, n_boot=3, seed=0, candidates=None):
              for b in range(n_boot)]
         out[name] = float(np.mean(s))
     return dict(sorted(out.items(), key=lambda kv: kv[1]))
+
+
+# Absolute goodness-of-fit cutoff, calibrated on synthetic data BEFORE any real
+# data (CLAUDE.md R2) and frozen. Reproduce with:
+#     python -m tpl.analysis.calibration --fit-threshold
+# Measured at n = 2000, 4 seeds per cell:
+#   true candidate geometry, noise <= 0.10, uniform OR not : 0.26 .. 2.43
+#   none of the candidates (S3, S10, T3, 20-D gaussian)     : 4.05 .. 14.60
+#   Kuramoto null of the project (K = 0 and K = 2)          : 4.20 .. 58.05
+# 3.0 sits mid-margin and errs towards rejecting, like betti1's gap rule.
+# DECLARED LIMIT: a genuine S6 carrying noise >= ~0.15 also scores above 3.0
+# (3.34 at 0.15, 4.63 at 0.20) and is rejected. Beyond that noise level the
+# test has no power rather than being wrong — see docs/09 and docs/12.
+MAX_FIT_SCORE = 3.0
+
+
+def select_geometry(data, seed=0, candidates=None, max_score=MAX_FIT_SCORE, n_boot=3):
+    """Rank the candidates, then accept the winner only if it actually fits.
+
+    `rank_candidates` on its own cannot say 'none of these': S^3 data comes out
+    R6 and 20-D gaussian noise comes out T6, so a bare 'S6 won' carries a 1-in-3
+    base rate. Returns `geometry=None` when no candidate clears `max_score`.
+    """
+    ranking = rank_candidates(data, n_boot=n_boot, seed=seed, candidates=candidates)
+    best = next(iter(ranking))
+    accepted = ranking[best] <= max_score
+    return {"geometry": best if accepted else None,
+            "best_candidate": best,
+            "score": ranking[best],
+            "accepted": accepted,
+            "max_score": max_score,
+            "ranking": ranking}

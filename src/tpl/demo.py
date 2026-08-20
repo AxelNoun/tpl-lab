@@ -9,7 +9,7 @@ from tpl.nulls.kuramoto import simulate_kuramoto, order_parameter
 from tpl.analysis.intrinsic_dim import twonn
 from tpl.analysis.triplet_phase import closure_naive, closure_windowed
 from tpl.analysis.topology import betti1
-from tpl.analysis.model_comparison import rank_candidates
+from tpl.analysis.model_comparison import rank_candidates, select_geometry, MAX_FIT_SCORE
 from tpl.analysis.spectral import covariance_spectrum, matches_s6_profile
 from tpl.analysis.state_contrast import contrast
 
@@ -37,6 +37,15 @@ def main():
         r = rank_candidates(gen(2000, dim=6, noise=0.03, seed=s), seed=s)
         best = next(iter(r))
         print(f"  {name} -> gagnant {best}  {dict((k, round(v, 2)) for k, v in r.items())}")
+    print(f"  seuil d'adéquation absolu = {MAX_FIT_SCORE} (calibré : "
+          f"python -m tpl.analysis.calibration --fit-threshold)")
+    for name, data in [("données S6", sphere(2000, dim=6, noise=0.03, seed=s)),
+                       ("données S3 (aucun candidat)", sphere(2000, dim=3, noise=0.03, seed=s)),
+                       ("bruit 20-D (aucun candidat)",
+                        np.random.default_rng(s).standard_normal((2000, 20)) / np.sqrt(20))]:
+        sel = select_geometry(data, seed=s)
+        verdict = sel["geometry"] or f"AUCUN (meilleur : {sel['best_candidate']})"
+        print(f"  {name:<28s} -> {verdict}  score {sel['score']:.2f}")
 
     print("\n— [5] Spectre G2 : prédiction exacte à 4 niveaux (corrigée par audit v1) —")
     ev = covariance_spectrum(sphere(20000, dim=6, seed=s))
@@ -48,8 +57,12 @@ def main():
 
     print("\n— [3] Contraste d'états (simulé : 'veille' S^6 vs 'anesthésie' effondrée) —")
     c = contrast(sphere(1500, dim=6, noise=0.02, seed=s), euclidean(1500, dim=3, noise=0.02, seed=s), seed=s)
-    print(f"  delta ID = {c['delta_id']:.2f}  CI95 {tuple(round(x, 2) for x in c['delta_id_ci95'])} ; "
-          f"veille classée {c['A']['best_geometry']}")
+    print(f"  delta ID = {c['delta_id']:.2f}  CI95 {tuple(round(x, 2) for x in c['delta_id_ci95'])} "
+          f"(sous-échantillonnage sans remise, n_boot={c['n_boot']})")
+    print(f"  veille     -> géométrie {c['A']['best_geometry']} (score {c['A']['fit_score']:.2f})")
+    print(f"  anesthésie -> géométrie {c['B']['best_geometry']} "
+          f"(meilleur candidat {c['B']['best_candidate']}, score {c['B']['fit_score']:.2f} "
+          f"> {MAX_FIT_SCORE} : aucun ne convient)")
 
     print("\n— Rappel (docs/03) : la 'signature' de l'article source est morte —")
     th = simulate_kuramoto(seed=s)

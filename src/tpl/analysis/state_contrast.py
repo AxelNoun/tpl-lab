@@ -11,14 +11,19 @@ import numpy as np
 
 from tpl.analysis.intrinsic_dim import twonn
 from tpl.analysis.topology import betti1
-from tpl.analysis.model_comparison import rank_candidates
+from tpl.analysis.model_comparison import select_geometry
 
 
 def metrics_for(pts, seed=0):
-    ranks = rank_candidates(pts, n_boot=2, seed=seed)
-    best = next(iter(ranks))
+    """`best_geometry` is None when NO candidate actually fits — the collapse
+    TPL predicts under anaesthesia should show up exactly that way, rather than
+    as a winner named by default."""
+    sel = select_geometry(pts, seed=seed, n_boot=2)
     return {"id": twonn(pts), "b1": betti1(pts, seed=seed),
-            "best_geometry": best, "score_S6": ranks.get("S6", np.nan)}
+            "best_geometry": sel["geometry"],
+            "best_candidate": sel["best_candidate"],
+            "fit_score": sel["score"],
+            "score_S6": sel["ranking"].get("S6", np.nan)}
 
 
 def contrast(pts_a, pts_b, n_boot=1000, frac=0.632, seed=0):
