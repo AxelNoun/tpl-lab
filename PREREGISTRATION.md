@@ -70,6 +70,13 @@ signal continu**.
    (intervalle par SOUS-ÉCHANTILLONNAGE SANS REMISE, n_boot ≥ 1000 : le bootstrap avec
    remise est invalide pour un estimateur k-NN, audit v2), ET perte de l'acceptation
    de S⁶ sous anesthésie (`best_geometry` ≠ "S6", y compris None).
+   **L'IC95 est un test de détection, pas une taille d'effet, et sera publié comme
+   tel.** Couverture mesurée de la vraie différence : 98 % pour un contraste 6 contre 3,
+   mais 40 % pour 10 contre 3, le biais de TwoNN dépassant alors la largeur de
+   l'intervalle (docs/11, `calibration --ci-coverage`). Le biais croissant avec d, la
+   différence est sous-estimée et l'intervalle tiré vers zéro : « exclut 0 » reste donc
+   conservateur. Interdiction déclarée à l'avance : ne jamais rapporter la largeur de
+   cet intervalle comme barre d'erreur, ni delta ID comme amplitude d'effondrement.
 3. SECONDAIRE : b1 (gap) = 0 attendu ; interprétable seulement si dim effective ≤ 3.
 4. EXPLORATOIRE (risqué, déclaré tel) : multiplets spectraux 7/27 (docs/10).
 

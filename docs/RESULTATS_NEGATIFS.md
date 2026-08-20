@@ -87,14 +87,29 @@
   Conséquence figée dans `run_id` : le verdict H1 est **conjonctif** (dimension ET
   géométrie), une compatibilité de dimension seule ne compte pas.
 
+- [audit v2] NON-CORRIGEABLE PAR RÉÉCHANTILLONNAGE : l'IC95 sur delta ID n'est pas une
+  taille d'effet. Mesuré par `python -m tpl.analysis.calibration --ci-coverage`, couverture
+  de la vraie différence : **98 % sur un contraste 6 contre 3, mais 40 % sur 10 contre 3**
+  (n = 1200). En dimension élevée le biais de TwoNN sur la différence (≈ 1,3) dépasse la
+  largeur de l'intervalle (≈ 1,5), et aucun schéma de rééchantillonnage ne peut le réparer :
+  le rééchantillonnage n'a pas accès au biais.
+  La correction de manuel a été essayée et **rejetée sur mesure** : rescaler la racine
+  θ_m − θ_n par √(m/n) (Politis & Romano 1994) est le correctif principiel d'un intervalle
+  calculé à m < n, et il fait *chuter* la couverture à 65 % (32 % dans le cas 10 contre 3).
+  Le biais de TwoNN bouge à peine entre m et n, donc le sous-échantillonnage ne le voit pas ;
+  le rescalage supprime la seule chose qui le compensait, à savoir la largeur excédentaire.
+  Ce qui survit, c'est le SIGNE : le biais croît avec d, donc la différence est SOUS-estimée
+  et l'intervalle est tiré vers zéro. Le critère « IC95 excluant 0 » reste donc conservateur
+  — la revendication devient plus difficile, jamais plus facile — mais la largeur ne doit
+  jamais être publiée comme barre d'erreur. Prereg mesure 2 reformulée en conséquence.
+- [audit v2] Même cause, symptôme visible : l'IC95 peut exclure sa propre estimation
+  ponctuelle (delta = −2,27, IC [−2,18 ; −1,30] sur le dry-run) quand les deux conditions
+  diffèrent beaucoup en dimension.
+
 ### Mesuré, non corrigé — à traiter avant de figer le prereg
 - [audit v2] b1 direct meurt dès d = 3 (T³ : 0 détection sur 30 à n = 2000), pas d = 4
   comme l'annonce la docstring de `calibration.py` ; docs/12 avait raison. La
   conservativité tient : 0 faux positif sur 180 essais.
-- [audit v2] `contrast` renvoie un IC95 qui peut exclure sa propre estimation ponctuelle
-  (delta = −2,27, IC [−2,18 ; −1,30] sur le dry-run) : l'intervalle est calculé à m < n,
-  où TwoNN est plus biaisé bas, et n'est pas recentré. Documenté dans la docstring, mais
-  à remplacer par un intervalle corrigé du biais avant publication.
 
 ### Revérifié indépendamment et correct
 - [audit v2] Table octonionique (Moufang 2,8×10⁻¹⁴, alternativité 1,1×10⁻¹⁴) ; Leibniz sur

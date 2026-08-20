@@ -12,6 +12,7 @@ import argparse
 import numpy as np
 
 from tpl.analysis.topology import betti1
+from tpl.analysis.intrinsic_dim import twonn
 from tpl.analysis.model_comparison import rank_candidates, MAX_FIT_SCORE
 from tpl.generative.manifolds import sphere, torus_flat, euclidean
 from tpl.nulls.kuramoto import simulate_kuramoto
@@ -94,6 +95,52 @@ def fit_threshold(n=2000, n_rep=4, seed=0):
     print(f"  faux negatifs (rejete a tort)  : {100 * (pos > MAX_FIT_SCORE).mean():.0f}%")
 
 
+def _ci_variants(pts_a, pts_b, n_boot, frac, seed):
+    """The two candidate intervals, computed from ONE set of subsamples so the
+    comparison is not confounded by resampling noise."""
+    rng = np.random.default_rng(seed)
+    theta = twonn(pts_a) - twonn(pts_b)
+    ma, mb = int(len(pts_a) * frac), int(len(pts_b) * frac)
+    diffs = np.empty(n_boot)
+    for k in range(n_boot):
+        diffs[k] = (twonn(pts_a[rng.choice(len(pts_a), ma, replace=False)])
+                    - twonn(pts_b[rng.choice(len(pts_b), mb, replace=False)]))
+    naive = tuple(np.percentile(diffs, [2.5, 97.5]))
+    rate = np.sqrt(0.5 * (ma / len(pts_a) + mb / len(pts_b)))
+    q_lo, q_hi = np.percentile(diffs - theta, [2.5, 97.5])
+    return theta, naive, (theta - rate * q_hi, theta - rate * q_lo)
+
+
+def ci_coverage(n=1200, n_rep=60, n_boot=300, frac=0.632, seed=0, dims=(6, 3)):
+    """Does the delta-ID interval actually cover the TRUE difference 95% of the time?
+
+    The prereg's primary measure 2 reads 'CI95 excluding 0', so the interval has
+    to mean what it says. Ground truth is known here by construction: S^dims[0]
+    against S^dims[1]. Compares the naive percentile interval against the
+    subsampling construction now used in state_contrast.contrast.
+    """
+    truth = dims[0] - dims[1]
+    print(f"vraie difference = {truth}  (S^{dims[0]} vs S^{dims[1]}, n={n}, "
+          f"{n_rep} repetitions, n_boot={n_boot})")
+    hits = {"naif": 0, "sous-echantillonnage": 0}
+    widths = {"naif": [], "sous-echantillonnage": []}
+    off_centre = 0
+    for r in range(n_rep):
+        a = sphere(n, dim=dims[0], noise=0.02, seed=seed + 900 + r)
+        b = sphere(n, dim=dims[1], noise=0.02, seed=seed + 400 + r)
+        theta, naive, sub = _ci_variants(a, b, n_boot, frac, seed + r)
+        off_centre += not (naive[0] <= theta <= naive[1])
+        for name, (lo, hi) in (("naif", naive), ("sous-echantillonnage", sub)):
+            hits[name] += lo <= truth <= hi
+            widths[name].append(hi - lo)
+    print(f"\n  {'intervalle':<22s} {'couverture':>11s} {'largeur moy.':>13s}")
+    for name in hits:
+        print(f"  {name:<22s} {100 * hits[name] / n_rep:>10.0f}% "
+              f"{np.mean(widths[name]):>13.2f}")
+    print(f"\n  l'intervalle naif excluait sa propre estimation ponctuelle dans "
+          f"{100 * off_centre / n_rep:.0f}% des cas")
+
+
 def run(dims=(2, 3), n=1500, n_rep=2, seed=0):
     print(f"{'d':>2} {'topo TPR':>9} {'topo FPR':>9} {'rank acc':>9}   (n={n})")
     for d in dims:
@@ -107,10 +154,14 @@ if __name__ == "__main__":
     ap.add_argument("--full", action="store_true")
     ap.add_argument("--fit-threshold", action="store_true",
                     help="recalibrate the absolute goodness-of-fit cutoff")
+    ap.add_argument("--ci-coverage", action="store_true",
+                    help="measure the coverage of the delta-ID interval")
     ap.add_argument("--seed", type=int, default=0)
     a = ap.parse_args()
     if a.fit_threshold:
         fit_threshold(seed=a.seed)
+    elif a.ci_coverage:
+        ci_coverage(seed=a.seed)
     else:
         run(dims=(2, 3, 4, 6) if a.full else (2, 3),
             n=3000 if a.full else 1500, n_rep=3 if a.full else 2, seed=a.seed)
