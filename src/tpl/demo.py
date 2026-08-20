@@ -84,6 +84,7 @@ def main():
     print("  Un R^6 de vraie dimension 6 passerait la mesure 1 (ID dans [5,5 ; 6,5[) :")
     print("  c'est un rival, pas TPL. `h1_verdict` exige le nom S6.")
     print("  Puissance : python -m tpl.analysis.calibration --h1-power")
+    print("  Bruit     : python -m tpl.analysis.calibration --h1-noise")
 
 
 if __name__ == "__main__":

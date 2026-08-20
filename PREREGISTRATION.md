@@ -104,6 +104,11 @@ signal continu**.
    vainqueur, donc « S⁶ a gagné » vaudrait 1 chance sur 3 par défaut. Un score > 3,0
    se lit « aucune des trois géométries », pas « S⁶ affaibli ». Un T⁶ ou R⁶ sous le
    seuil se lit **réfutation de H-TPL**, pas « compatible avec une variété 6-D ».
+   Puissance au bruit (`calibration --h1-noise`, n = 2000) : TPR 100 % à σ = 0,03 ;
+   50 % à 0,12 (TwoNN sort de la fenêtre, S⁶ encore accepté) ; 12 % à 0,15 (le
+   seuil 3,0 rejette). Un rejet réel à ID basse ou score > 3,0 peut être du bruit
+   de mesure — à déclarer, pas à retoucher après coup. TPR(n) : les ratés à n = 500
+   sont tous TwoNN ; le plancher n_min = 2000 (200 graines) ne baisse pas.
 2. PRIMAIRE : `contrast` veille vs anesthésie — delta ID > 0 avec CI95 excluant 0
    (intervalle par SOUS-ÉCHANTILLONNAGE SANS REMISE, n_boot ≥ 1000 : le bootstrap avec
    remise est invalide pour un estimateur k-NN, audit v2), ET perte de l'acceptation

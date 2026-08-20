@@ -155,11 +155,7 @@ def _one_h1(points, seed):
 
 
 def h1_power(n=2000, n_rep=8, seed=0):
-    """TPR / FPR of the conjunctive H-TPL rule at the prereg operating point.
-
-    Compatible = ID in a predicted window AND geometry is S6 by name. A fitted
-    T6 is a false positive for 'some 6-manifold' but a true negative for TPL.
-    """
+    """TPR / FPR of the conjunctive H-TPL rule at one n."""
     gens = [
         ("S6 (doit accepter)", lambda s: sphere(n, dim=6, noise=0.03, seed=s), "compatible"),
         ("T6 (rival, doit refuter)", lambda s: torus_flat(n, dim=6, noise=0.03, seed=s), "refutee"),
@@ -173,8 +169,7 @@ def h1_power(n=2000, n_rep=8, seed=0):
           f"{'ID ok':>6s} {'S6':>5s} {'T6':>5s} {'aucun':>6s}")
     summary = {}
     for name, gen, expected in gens:
-        hits = 0
-        id_ok = s6 = t6 = none = 0
+        hits = id_ok = s6 = t6 = none = 0
         for r in range(n_rep):
             v, id_v, geom = _one_h1(gen(seed + r), seed + r)
             hits += v == expected
@@ -183,11 +178,57 @@ def h1_power(n=2000, n_rep=8, seed=0):
             t6 += geom == "T6"
             none += geom is None
         rate = 100 * hits / n_rep
-        summary[name] = rate
+        summary[name] = {"rate": rate, "id_ok": 100 * id_ok / n_rep,
+                         "s6": 100 * s6 / n_rep, "t6": 100 * t6 / n_rep,
+                         "none": 100 * none / n_rep}
         print(f"  {name:<28s} {expected:>10s} {rate:7.0f}%  "
-              f"{100 * id_ok / n_rep:5.0f}% {100 * s6 / n_rep:4.0f}% "
-              f"{100 * t6 / n_rep:4.0f}% {100 * none / n_rep:5.0f}%")
+              f"{summary[name]['id_ok']:5.0f}% {summary[name]['s6']:4.0f}% "
+              f"{summary[name]['t6']:4.0f}% {summary[name]['none']:5.0f}%")
     return summary
+
+
+def h1_power_curve(ns=(500, 1000, 1500, 2000), n_rep=8, seed=0):
+    """Does the n_min = 2000 floor sit where TPR actually recovers?
+
+    Below the floor the pipeline returns INDECIDABLE; this curve is the
+    underlying rule, un-gated, so the floor can be compared to measured power
+    rather than to a guess.
+    """
+    rows = {}
+    for n in ns:
+        print(f"\n===== n = {n} =====")
+        rows[n] = h1_power(n=n, n_rep=n_rep, seed=seed)
+    print(f"\nTPR(n) sur un vrai S6  (pipeline sans le plancher n_min) :")
+    print(f"  {'n':>6s} {'TPR H-TPL':>10s} {'ID ok':>8s} {'S6':>8s}")
+    for n, s in rows.items():
+        u = s["S6 (doit accepter)"]
+        print(f"  {n:6d} {u['rate']:9.0f}% {u['id_ok']:7.0f}% {u['s6']:7.0f}%")
+    return rows
+
+
+def h1_noise(n=2000, n_rep=8, noises=(0.03, 0.08, 0.12, 0.15, 0.20), seed=0):
+    """Power vs additive noise on a true S6, at the prereg n.
+
+    MAX_FIT_SCORE was calibrated to reject a genuine S6 at noise >= 0.15
+    (docs/09). This re-measures that limit on the named conjunctive verdict,
+    not on the ranking score alone.
+    """
+    print(f"vrai S6, n={n}, {n_rep} graines : TPR en fonction du bruit additif")
+    print(f"  {'bruit':>6s} {'TPR H-TPL':>10s} {'ID ok':>8s} {'S6 accepte':>12s} {'aucun':>8s}")
+    out = {}
+    for noise in noises:
+        hits = id_ok = s6 = none = 0
+        for r in range(n_rep):
+            v, id_v, geom = _one_h1(sphere(n, dim=6, noise=noise, seed=seed + r), seed + r)
+            hits += v == "compatible"
+            id_ok += id_v == "compatible"
+            s6 += geom == "S6"
+            none += geom is None
+        out[noise] = (100 * hits / n_rep, 100 * id_ok / n_rep,
+                      100 * s6 / n_rep, 100 * none / n_rep)
+        h, i, g, z = out[noise]
+        print(f"  {noise:6.2f} {h:9.0f}% {i:7.0f}% {g:11.0f}% {z:7.0f}%")
+    return out
 
 
 def run(dims=(2, 3), n=1500, n_rep=2, seed=0):
@@ -206,7 +247,9 @@ if __name__ == "__main__":
     ap.add_argument("--ci-coverage", action="store_true",
                     help="measure the coverage of the delta-ID interval")
     ap.add_argument("--h1-power", action="store_true",
-                    help="TPR/FPR of the conjunctive H-TPL verdict")
+                    help="TPR/FPR of the conjunctive H-TPL verdict (curve over n)")
+    ap.add_argument("--h1-noise", action="store_true",
+                    help="TPR of a true S6 vs additive noise")
     ap.add_argument("--seed", type=int, default=0)
     a = ap.parse_args()
     if a.fit_threshold:
@@ -214,7 +257,9 @@ if __name__ == "__main__":
     elif a.ci_coverage:
         ci_coverage(seed=a.seed)
     elif a.h1_power:
-        h1_power(seed=a.seed)
+        h1_power_curve(seed=a.seed)
+    elif a.h1_noise:
+        h1_noise(seed=a.seed)
     else:
         run(dims=(2, 3, 4, 6) if a.full else (2, 3),
             n=3000 if a.full else 1500, n_rep=3 if a.full else 2, seed=a.seed)

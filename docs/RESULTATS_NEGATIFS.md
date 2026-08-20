@@ -95,6 +95,16 @@
   TPR 100 % (S⁶) ; TNR 100 % (T⁶, R⁶, Kuramoto, gaussienne 20-D).
   `python -m tpl.analysis.calibration --h1-power`.
 
+- [calibration] TPR(n) (8 graines, règle sans plancher) : à n = 500 le TPR sur un
+  vrai S⁶ est 88 %, et les 12 % de ratés sont tous TwoNN (S⁶ accepté 100 %). Dès
+  n = 1000 le TPR affiché est 100 %, mais 8 graines ne voient pas les 14 % de
+  réfutations à tort mesurés sur 200 graines à n = 1000. Le plancher n_min = 2000
+  **ne baisse pas**.
+- [calibration] Bruit additif sur un vrai S⁶, n = 2000 : TPR 100 % à σ = 0,03 ;
+  88 % à 0,08 ; 50 % à 0,12 ; 12 % à 0,15 ; 0 % à 0,20. Entre 0,08 et 0,12,
+  TwoNN sort de la fenêtre alors que `select_geometry` accepte encore S⁶. Le
+  seuil 3,0 ne devient le facteur limitant qu'à 0,15, comme calibré.
+
 - [audit v2] NON-CORRIGEABLE PAR RÉÉCHANTILLONNAGE : l'IC95 sur delta ID n'est pas une
   taille d'effet. Mesuré par `python -m tpl.analysis.calibration --ci-coverage`, couverture
   de la vraie différence : **98 % sur un contraste 6 contre 3, mais 40 % sur 10 contre 3**
