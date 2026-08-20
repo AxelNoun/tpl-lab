@@ -150,6 +150,17 @@ dynamique de basse dimension sans aucune géométrie S⁶. Testé avec 200 unit�
   primaires (dimension + géométrie du fingerprint) ; SU(3) et les octonions n'ont
   pas de procédure, donc pas de prédiction (docs/02).
 
+## Chantier 6 — H1 « percept > 10 s » n'est pas puissant sur du Neuropixels public
+
+- [loader] 10 s de stimulus à 50 ms = 200 fenêtres ; n_min = 2000 exige 100 s à lag 1
+  et 45–90 min aux lags des flots synthétiques. Un grating Allen dure ~2 s. Cent
+  repeats sommés feraient 200 s et passeraient le plancher : le loader prend la durée
+  du plus long bloc continu, pas la somme (`report_power`, tests/test_extract.py).
+  `extract_block` refuse < 100 s plutôt que de concaténer. Premier test déclaré :
+  **H1-spontané**, plus faible que H1 (pas de percept contrôlé). Un compatible là
+  n'autorise pas à parler de percept ; un réfutant là réfute aussi H1. Allen Visual
+  Coding n'a pas d'anesthésie : le contraste d'états n'est pas testable sur ce jeu.
+
 ### Cohérence et nuls affaiblis (F9 à F14, corrigés)
 - [audit v2] b1 direct meurt dès d = 3 (T³ : 0 détection sur 30 à n = 2000), pas d = 4
   comme l'annonçait la docstring de `calibration.py` ; docs/12 avait raison. Docstring

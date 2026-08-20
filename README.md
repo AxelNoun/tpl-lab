@@ -21,7 +21,7 @@ les « signatures » proposées par l'article d'origine.
 | 3 | Modèle génératif S⁶ + projection réaliste | 🟡 squelette fonctionnel | `src/tpl/generative/` |
 | 4 | Modèles nuls (Kuramoto, surrogates, RNN chaotique) | ✅ les trois perdent sur les deux mesures | `src/tpl/nulls/` |
 | 5 | Test de non-associativité (interventionnel) | 🔴 protocole seul — exige un labo | `docs/05-protocole-non-associativite.md` |
-| 6 | Dimension intrinsèque = 6 ou 8 (prédiction rigide) | 🟡 pipeline prêt pour données réelles | `src/tpl/analysis/` |
+| 6 | Dimension intrinsèque = 6 ou 8 (prédiction rigide) | 🟡 loader Allen prêt ; H1 percept non puissant | `src/tpl/io/`, `docs/13-donnees-reelles.md` |
 | 7 | Pré-enregistrement | 🟡 pipeline exécutable, à figer | `PREREGISTRATION.md`, `src/tpl/analysis/run_id.py` |
 | 8 | Psychophysique structurelle | 🔴 protocole seul | `docs/08-psychophysique.md` |
 | 9 | Ranking de géométries (S⁶/T⁶/R⁶) | ✅ acc 1,0 synthétique | `docs/09-geometries-candidates.md` |

@@ -19,6 +19,27 @@ main : sur une rotation S⁶ de vraie dimension 6, les facteurs 1 / 2 / 5 / 10
 donnent 4,05 / 4,49 / 5,40 / 6,01 — le choix de l'analyste déciderait à lui seul
 du verdict.
 
+## Portée empirique (figée avant données, docs/13)
+
+H1 ci-dessus n'est **pas puissant** sur les Neuropixels publics à stimuli brefs :
+10 s à 50 ms = 200 fenêtres, le plancher n = 2000 exige 100 s même à lag 1, et
+45–90 min aux lags mesurés sur les flots synthétiques. Un essai de grating Allen
+dure ~2 s (40 fenêtres). Concaténer les repeats est **interdit** : ce serait
+tester la stationnarité *entre* essais, pas la trajectoire d'un percept soutenu
+(`tpl.io.extract`, tests/test_extract.py).
+
+Premier test empirique déclaré, strictement plus faible que H1 :
+
+> **H1-spontané** : sur le plus long bloc `spontaneous` continu d'**une** aire
+> visuelle Allen (éveillé, pas de percept contrôlé), les deux mesures primaires
+> sont-elles compatibles avec S⁶ ?
+
+Ce n'est pas un substitut silencieux de « géométrie perceptive ». Un résultat
+compatible ici n'autorise pas à parler de percept ; un résultat réfutant ici
+réfute aussi H1 (si la variété n'apparaît même pas sans stimulus contrôlé, la
+revendication plus forte tombe). Allen Visual Coding n'a pas de condition
+anesthésie : le contraste d'états n'est pas testable sur ce jeu.
+
 ## H0
 L'ID ne se distingue pas de celle produite par (a) un Kuramoto ajusté aux mêmes
 spectres, (b) des surrogates à phase randomisée des mêmes données (`preserve_cross=True`),
@@ -64,9 +85,12 @@ signal continu**.
   avec états contrastés) : H1 fortement affaiblie.
 
 ## Données visées (ordre de priorité)
-1. Allen Brain Observatory — Visual Coding Neuropixels (stimuli constants, veille).
-2. IBL Brain-wide Map (Neuropixels, tâche standardisée).
-3. EEG haute densité OpenNeuro avec conditions veille/anesthésie.
+1. Allen Brain Observatory — Visual Coding Neuropixels, **blocs spontaneous**,
+   une aire corticale visuelle à la fois (loader : `python -m tpl.io.allen`).
+   Éveillé seulement. Voir docs/13.
+2. IBL Brain-wide Map (Neuropixels, tâche standardisée) — pas de loader encore.
+3. Jeu spike veille/anesthésie (contraste). Pas de source branchée ; l'EEG
+   OpenNeuro n'est pas l'observable de la loi-pont.
 
 ## Mesures primaires (révision v3, post-audit v2)
 1. PRIMAIRE : `select_geometry` — S⁶ doit gagner contre T⁶/R⁶ en veille ET passer le
