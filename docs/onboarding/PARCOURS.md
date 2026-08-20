@@ -113,17 +113,20 @@ retrouve la bonne dimension ; identifier à partir de quel niveau de bruit il é
   la falsifiabilité).
 - Parcourir les gabarits de pré-enregistrement de l'**OSF** (osf.io).
 
-**Livrable** : relire `PREREGISTRATION.md` et proposer une amélioration d'un critère
-de réfutation (pull request ou note).
+**Livrable** : relire `PREREGISTRATION.md` (statut FIGÉ, tag `prereg-v1`) et
+expliquer en une page pourquoi un seuil, une fenêtre ou un filtre ne se retouche
+plus après le tag. Ne pas proposer de retuning.
 
 ---
 
 ## Après le parcours
 
 Choisir un chantier dans `docs/ETAT.md` et se signaler. Bons points d'entrée :
-- Chantier 4 : ajouter un nul (réseau récurrent aléatoire) — accessible dès le chemin minimal.
-- Chantier 6 : pipeline de chargement Neuropixels (Allen SDK) — le plus utile à court terme.
-- Chantier 2 : la loi-pont — le plus dur, le plus important, pour profils théoriques.
+- Chantier 6 : extraire un bloc Allen `spontaneous` (une aire) et passer `run_id`
+  — le premier test empirique déclaré, plus faible que H1 perceptif.
+- Loader IBL Brain-wide Map — listé au prereg, pas encore écrit.
+- Nul RNN à rang faible *structuré* (Mastrogiuseppe & Ostojic) : U,V indépendants
+  et UUᵀ ont déjà été mesurés et écartés.
 
 ## Règles de la maison (rappel)
 

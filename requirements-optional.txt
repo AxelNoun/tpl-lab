@@ -1,0 +1,12 @@
+# Optional extras
+
+Heavy dependencies are declared in `pyproject.toml` under
+`[project.optional-dependencies]`, not duplicated here.
+
+```bash
+pip install -e ".[dev]"    # pytest
+pip install -e ".[full]"   # allensdk, mne, giotto-tda, scikit-dimension
+```
+
+The core (`numpy`, `scipy`, `ripser`) installs without this file.
+The Allen loader imports `allensdk` only inside `tpl.io.allen`.

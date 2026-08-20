@@ -1,10 +1,12 @@
 """Chantier 3 — generative model on S^6 (unit sphere in R^7).
 
-Current status (honest): a *placeholder* dynamic — deterministic rotation plus
-tangential Brownian diffusion, renormalized to the sphere. It fills S^6 (so the
-intrinsic-dimension pipeline has a ground truth of 6) but does NOT yet implement
-SU(3) holonomy. TODO (issue #1): build the g2 derivations from the octonion
-table and restrict to an su(3) subalgebra.
+Two dynamics, both renormalized to the sphere:
+
+- ``simulate_s6``: generic SO(7) rotation plus tangential Brownian motion.
+  Ground-truth intrinsic dimension 6 for the pipeline.
+- ``simulate_su3_flow``: drift from a genuine su(3) generator (octonion-derived
+  g2, see ``tpl.utils.g2``) plus transverse noise so the process covers S^6.
+  Pure SU(3) holonomy is not a passive test (chantier 5).
 """
 import numpy as np
 

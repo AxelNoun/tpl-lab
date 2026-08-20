@@ -3,4 +3,4 @@ Projet de falsification scientifique. Lire CLAUDE.md avant tout. Règles dures :
 nuls obligatoires pour toute signature ; seuils figés par PREREGISTRATION.md avant
 données réelles ; préfixe synth_ pour tout simulé ; --seed partout ; pytest -q avant
 de conclure ; « compatible avec » ≠ « démontre ». Mesures primaires sur réel :
-rank_candidates + contrast (b1 = secondaire, cf docs/12-calibration.md).
+select_geometry nomme S6 + contrast (b1 = secondaire, cf docs/12-calibration.md).

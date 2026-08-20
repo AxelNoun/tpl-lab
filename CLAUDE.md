@@ -42,7 +42,8 @@ Les 12 chantiers sont décrits dans `README.md`. L'état d'avancement est dans `
 - dim g2 = 14 et dim su(3) = 8 : vérifiés numériquement depuis la table octonionique
   (tpl/utils/g2.py, testé). Ne pas re-débattre.
 - b1 direct : puissance nulle pour d ≥ 3 à n ≤ 3000 (docs/12). Mesures primaires
-  sur données réelles : rank_candidates (chantier 9) + contrast (chantier 11).
+  sur données réelles : select_geometry nomme S6 (chantier 9 ; rank_candidates
+  seul désigne toujours un gagnant) + contrast (chantier 11).
 - Spectre S⁶ (chantier 10, corrigé audit v1) : 4 niveaux EXACTS 1/7(×7), 2/63(×6),
   1/63(×21), 0(×1) en base brute — la 27 de G2 y est scindée 6+21 (base non-ON) ;
   elle se réunifie en base orthonormée (Schur). Ne plus écrire « plateau de 27 ».
@@ -50,7 +51,8 @@ Les 12 chantiers sont décrits dans `README.md`. L'état d'avancement est dans `
 ## Conventions de code
 
 - Python ≥ 3.11, numpy/scipy uniquement pour le cœur ; dépendances lourdes (giotto-tda,
-  MNE) isolées dans `requirements-optional.txt`.
+  MNE, allensdk) dans `pyproject.toml` extra `[full]` (`pip install -e ".[full]"` ;
+  pointeur dans `requirements-optional.txt`).
 - Code et docstrings en anglais ; documentation `docs/` en français.
 - Tests pytest obligatoires pour tout module de `src/tpl/`. Lancer : `pytest -q`.
 - Style : `ruff format` avant commit. Pas de notebook dans `src/` (les notebooks vont

@@ -71,5 +71,5 @@ ressources 100 % gratuites) : `docs/onboarding/PARCOURS.md`.
 
 ## Licence & esprit
 
-MIT pour le code. L'esprit : un résultat négatif propre vaut mieux qu'une confirmation
-molle. On documente ce qui échoue.
+MIT pour le code (`LICENSE`). L'esprit : un résultat négatif propre vaut mieux
+qu'une confirmation molle. On documente ce qui échoue.

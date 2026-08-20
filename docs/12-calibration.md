@@ -12,7 +12,8 @@ Premier résultat (n = 1500, seed 0) — `python -m tpl.analysis.calibration` :
 Lecture : la détection topologique directe (b1) meurt dès d = 3 à ce n — mais sans
 faux positifs (critère conservateur). Le ranking par fingerprint garde une précision
 parfaite. Conséquence protocolaire, gravée dans PREREGISTRATION.md : sur données
-réelles, les mesures primaires sont le RANKING et le CONTRASTE ; b1 n'est qu'une
+réelles, les mesures primaires sont `select_geometry` (géométrie **nommée S6**,
+pas le seul ranking) et le CONTRASTE ; b1 n'est qu'une
 confirmation en basse dimension effective.
 
 Grille complète (d = 2,3,4,6 ; n = 3000) : `python -m tpl.analysis.calibration --full`.
