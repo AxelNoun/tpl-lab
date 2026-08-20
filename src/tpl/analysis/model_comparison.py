@@ -11,7 +11,7 @@ likelihood (mGPLVM, Jensen et al. 2020) — see docs/09-geometries-candidates.md
 import numpy as np
 
 from tpl.analysis.intrinsic_dim import twonn
-from tpl.analysis.topology import h1_persistences
+from tpl.analysis.topology import h1_persistences, rescale_to_unit
 from tpl.generative.manifolds import CANDIDATES
 
 
@@ -31,6 +31,15 @@ def _wass1(p, q):
 
 
 def fingerprint(pts, seed=0):
+    """Scale-invariant shape descriptor.
+
+    The cloud is rescaled to mean radius 1 first. TwoNN and the median-normalised
+    distance histogram are already scale-free, but H1 persistence lengths are not:
+    without this, doubling the units of the same data scored 5.0 against itself
+    instead of 0, and the R6 candidate (mean |x| = 0.86) was compared against
+    S6/T6 (mean |x| = 1.0) partly on scale rather than on shape.
+    """
+    pts = rescale_to_unit(np.asarray(pts, float))
     return {
         "id": twonn(pts),
         "hist": _pairwise_hist(pts, seed=seed),

@@ -5,8 +5,11 @@ l'effondrement de la structure géométrique quand la conscience s'effondre
 (veille → propofol / sommeil profond / NREM).
 
 - Outil : `tpl.analysis.state_contrast.contrast(pts_veille, pts_anesthesie)` —
-  métriques par condition (ID, b1, géométrie gagnante, score S6) + delta ID
-  bootstrappé avec CI95.
+  métriques par condition (ID, b1, géométrie gagnante, score S6) + delta ID et son
+  intervalle. L'intervalle vient d'un SOUS-ÉCHANTILLONNAGE SANS REMISE (m parmi n) :
+  le bootstrap avec remise est invalide pour un estimateur k-NN, les duplicats
+  gonflaient l'ID de 5,95 à 9,02 (audit v2, docs/RESULTATS_NEGATIFS.md). Calculé à
+  m < n, il est donc conservateur et n'est pas recentré ; n_boot ≥ 1000.
 - Benchmark à battre : le PCI (Casali et al. 2013, *Science Translational
   Medicine*), étalon actuel du niveau de conscience (nécessite TMS-EEG — sur les
   jeux où PCI est disponible, corréler notre « distance à la géométrie »).

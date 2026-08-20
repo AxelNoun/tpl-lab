@@ -26,7 +26,9 @@ def h1_persistences(points, **kw):
     return np.sort(d[:, 1] - d[:, 0])[::-1] if len(d) else np.array([])
 
 
-def _rescale_to_unit(pts):
+def rescale_to_unit(pts):
+    """Centre and scale to mean radius 1, so persistence lengths are comparable
+    across clouds recorded in arbitrary units. Shared with model_comparison."""
     pts = pts - pts.mean(0)
     r = np.linalg.norm(pts, axis=1).mean()
     return pts / r if r > 0 else pts
@@ -42,7 +44,7 @@ def betti1(points, dim=None, min_gap_ratio=2.0, n_landmarks=400, seed=0):
     real data. Conservative: in low-power regimes (d >= 3-4 at n <= 3000, see
     calibration) it returns 0 rather than hallucinating loops. `dim` is kept
     for API compatibility and future null-based variants."""
-    pts = _rescale_to_unit(np.asarray(points, float))
+    pts = rescale_to_unit(np.asarray(points, float))
     p = h1_persistences(pts, n_landmarks=n_landmarks, seed=seed)
     if p.size < 2:
         return 0
