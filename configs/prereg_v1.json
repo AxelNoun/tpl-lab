@@ -1,0 +1,35 @@
+{
+  "name": "prereg_v1",
+  "_comment": "Frozen analysis parameters for PREREGISTRATION.md. Every value that could otherwise become a researcher degree of freedom lives here and is echoed by run_id. Do not edit after the prereg-v1 git tag.",
+  "seed": 42,
+
+  "windows": {
+    "length_ms": 50,
+    "overlapping": false
+  },
+
+  "decimation": {
+    "criterion": "autocorrelation",
+    "threshold": 0.1,
+    "_comment": "Thin until the mean per-channel autocorrelation falls below the threshold. TwoNN assumes i.i.d. samples and temporal correlation biases it DOWN, i.e. towards a spurious 6. On a synthetic S6 rotation of true dimension 6, hand-picked factors 1 / 2 / 5 / 10 give 4.05 / 4.49 / 5.40 / 6.01, so the analyst's choice alone would decide the verdict. The factor must come from the data."
+  },
+
+  "intrinsic_dimension": {
+    "targets": [6, 8],
+    "tolerance": 0.5,
+    "min_samples_after_decimation": 2000,
+    "_comment": "Acceptance windows are half-open [t-tol, t+tol) so no value belongs to two intervals and none is left unclassified (audit v2, F7). min_samples is set from the measured false-refutation rate of a TRUE S6: 36.5% at n=250, 17.5% at n=500, 14.0% at n=1000, 2.5% at n=1500, 1.0% at n=2000 (200 seeds per point). TwoNN converges to d from BELOW, so small n refutes a correct hypothesis."
+  },
+
+  "geometry": {
+    "candidates": ["S6", "T6", "R6"],
+    "max_fit_score": 3.0,
+    "_comment": "Absolute goodness-of-fit cutoff, calibrated in docs/09. Winning the ranking is not sufficient: rank_candidates always names a winner."
+  },
+
+  "contrast": {
+    "n_boot": 1000,
+    "subsample_frac": 0.632,
+    "_comment": "Subsampling WITHOUT replacement. A with-replacement bootstrap is invalid for a k-NN estimator (audit v2, F1)."
+  }
+}

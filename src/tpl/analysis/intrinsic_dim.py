@@ -17,6 +17,53 @@ import numpy as np
 from scipy.spatial import cKDTree
 
 
+def autocorrelation_time(traj, threshold: float = 0.1, max_lag: int | None = None) -> int:
+    """Smallest lag at which the mean per-channel autocorrelation drops below
+    `threshold`. This is the decimation factor the preregistration asks for.
+
+    Averaged across channels: a population trajectory has one shared timescale,
+    and per-channel thresholds would make the factor depend on which channel
+    happens to be slowest. Returns `max_lag` if the series never decorrelates,
+    which is itself a reportable finding rather than a silent fallback.
+    """
+    x = np.asarray(traj, dtype=float)
+    if x.ndim == 1:
+        x = x[:, None]
+    max_lag = max_lag or max(1, min(len(x) // 4, 1000))
+    x = x - x.mean(0)
+    var = (x ** 2).mean(0)
+    x = x[:, var > 0]
+    if x.shape[1] == 0:
+        return 1
+    var = var[var > 0]
+    for lag in range(1, max_lag + 1):
+        if float(np.mean((x[:-lag] * x[lag:]).mean(0) / var)) < threshold:
+            return lag
+    return max_lag
+
+
+def decorrelate(traj, threshold: float = 0.1, max_lag: int | None = None):
+    """Thin a trajectory to (approximately) independent samples.
+
+    TwoNN assumes i.i.d. sampling; temporal correlation biases it DOWN, which is
+    the direction that would manufacture a spurious 'd = 6'. The factor must
+    therefore come from the data, never from the analyst: on a synthetic S6
+    rotation of true dimension 6 (20000 steps), hand-picked factors 1, 2, 5 and
+    10 give 4.05, 4.49, 5.40 and 6.01 — a range several times the +/- 0.5
+    tolerance, so the choice alone decides the verdict.
+
+    Thinning is not free, and the rule does NOT remove the problem: factors 50
+    and 100 on that same trajectory give 5.19 and 5.08, back below tolerance,
+    because only 400 and 200 samples survive and TwoNN is biased low at small n.
+    Decorrelating and keeping enough samples pull in opposite directions, which
+    is why the pipeline pairs this rule with a minimum n (see run_id).
+
+    Returns (thinned, lag).
+    """
+    lag = autocorrelation_time(traj, threshold=threshold, max_lag=max_lag)
+    return np.asarray(traj, dtype=float)[::lag], lag
+
+
 def twonn(points: np.ndarray, discard: float = 0.1, dedupe: bool = True) -> float:
     """Estimate intrinsic dimension. Exact duplicate points are dropped by default.
 

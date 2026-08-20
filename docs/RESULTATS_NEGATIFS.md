@@ -52,21 +52,49 @@
   dans docs/09 : un vrai S⁶ à bruit ≥ 0,15 est rejeté lui aussi — le test perd sa
   puissance, il ne se trompe pas.
 
+- [audit v2] MANQUANT : le pipeline pré-enregistré n'existait pas — `PREREGISTRATION.md`
+  décrivait une analyse que personne ne pouvait rejouer. Créés : `tpl/analysis/run_id.py`
+  et `configs/prereg_v1.json` (JSON et non YAML : pas de dépendance hors numpy/scipy dans
+  le cœur). Tout degré de liberté d'analyste est lu dans la config et réaffiché en sortie ;
+  `load_config` refuse un `max_fit_score` modifié après calibration.
+- [audit v2] MANQUANT : la décimation « autocorrélation < 0,1 » était annoncée mais non
+  implémentée (la démo codait en dur `[::10]`). Implémentée dans
+  `intrinsic_dim.decorrelate`. Sur une rotation S⁶ de vraie dimension 6, les facteurs
+  choisis à la main 1 / 2 / 5 / 10 donnent 4,05 / 4,49 / 5,40 / 6,01 : l'analyste décidait
+  du verdict à lui seul. **Tension résiduelle déclarée** : décimer coûte des échantillons,
+  et les facteurs 50 et 100 sur la même trajectoire redescendent à 5,19 et 5,08 (n = 400 et
+  200) par le biais de petit échantillon. La règle ne suffit donc pas seule — d'où le
+  plancher de n ci-dessous.
+- [audit v2] Critères de réfutation incomplets, corrigé : `run_id.classify_id` utilise des
+  fenêtres semi-ouvertes `[t−0,5 ; t+0,5[`, exhaustives et sans recouvrement, testées à
+  toutes les bornes et sur 1500 valeurs. `ID < 5,5` réfute désormais explicitement (au lieu
+  de n'être ni l'un ni l'autre) et la nouvelle règle n'est plus permissive que l'ancienne
+  en aucun point.
+- [audit v2] TwoNN converge vers d PAR EN DESSOUS — chiffré en taux de réfutation À TORT
+  d'un vrai S⁶ sous la règle du prereg (200 graines par point) : 36,5 % à n = 250 ; 17,5 %
+  à n = 500 ; 14,0 % à n = 1000 ; 2,5 % à n = 1500 ; 1,0 % à n = 2000. Le plancher est fixé
+  à **n = 2000 après décimation** et `run_id` renvoie INDÉCIDABLE en dessous, sans publier
+  d'estimation. Conséquence expérimentale à assumer avant d'enregistrer : 45 min à 1 h 30
+  de signal continu par condition.
+
+### Nouveau — mesuré sur le pipeline lui-même
+- [audit v2] NON-DISCRIMINANT : la mesure 1 seule ne bat pas le nul tant que la variante
+  d = 8 est autorisée. Un Kuramoto de 12 oscillateurs, décimé par la même règle, donne
+  ID = 8,23 — à l'intérieur de la fenêtre d'acceptation `[7,5 ; 8,5[`. La variante « ou
+  d = 8 = dim SU(3) » double le nombre de cibles et élargit assez la zone d'acceptation
+  pour qu'un oscillateur générique y tombe. Ce qui sépare, c'est la mesure 2 : le nul ne
+  correspond à aucun candidat (meilleur score 55,8) là où le flot su(3) donne S⁶ à 0,47.
+  Conséquence figée dans `run_id` : le verdict H1 est **conjonctif** (dimension ET
+  géométrie), une compatibilité de dimension seule ne compte pas.
+
 ### Mesuré, non corrigé — à traiter avant de figer le prereg
-- [audit v2] Le pipeline pré-enregistré n'existe pas : ni `tpl.analysis.run_id` ni
-  `configs/prereg_v1.yaml`. La décimation « autocorrélation < 0,1 » n'est pas implémentée
-  (la démo code en dur `[::10]`) ; sur un vrai d = 6, les facteurs voisins donnent 5,59 à
-  6,54, soit toute la fenêtre ±0,5 et au-delà. C'est exactement le degré de liberté que la
-  règle 2 de CLAUDE.md interdit.
-- [audit v2] Critères de réfutation incomplets : ID < 5,5 n'est ni une confirmation ni une
-  réfutation, et 6,5 comme 7,5 appartiennent à la fois à une fenêtre d'acceptation et à
-  l'intervalle de réfutation.
 - [audit v2] b1 direct meurt dès d = 3 (T³ : 0 détection sur 30 à n = 2000), pas d = 4
   comme l'annonce la docstring de `calibration.py` ; docs/12 avait raison. La
   conservativité tient : 0 faux positif sur 180 essais.
-- [audit v2] TwoNN converge vers d PAR EN DESSOUS : 5,74 à n=250 ; 5,82 à n=1000 ; 5,97 à
-  n=16000 pour un vrai 6. À n ≤ 500 le plancher 5,5 du prereg est à moins d'un écart-type,
-  d'où un risque de réfuter à tort. Fixer un n minimal avant de figer.
+- [audit v2] `contrast` renvoie un IC95 qui peut exclure sa propre estimation ponctuelle
+  (delta = −2,27, IC [−2,18 ; −1,30] sur le dry-run) : l'intervalle est calculé à m < n,
+  où TwoNN est plus biaisé bas, et n'est pas recentré. Documenté dans la docstring, mais
+  à remplacer par un intervalle corrigé du biais avant publication.
 
 ### Revérifié indépendamment et correct
 - [audit v2] Table octonionique (Moufang 2,8×10⁻¹⁴, alternativité 1,1×10⁻¹⁴) ; Leibniz sur
