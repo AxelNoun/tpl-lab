@@ -87,6 +87,14 @@
   Conséquence figée dans `run_id` : le verdict H1 est **conjonctif** (dimension ET
   géométrie), une compatibilité de dimension seule ne compte pas.
 
+- [calibration] TROU dans le conjonctif : « géométrie acceptée » sans exiger le nom
+  S⁶. Un R⁶ de vraie dimension 6 a l'ID dans [5,5 ; 6,5[ **100 %** du temps et passe
+  `MAX_FIT_SCORE` ; l'ancienne règle l'aurait déclaré compatible avec H-TPL. Un tore
+  plat T⁶ a TwoNN ~6,6 (souvent déjà hors fenêtre) mais gagne toujours le ranking T6.
+  Correctif : `h1_verdict` exige `geometry == "S6"`. Mesure à n = 2000, 8 graines :
+  TPR 100 % (S⁶) ; TNR 100 % (T⁶, R⁶, Kuramoto, gaussienne 20-D).
+  `python -m tpl.analysis.calibration --h1-power`.
+
 - [audit v2] NON-CORRIGEABLE PAR RÉÉCHANTILLONNAGE : l'IC95 sur delta ID n'est pas une
   taille d'effet. Mesuré par `python -m tpl.analysis.calibration --ci-coverage`, couverture
   de la vraie différence : **98 % sur un contraste 6 contre 3, mais 40 % sur 10 contre 3**

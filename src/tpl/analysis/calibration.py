@@ -15,7 +15,8 @@ import numpy as np
 
 from tpl.analysis.topology import betti1
 from tpl.analysis.intrinsic_dim import twonn
-from tpl.analysis.model_comparison import rank_candidates, MAX_FIT_SCORE
+from tpl.analysis.model_comparison import rank_candidates, select_geometry, MAX_FIT_SCORE
+from tpl.analysis.run_id import classify_id, h1_verdict
 from tpl.generative.manifolds import sphere, torus_flat, euclidean
 from tpl.nulls.kuramoto import simulate_kuramoto
 
@@ -146,6 +147,49 @@ def ci_coverage(n=1200, n_rep=60, n_boot=300, frac=0.632, seed=0, dims=(6, 3)):
           f"{100 * off_centre / n_rep:.0f}% des cas")
 
 
+def _one_h1(points, seed):
+    d = twonn(points)
+    id_v, _ = classify_id(d, [6, 8], 0.5)
+    sel = select_geometry(points, seed=seed, n_boot=2)
+    return h1_verdict(id_v, sel["geometry"]), id_v, sel["geometry"]
+
+
+def h1_power(n=2000, n_rep=8, seed=0):
+    """TPR / FPR of the conjunctive H-TPL rule at the prereg operating point.
+
+    Compatible = ID in a predicted window AND geometry is S6 by name. A fitted
+    T6 is a false positive for 'some 6-manifold' but a true negative for TPL.
+    """
+    gens = [
+        ("S6 (doit accepter)", lambda s: sphere(n, dim=6, noise=0.03, seed=s), "compatible"),
+        ("T6 (rival, doit refuter)", lambda s: torus_flat(n, dim=6, noise=0.03, seed=s), "refutee"),
+        ("R6 (rival, doit refuter)", lambda s: euclidean(n, dim=6, noise=0.03, seed=s), "refutee"),
+        ("Kuramoto K=2", lambda s: _kuramoto_cloud(n, seed=s, K=2.0), "refutee"),
+        ("gaussienne 20-D", lambda s: np.random.default_rng(s).standard_normal((n, 20)) / np.sqrt(20), "refutee"),
+    ]
+    print(f"verdict H-TPL = dimension compatible ET geometrie S6   "
+          f"(n={n}, {n_rep} graines, select_geometry n_boot=2)")
+    print(f"  {'donnees':<28s} {'attendu':>10s} {'TPR/TNR':>8s}  "
+          f"{'ID ok':>6s} {'S6':>5s} {'T6':>5s} {'aucun':>6s}")
+    summary = {}
+    for name, gen, expected in gens:
+        hits = 0
+        id_ok = s6 = t6 = none = 0
+        for r in range(n_rep):
+            v, id_v, geom = _one_h1(gen(seed + r), seed + r)
+            hits += v == expected
+            id_ok += id_v == "compatible"
+            s6 += geom == "S6"
+            t6 += geom == "T6"
+            none += geom is None
+        rate = 100 * hits / n_rep
+        summary[name] = rate
+        print(f"  {name:<28s} {expected:>10s} {rate:7.0f}%  "
+              f"{100 * id_ok / n_rep:5.0f}% {100 * s6 / n_rep:4.0f}% "
+              f"{100 * t6 / n_rep:4.0f}% {100 * none / n_rep:5.0f}%")
+    return summary
+
+
 def run(dims=(2, 3), n=1500, n_rep=2, seed=0):
     print(f"{'d':>2} {'topo TPR':>9} {'topo FPR':>9} {'rank acc':>9}   (n={n})")
     for d in dims:
@@ -161,12 +205,16 @@ if __name__ == "__main__":
                     help="recalibrate the absolute goodness-of-fit cutoff")
     ap.add_argument("--ci-coverage", action="store_true",
                     help="measure the coverage of the delta-ID interval")
+    ap.add_argument("--h1-power", action="store_true",
+                    help="TPR/FPR of the conjunctive H-TPL verdict")
     ap.add_argument("--seed", type=int, default=0)
     a = ap.parse_args()
     if a.fit_threshold:
         fit_threshold(seed=a.seed)
     elif a.ci_coverage:
         ci_coverage(seed=a.seed)
+    elif a.h1_power:
+        h1_power(seed=a.seed)
     else:
         run(dims=(2, 3, 4, 6) if a.full else (2, 3),
             n=3000 if a.full else 1500, n_rep=3 if a.full else 2, seed=a.seed)

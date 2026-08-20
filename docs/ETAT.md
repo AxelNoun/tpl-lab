@@ -12,5 +12,5 @@
 | 9 | Géométries candidates (ranking) | ✅ validé synthétique (acc 1,0) | mGPLVM | — |
 | 10 | Multiplets G2 + g2/su(3) calculés | ✅ validé synthétique | robustesse au bruit | — |
 | 11 | Contraste d'états | ✅ outil prêt | jeu spike veille/anesthésie (Allen n'en a pas) | — |
-| 12 | Calibration | v1 faite (résultat clé) | grille --full + courbes TPR(n) | — |
+| 12 | Calibration | TPR H-TPL 100/100 à n=2000 (8 graines) | courbes TPR(n) | — |
 | — | Registered Report | REPORTÉ (décision utilisateur) | après premiers résultats réels | — |

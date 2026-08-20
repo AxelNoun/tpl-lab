@@ -60,6 +60,25 @@ def classify_id(value, targets, tolerance):
     return "refutee", f"ID = {value:.2f} >= {hi:g} : variete de dimension plus haute que predit"
 
 
+H1_GEOMETRY = "S6"
+
+
+def h1_verdict(id_verdict, geometry):
+    """H-TPL is S^6, not 'some 6-D manifold'.
+
+    Measure 1 alone does not beat the nulls (a 12-oscillator Kuramoto lands in
+    the d = 8 window). Measure 2 alone is not enough either if ANY fitted
+    candidate counts: a genuine T^6 has ID ~ 6 and score < 3, which is the
+    strong-inference *rival* (docs/09), not a confirmation of TPL. Compatible
+    requires the predicted geometry by name.
+    """
+    if id_verdict == "refutee":
+        return "refutee"
+    if geometry != H1_GEOMETRY:
+        return "refutee"
+    return "compatible"
+
+
 def run_condition(points, cfg, label="A"):
     """Decimate, then apply the two primary measures — or decline to conclude.
 
@@ -97,17 +116,7 @@ def run_condition(points, cfg, label="A"):
     sel = select_geometry(thinned, seed=cfg["seed"])
     out["geometry"], out["best_candidate"] = sel["geometry"], sel["best_candidate"]
     out["fit_score"], out["ranking"] = sel["score"], sel["ranking"]
-
-    # H1 needs BOTH primary measures, because measure 1 alone does not beat the
-    # nulls: allowing the d = 8 variant makes the acceptance window wide enough
-    # that a 12-oscillator Kuramoto network lands in it (ID = 8.23) while fitting
-    # no candidate geometry at all (best score 55.8 vs 0.47 for a true S6).
-    if out["id_verdict"] == "refutee":
-        out["verdict"] = "refutee"
-    elif out["geometry"] is None:
-        out["verdict"] = "refutee"
-    else:
-        out["verdict"] = "compatible"
+    out["verdict"] = h1_verdict(out["id_verdict"], out["geometry"])
     return out
 
 
@@ -121,6 +130,9 @@ def _format(res, cfg):
     if res["geometry"] is None:
         geom = (f"AUCUNE : meilleur candidat {res['best_candidate']}, score "
                 f"{res['fit_score']:.2f} > {cfg['geometry']['max_fit_score']}  -> refutee")
+    elif res["geometry"] != H1_GEOMETRY:
+        geom = (f"{res['geometry']} (score {res['fit_score']:.2f})  -> refutee "
+                f"(H-TPL predit {H1_GEOMETRY}, pas un rival)")
     else:
         geom = f"{res['geometry']} (score {res['fit_score']:.2f})  -> compatible"
     lines.append(f"      mesure 2 (geometrie)  : {geom}")

@@ -78,13 +78,12 @@ def main():
     print(f"  Kuramoto r = {order_parameter(th):.2f} ; closure naïve = {closure_naive(sig):.1e} (tautologie) ;"
           f" fenêtrée = {closure_windowed(sig):.3f} rad (le nul la satisfait)")
 
-    print("\n— [7] Pipeline pré-enregistré (verdict conjonctif : dimension ET géométrie) —")
+    print("\n— [7] Pipeline pré-enregistré (H-TPL = dimension compatible ET géométrie S6) —")
     print("  python -m tpl.analysis.run_id --config configs/prereg_v1.json --synthetic")
     print("  sur ce dry-run : flot su(3) -> COMPATIBLE ; nul Kuramoto -> RÉFUTÉE.")
-    print("  Le nul passe pourtant la mesure 1 seule (ID = 8,23, dans la fenêtre de la")
-    print("  variante d = 8) : c'est la mesure 2 qui le rejette (score 55,8 > 3,0).")
-
-    print("\nCalibration complète : python -m tpl.analysis.calibration --full")
+    print("  Un R^6 de vraie dimension 6 passerait la mesure 1 (ID dans [5,5 ; 6,5[) :")
+    print("  c'est un rival, pas TPL. `h1_verdict` exige le nom S6.")
+    print("  Puissance : python -m tpl.analysis.calibration --h1-power")
 
 
 if __name__ == "__main__":

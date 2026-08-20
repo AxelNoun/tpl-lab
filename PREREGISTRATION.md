@@ -80,7 +80,12 @@ signal continu**.
   règle donne ID = 8,23, à l'intérieur de la fenêtre d'acceptation de la variante
   d = 8. La mesure 1 seule ne discrimine donc pas tant que la variante d = 8 est
   autorisée ; c'est la mesure 2 (géométrie) qui sépare (score 55,8 contre 0,47).
-  Le verdict H1 est en conséquence **conjonctif** : dimension ET géométrie.
+  Le verdict H1 est en conséquence **conjonctif et nommé** : dimension compatible
+  **et** géométrie = S⁶. Un T⁶ ou R⁶ qui passe le seuil d'adéquation réfute H-TPL
+  (c'est le rival de l'inférence forte, docs/09), ce n'est pas une confirmation.
+  Mesuré à n = 2000, 8 graines (`calibration --h1-power`) : TPR 100 % sur S⁶ ;
+  TNR 100 % sur T⁶, R⁶, Kuramoto K=2 et gaussienne 20-D. L'ancien « n'importe quel
+  candidat accepté » aurait classé R⁶ compatible (ID ok 100 % des cas).
 - Si l'ID ne change pas entre veille et anesthésie/sommeil profond (jeux de données
   avec états contrastés) : H1 fortement affaiblie.
 
@@ -97,7 +102,8 @@ signal continu**.
    seuil d'adéquation absolu `MAX_FIT_SCORE = 3,0` (figé, calibré sur synthétique,
    docs/09). Gagner ne suffit pas : `rank_candidates` seul désigne toujours un
    vainqueur, donc « S⁶ a gagné » vaudrait 1 chance sur 3 par défaut. Un score > 3,0
-   se lit « aucune des trois géométries », pas « S⁶ affaibli ».
+   se lit « aucune des trois géométries », pas « S⁶ affaibli ». Un T⁶ ou R⁶ sous le
+   seuil se lit **réfutation de H-TPL**, pas « compatible avec une variété 6-D ».
 2. PRIMAIRE : `contrast` veille vs anesthésie — delta ID > 0 avec CI95 excluant 0
    (intervalle par SOUS-ÉCHANTILLONNAGE SANS REMISE, n_boot ≥ 1000 : le bootstrap avec
    remise est invalide pour un estimateur k-NN, audit v2), ET perte de l'acceptation

@@ -27,7 +27,7 @@ les « signatures » proposées par l'article d'origine.
 | 9 | Ranking de géométries (S⁶/T⁶/R⁶) | ✅ acc 1,0 synthétique | `docs/09-geometries-candidates.md` |
 | 10 | Multiplets G2 ; g2/su(3) numériques | ✅ validé | `docs/10-multiplets-spectraux.md` |
 | 11 | Contraste d'états (benchmark PCI) | 🟡 outil prêt | `docs/11-contraste-etats.md` |
-| 12 | Calibration / puissance | 🟡 v1 (résultat clé) | `docs/12-calibration.md` |
+| 12 | Calibration / puissance | ✅ TPR H-TPL à n=2000 | `docs/12-calibration.md` |
 
 Premier résultat du projet (déjà acquis, voir `docs/03-critique-tests-originaux.md`) :
 la signature n°1 de l'article source (fermeture de phase en triplets) est soit

@@ -7,8 +7,9 @@ import pytest
 
 from tpl.analysis.intrinsic_dim import autocorrelation_time, decorrelate, twonn
 from tpl.analysis.model_comparison import MAX_FIT_SCORE
-from tpl.analysis.run_id import classify_id, load_config, run_condition
+from tpl.analysis.run_id import classify_id, h1_verdict, load_config, run_condition
 from tpl.generative.s6_flow import sample_s6_uniform, simulate_s6
+from tpl.generative.manifolds import euclidean
 
 CONFIG = Path(__file__).resolve().parents[1] / "configs" / "prereg_v1.json"
 TARGETS, TOL = [6, 8], 0.5
@@ -97,3 +98,36 @@ def test_too_few_channels_is_refused_not_padded():
     """Bridge law: S^6 cannot sit in R^6. Padding or PCA-up is forbidden."""
     with pytest.raises(ValueError, match="cannot sit"):
         run_condition(np.ones((500, 6)), load_config(CONFIG))
+
+
+def test_h1_requires_s6_by_name_not_any_fitted_candidate():
+    assert h1_verdict("compatible", "S6") == "compatible"
+    assert h1_verdict("compatible", "T6") == "refutee"
+    assert h1_verdict("compatible", "R6") == "refutee"
+    assert h1_verdict("compatible", None) == "refutee"
+    assert h1_verdict("refutee", "S6") == "refutee"
+
+
+def test_a_fitted_euclidean_6d_refutes_tpl():
+    """R^6 has ID in the d = 6 window and clears MAX_FIT_SCORE, so the old
+    conjunctive rule (any accepted candidate) would have called it compatible.
+    It is a rival, not TPL."""
+    pts = euclidean(2000, dim=6, noise=0.03, seed=1)
+    from tpl.analysis.model_comparison import select_geometry
+    d = twonn(pts)
+    id_v, _ = classify_id(d, TARGETS, TOL)
+    sel = select_geometry(pts, seed=1, n_boot=2)
+    assert id_v == "compatible", f"ID = {d:.2f} should sit in the d = 6 window"
+    assert sel["geometry"] == "R6"
+    assert h1_verdict(id_v, sel["geometry"]) == "refutee"
+
+
+def test_true_s6_is_compatible_on_both_measures():
+    pts = sample_s6_uniform(2000, seed=3)
+    from tpl.analysis.model_comparison import select_geometry
+    d = twonn(pts)
+    id_v, _ = classify_id(d, TARGETS, TOL)
+    sel = select_geometry(pts, seed=3, n_boot=2)
+    assert id_v == "compatible"
+    assert sel["geometry"] == "S6"
+    assert h1_verdict(id_v, sel["geometry"]) == "compatible"
