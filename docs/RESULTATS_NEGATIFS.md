@@ -106,6 +106,39 @@
   ponctuelle (delta = −2,27, IC [−2,18 ; −1,30] sur le dry-run) quand les deux conditions
   diffèrent beaucoup en dimension.
 
+## Chantier 4 — le nul RNN aléatoire (nouveau)
+
+Adversaire le plus sérieux du projet : un réseau récurrent chaotique produit une
+dynamique de basse dimension sans aucune géométrie S⁶. Testé avec 200 unités,
+140 000 pas, décimation par la règle du prereg (n ≈ 2200 à 2400 après décimation) :
+
+| g | lag | n | d̂ | géométrie | score |
+|---|---|---|---|---|---|
+| 1,4 | 63 | 2223 | 12,40 | AUCUNE (R6) | 32,50 |
+| 1,5 | 61 | 2296 | 9,59 | AUCUNE (R6) | 29,65 |
+| 1,6 | 59 | 2373 | 3,44 | AUCUNE (R6) | 15,46 |
+| 1,8 | plafond | 140 | — | INDÉCIDABLE | — |
+
+- **Le nul perd sur les deux mesures**, à tous les gains testés : dimension hors
+  fenêtre (12,4 / 9,6 / 3,4, jamais dans [5,5 ; 6,5[) et aucun candidat géométrique
+  (scores 15 à 32 contre un seuil de 3,0). Le gain `g` ne permet pas de le régler sur
+  la prédiction : d̂ varie de façon non monotone et saute par-dessus 6.
+- **DÉMONSTRATION DU PLANCHER n, sur un vrai nul et non sur du S⁶ synthétique** : à
+  g = 1,5, le même réseau donne d̂ = 5,24 sur 328 échantillons (donc DANS la fenêtre
+  d'acceptation) mais 9,59 sur 2296. Sans le plancher n ≥ 2000, ce nul aurait produit
+  une confirmation. C'est la justification la plus concrète du critère de puissance.
+- **BUG TROUVÉ PAR CE TEST** : à g = 1,8 la recherche de lag atteignait son plafond
+  sans que la série décorrèle jamais, et le pipeline continuait en silence — d̂ = 6,14
+  sur 140 échantillons jamais indépendants, soit une confirmation fabriquée à partir
+  d'autocorrélation. `autocorrelation_time` avertit désormais et `run_id` renvoie
+  INDÉCIDABLE dans ce cas.
+- **Deux impasses mesurées, à ne pas retenter** : `W = g·U·Vᵀ/N` à U et V indépendants
+  ne produit aucune dynamique (le recouvrement u_k·v_k/N s'annule, donc pas de boucle
+  de rétroaction) et donne d̂ ≈ 50-65, qui est la boule de bruit à 200 dimensions et
+  non une variété ; la variante symétrique `W = g·U·Uᵀ/N` converge vers des points
+  fixes, même symptôme (d̂ ≈ 58-70). Obtenir une vraie dynamique de rang faible exige
+  un recouvrement structuré entre u et v (Mastrogiuseppe & Ostojic 2018).
+
 ### Cohérence et nuls affaiblis (F9 à F14, corrigés)
 - [audit v2] b1 direct meurt dès d = 3 (T³ : 0 détection sur 30 à n = 2000), pas d = 4
   comme l'annonçait la docstring de `calibration.py` ; docs/12 avait raison. Docstring

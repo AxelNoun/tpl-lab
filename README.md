@@ -19,7 +19,7 @@ les « signatures » proposées par l'article d'origine.
 | 1 | Hypothèse locale formelle (amputer la TOE) | ✅ rédigé | `docs/01-hypothese.md` |
 | 2 | Loi-pont (neurones → variété) | 🟡 gabarit | `docs/02-loi-pont.md` |
 | 3 | Modèle génératif S⁶ + projection réaliste | 🟡 squelette fonctionnel | `src/tpl/generative/` |
-| 4 | Modèles nuls (Kuramoto, surrogates) | 🟡 squelette fonctionnel | `src/tpl/nulls/` |
+| 4 | Modèles nuls (Kuramoto, surrogates, RNN chaotique) | ✅ les trois perdent sur les deux mesures | `src/tpl/nulls/` |
 | 5 | Test de non-associativité (interventionnel) | 🔴 protocole seul — exige un labo | `docs/05-protocole-non-associativite.md` |
 | 6 | Dimension intrinsèque = 6 ou 8 (prédiction rigide) | 🟡 pipeline prêt pour données réelles | `src/tpl/analysis/` |
 | 7 | Pré-enregistrement | 🟡 pipeline exécutable, à figer | `PREREGISTRATION.md`, `src/tpl/analysis/run_id.py` |

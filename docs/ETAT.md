@@ -4,7 +4,7 @@
 | 1 | Hypothèse | rédigée v1 | revue critique | — |
 | 2 | Loi-pont | gabarit | remplir ligne 1 (S⁶) | — |
 | 3 | Génératif | squelette OK (rotation S⁶ générique) | vraie holonomie SU(3) via g2 | — |
-| 4 | Nuls | Kuramoto + surrogates OK | ajouter RNN aléatoire | — |
+| 4 | Nuls | Kuramoto + surrogates + RNN chaotique ✅ | rang faible à recouvrement structuré | — |
 | 5 | Non-associativité | protocole seul | trouver labo partenaire | — |
 | 6 | Dimension | TwoNN validé + décimation dérivée des données | loader Allen SDK | — |
 | 7 | Prereg | pipeline exécutable (`run_id` + config figée) | figer après ch.2 | — |

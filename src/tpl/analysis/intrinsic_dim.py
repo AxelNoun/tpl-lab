@@ -17,19 +17,31 @@ import numpy as np
 from scipy.spatial import cKDTree
 
 
+def max_lag_for(n: int) -> int:
+    """Cap on the search for a decorrelation lag. Callers compare against it to
+    tell 'decorrelated at lag L' from 'never decorrelated'."""
+    return max(1, min(n // 4, 1000))
+
+
 def autocorrelation_time(traj, threshold: float = 0.1, max_lag: int | None = None) -> int:
     """Smallest lag at which the mean per-channel autocorrelation drops below
     `threshold`. This is the decimation factor the preregistration asks for.
 
     Averaged across channels: a population trajectory has one shared timescale,
     and per-channel thresholds would make the factor depend on which channel
-    happens to be slowest. Returns `max_lag` if the series never decorrelates,
-    which is itself a reportable finding rather than a silent fallback.
+    happens to be slowest.
+
+    Returns `max_lag` when the series never decorrelates, and warns. That case
+    is NOT a decimation factor and must not be treated as one: the samples that
+    survive are still correlated, so TwoNN stays biased low on them. A chaotic
+    RNN at g = 1.8 hit the cap and yielded a plausible-looking d = 6.14 on 140
+    samples that were never independent (audit v2).
     """
     x = np.asarray(traj, dtype=float)
     if x.ndim == 1:
         x = x[:, None]
-    max_lag = max_lag or max(1, min(len(x) // 4, 1000))
+    cap = max_lag or max_lag_for(len(x))
+    max_lag = cap
     x = x - x.mean(0)
     var = (x ** 2).mean(0)
     x = x[:, var > 0]
@@ -39,7 +51,14 @@ def autocorrelation_time(traj, threshold: float = 0.1, max_lag: int | None = Non
     for lag in range(1, max_lag + 1):
         if float(np.mean((x[:-lag] * x[lag:]).mean(0) / var)) < threshold:
             return lag
-    return max_lag
+    warnings.warn(
+        f"autocorrelation_time: never fell below {threshold} within {cap} lags; "
+        f"the series is not decorrelatable at this length and the returned lag "
+        f"is a cap, not a decimation factor",
+        RuntimeWarning,
+        stacklevel=2,
+    )
+    return cap
 
 
 def decorrelate(traj, threshold: float = 0.1, max_lag: int | None = None):

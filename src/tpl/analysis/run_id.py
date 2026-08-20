@@ -19,7 +19,7 @@ from pathlib import Path
 
 import numpy as np
 
-from tpl.analysis.intrinsic_dim import decorrelate, twonn
+from tpl.analysis.intrinsic_dim import decorrelate, max_lag_for, twonn
 from tpl.analysis.model_comparison import select_geometry
 from tpl.analysis.state_contrast import contrast
 
@@ -68,6 +68,17 @@ def run_condition(points, cfg, label="A"):
     thinned, lag = decorrelate(points, threshold=cfg["decimation"]["threshold"])
     out = {"label": label, "n_raw": len(points), "lag": lag, "n": len(thinned),
            "n_min": idc["min_samples_after_decimation"], "points": thinned}
+
+    # Hitting the cap means the series never decorrelated, so the surviving
+    # samples are not independent and TwoNN stays biased low on them. A chaotic
+    # RNN at g = 1.8 reached the cap and returned a plausible d = 6.14 on 140
+    # still-correlated samples — which would have read as a confirmation.
+    if lag >= max_lag_for(len(points)):
+        out["verdict"] = "indecidable"
+        out["reason"] = (f"autocorrelation jamais descendue sous "
+                         f"{cfg['decimation']['threshold']} en {lag} pas : la serie "
+                         f"n'est pas decorrelable a cette longueur")
+        return out
 
     if len(thinned) < idc["min_samples_after_decimation"]:
         out["verdict"] = "indecidable"
