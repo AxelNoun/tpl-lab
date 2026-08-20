@@ -34,7 +34,8 @@
   "geometry": {
     "candidates": ["S6", "T6", "R6"],
     "max_fit_score": 3.0,
-    "_comment": "Absolute goodness-of-fit cutoff, calibrated in docs/09. Winning the ranking is not sufficient: rank_candidates always names a winner."
+    "h1_geometry": "S6",
+    "_comment": "Absolute goodness-of-fit cutoff, calibrated in docs/09. Winning the ranking is not sufficient: rank_candidates always names a winner. H-TPL is the named candidate S6, not 'any candidate below the cutoff'."
   },
 
   "contrast": {

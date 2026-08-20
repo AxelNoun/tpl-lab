@@ -27,12 +27,21 @@ from tpl.analysis.state_contrast import contrast
 
 def load_config(path):
     cfg = json.loads(Path(path).read_text(encoding="utf-8"))
-    if cfg["geometry"]["max_fit_score"] != 3.0:
+    geo, idc, dec = cfg["geometry"], cfg["intrinsic_dimension"], cfg["decimation"]
+    if geo["max_fit_score"] != 3.0:
         raise ValueError("max_fit_score is calibrated in docs/09; changing it "
                          "post hoc is exactly the HARKing the prereg forbids")
+    if geo.get("h1_geometry", "S6") != "S6":
+        raise ValueError("H-TPL is S6 by name; renaming the target after seeing "
+                         "data is HARKing")
     if cfg.get("bridge", {}).get("reduce_to_r7", False):
         raise ValueError("reduce_to_r7 is the degree of freedom docs/02 exists "
                          "to forbid; turning it on after seeing data is HARKing")
+    if idc["min_samples_after_decimation"] != 2000 or idc["tolerance"] != 0.5:
+        raise ValueError("n_min and tolerance are frozen by the false-refutation "
+                         "curve; do not retune them")
+    if dec["threshold"] != 0.1:
+        raise ValueError("autocorrelation threshold is frozen at 0.1")
     return cfg
 
 
@@ -63,7 +72,7 @@ def classify_id(value, targets, tolerance):
 H1_GEOMETRY = "S6"
 
 
-def h1_verdict(id_verdict, geometry):
+def h1_verdict(id_verdict, geometry, required=H1_GEOMETRY):
     """H-TPL is S^6, not 'some 6-D manifold'.
 
     Measure 1 alone does not beat the nulls (a 12-oscillator Kuramoto lands in
@@ -74,7 +83,7 @@ def h1_verdict(id_verdict, geometry):
     """
     if id_verdict == "refutee":
         return "refutee"
-    if geometry != H1_GEOMETRY:
+    if geometry != required:
         return "refutee"
     return "compatible"
 
@@ -116,7 +125,8 @@ def run_condition(points, cfg, label="A"):
     sel = select_geometry(thinned, seed=cfg["seed"])
     out["geometry"], out["best_candidate"] = sel["geometry"], sel["best_candidate"]
     out["fit_score"], out["ranking"] = sel["score"], sel["ranking"]
-    out["verdict"] = h1_verdict(out["id_verdict"], out["geometry"])
+    out["verdict"] = h1_verdict(out["id_verdict"], out["geometry"],
+                                required=cfg["geometry"].get("h1_geometry", H1_GEOMETRY))
     return out
 
 
@@ -127,12 +137,13 @@ def _format(res, cfg):
         lines.append(f"      INDECIDABLE : {res['reason']}")
         return lines
     lines.append(f"      mesure 1 (dimension)  : {res['reason']}  -> {res['id_verdict']}")
+    required = cfg["geometry"].get("h1_geometry", H1_GEOMETRY)
     if res["geometry"] is None:
         geom = (f"AUCUNE : meilleur candidat {res['best_candidate']}, score "
                 f"{res['fit_score']:.2f} > {cfg['geometry']['max_fit_score']}  -> refutee")
-    elif res["geometry"] != H1_GEOMETRY:
+    elif res["geometry"] != required:
         geom = (f"{res['geometry']} (score {res['fit_score']:.2f})  -> refutee "
-                f"(H-TPL predit {H1_GEOMETRY}, pas un rival)")
+                f"(H-TPL predit {required}, pas un rival)")
     else:
         geom = f"{res['geometry']} (score {res['fit_score']:.2f})  -> compatible"
     lines.append(f"      mesure 2 (geometrie)  : {geom}")

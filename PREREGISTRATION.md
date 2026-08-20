@@ -1,6 +1,13 @@
 # Pré-enregistrement — chantier 6 (dimension intrinsèque)
-**Statut : BROUILLON — à figer avant tout contact avec des données réelles.**
-Une fois figé : tag git `prereg-v1`, dépôt du hash sur OSF, aucune modification.
+**Statut : FIGÉ — tag git `prereg-v1`, 20 août 2026.**
+Aucune modification des seuils, fenêtres, filtres ou de la règle de décision
+après ce tag. Le dépôt OSF du hash est à la charge de l'expérimentateur, pas
+du dépôt. Rejouer :
+
+```bash
+git checkout prereg-v1
+python -m tpl.analysis.run_id --config configs/prereg_v1.json --synthetic
+```
 
 ## H1 (TPL) 
 Pendant un stimulus perceptif constant (>10 s), la dimension intrinsèque (ID) de la

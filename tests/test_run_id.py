@@ -19,7 +19,9 @@ def test_config_matches_the_calibrated_constant():
     """The config must not quietly drift away from the code it parameterises."""
     cfg = load_config(CONFIG)
     assert cfg["geometry"]["max_fit_score"] == MAX_FIT_SCORE
+    assert cfg["geometry"]["h1_geometry"] == "S6"
     assert cfg["intrinsic_dimension"]["targets"] == TARGETS
+    assert cfg["intrinsic_dimension"]["min_samples_after_decimation"] == 2000
 
 
 def test_load_config_rejects_a_retuned_threshold():
@@ -29,6 +31,18 @@ def test_load_config_rejects_a_retuned_threshold():
     tmp.write_text(json.dumps(cfg), encoding="utf-8")
     try:
         with pytest.raises(ValueError, match="HARKing"):
+            load_config(tmp)
+    finally:
+        tmp.unlink()
+
+
+def test_load_config_rejects_a_lowered_n_min():
+    cfg = json.loads(CONFIG.read_text(encoding="utf-8"))
+    cfg["intrinsic_dimension"]["min_samples_after_decimation"] = 500
+    tmp = CONFIG.parent / "_tmp_nmin.json"
+    tmp.write_text(json.dumps(cfg), encoding="utf-8")
+    try:
+        with pytest.raises(ValueError, match="frozen"):
             load_config(tmp)
     finally:
         tmp.unlink()
