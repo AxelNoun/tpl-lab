@@ -58,7 +58,23 @@ lancent pas « jusqu'à trouver S⁶ ».
 
 ## Contraste veille / anesthésie
 
-Pas de source publique Neuropixels *spike* avec les deux états dans ce dépôt.
+Allen Visual Coding n'a pas d'anesthésie (section précédente). Le contraste
+d'états est **branché** sur DANDI 000458 (Claar et al. 2023) :
+
+```bash
+python -m tpl.io.claar --nwb path.nwb --out-a data/real_claar_wake.npy \
+    --out-b data/real_claar_iso.npy
+python -m tpl.analysis.run_id --config configs/prereg_v1.json \
+    --data data/real_claar_wake.npy --data-b data/real_claar_iso.npy --seed 42
+```
+
+Loader : `src/tpl/io/claar.py`. Plus long intervalle continu éveil et plus
+long intervalle `isoflurane_anesthesia` ; `isoflurane_induction` exclue.
+Une aire (modale par défaut). Ce n'est pas un contraste de percept, ni un
+PCI (Casali et al. 2013) : Claar est de la stimulation corticale, pas du
+TMS-EEG.
+
+Sujets : `sub-551399` (PL, docs/21), `sub-590479` (MOs, docs/23).
+
 L'EEG OpenNeuro serait un autre observable (pas des comptages de spikes) et
-exigerait une nouvelle ligne de loi-pont. En attendant, le chantier 11 reste
-un outil sans données.
+exigerait une nouvelle ligne de loi-pont.

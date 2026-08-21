@@ -101,8 +101,13 @@ signal continu**.
    une aire corticale visuelle à la fois (loader : `python -m tpl.io.allen`).
    Éveillé seulement. Voir docs/13.
 2. IBL Brain-wide Map (Neuropixels, tâche standardisée) — pas de loader encore.
-3. Jeu spike veille/anesthésie (contraste). Pas de source branchée ; l'EEG
-   OpenNeuro n'est pas l'observable de la loi-pont.
+3. Contraste d'états — **branché**. Claar et al., DANDI 000458
+   (`python -m tpl.io.claar`), époques continues éveil vs isoflurane,
+   induction exclue. Exécution : `run_id --data A --data-b B`. Résultats :
+   docs/21 (`sub-551399`, PL), docs/23 (`sub-590479`, MOs). Ce n'est ni un
+   contraste de percept ni un PCI (Casali et al. 2013) : Claar est de la
+   stimulation corticale, pas du TMS-EEG. L'EEG OpenNeuro n'est pas
+   l'observable de la loi-pont.
 
 ## Mesures primaires (révision v3, post-audit v2)
 1. PRIMAIRE : `select_geometry` — S⁶ doit gagner contre T⁶/R⁶ en veille ET passer le
