@@ -267,7 +267,7 @@ Well-known file for the replication session: `1026124293`
 | 1 | Local hypothesis (cut the TOE down to what is testable) | Done — [`docs/01`](docs/01-hypothese.md) |
 | 2 | Bridge law | Done — PCA to 7 frozen OFF |
 | 3 | Generative S⁶ / su(3) flow | Tool — pure holonomy is not a passive test |
-| 4 | Nulls (Kuramoto, surrogates, chaotic RNN) | Done |
+| 4 | Nulls (Kuramoto, surrogates, chaotic RNN, structured low-rank) | Done — [`docs/20`](docs/20-nul-lowrank.md) |
 | 5 | Non-associativity | Protocol only — needs a lab |
 | 6 | ID = 6 or 8 | **H1-spontaneous refuted 12/12** (Allen). IBL VISp INDECIDABLE (spontaneous and full session) |
 | 7 | Preregistration | Frozen `prereg-v1` |
@@ -279,8 +279,7 @@ Well-known file for the replication session: `1026124293`
 
 Open, if someone continues: a wake/anesthesia *spike* corpus (IBL at 50 ms
 is not decorrelatable under the frozen 0.1 autocorrelation rule; docs/18–19),
-structured low-rank RNN (independent \(U,V\) and \(UU^\top\) were tried and
-discarded).
+mGPLVM (docs/09).
 
 ---
 

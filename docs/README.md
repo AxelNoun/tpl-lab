@@ -35,6 +35,7 @@ du labo, dans l’ordre utile.
 | [17-ibl.md](17-ibl.md) | IBL — autre jeu, déclaré avant les spikes ; pas un rattrapage Allen |
 | [18-ibl-visp.md](18-ibl-visp.md) | Première insertion VISp IBL, spontané 10 min — **INDÉCIDABLE** |
 | [19-ibl-session.md](19-ibl-session.md) | Même insertion, session continue 97 min — encore **INDÉCIDABLE** |
+| [20-nul-lowrank.md](20-nul-lowrank.md) | Nul RNN rang faible structuré (synth_) — réfuté, n = 8236 |
 
 Onboarding : [onboarding/PARCOURS.md](onboarding/PARCOURS.md),
 [onboarding/RESSOURCES.md](onboarding/RESSOURCES.md).

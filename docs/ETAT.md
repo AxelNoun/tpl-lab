@@ -4,7 +4,7 @@
 | 1 | Hypothèse | amputée à ce qui est testable (docs/01) | — | — |
 | 2 | Loi-pont | ligne 1 figée (R^N, pas R⁷) ; SU(3) et octonions = pas de prédiction | — | — |
 | 3 | Génératif | su(3) + bruit transverse OK | holonomie pure : pas un test passif | — |
-| 4 | Nuls | Kuramoto + surrogates + RNN chaotique ✅ | rang faible à recouvrement structuré | — |
+| 4 | Nuls | Kuramoto + surrogates + RNN chaotique + rang faible structuré ✅ | — | — |
 | 5 | Non-associativité | protocole seul | trouver labo partenaire | — |
 | 6 | Dimension | H1-spontané Allen réfuté 12/12 ; IBL VISp **INDÉCIDABLE** (spontané et session) | ne pas desserrer le seuil d'autocorr | — |
 | 7 | Prereg | **FIGÉ** tag `prereg-v1` (20 août 2026) | OSF du hash ; puis données | — |

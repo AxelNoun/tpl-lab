@@ -23,7 +23,7 @@ ce que le dépôt utilise réellement, tout en accès ouvert ou standard.
 - Casali et al. (2013). *A theoretically based index of consciousness*. Sci. Transl. Med. Benchmark PCI du contraste d'états — TMS-EEG, pas notre observable.
 - Gardner, Hermansen, Pachitariu et al. (2022). *Toroidal topology of population activity in grid cells*. Nature. T⁶ comme rival naturel.
 - Sompolinsky, Crisanti, Sommers (1988). Chaos in random neural networks. Nul RNN.
-- Mastrogiuseppe & Ostojic (2018). *Linking connectivity, dynamics and computations in low-rank RNNs*. Neuron. Rang faible à recouvrement structuré — pas encore implémenté ; U,V indépendants et UUᵀ ont été mesurés et écartés.
+- Mastrogiuseppe & Ostojic (2018). *Linking connectivity, dynamics and computations in low-rank RNNs*. Neuron. Rang faible à recouvrement structuré — `simulate_lowrank_rnn` ; U,V indépendants et UUᵀ restent écartés.
 
 ## Ce qui n'est pas une source
 

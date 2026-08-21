@@ -154,8 +154,17 @@ dynamique de basse dimension sans aucune géométrie S⁶. Testé avec 200 unit�
   ne produit aucune dynamique (le recouvrement u_k·v_k/N s'annule, donc pas de boucle
   de rétroaction) et donne d̂ ≈ 50-65, qui est la boule de bruit à 200 dimensions et
   non une variété ; la variante symétrique `W = g·U·Uᵀ/N` converge vers des points
-  fixes, même symptôme (d̂ ≈ 58-70). Obtenir une vraie dynamique de rang faible exige
-  un recouvrement structuré entre u et v (Mastrogiuseppe & Ostojic 2018).
+  fixes, même symptôme (d̂ ≈ 58-70). Le recouvrement structuré est
+  `simulate_lowrank_rnn` (docs/20).
+
+## Nul rang faible structuré — RÉFUTÉ (21 août 2026, synth_)
+
+`simulate_lowrank_rnn` (mode `oscillatory`, rang 6, ρ = 0,8, g = 4, 200
+unités, 140 000 pas, seed 42) : n = 8236 après décimation 1/17. ID = 14,95
+(hors fenêtre) ; aucun candidat (R6, score 36,76). Verdict **RÉFUTÉE**.
+Le rang 6 de W n'est pas S⁶. Détail : `docs/20-nul-lowrank.md`.
+La circulation pure sans gain meurt à l'origine (valeurs propres −1 ± i gρ) :
+ce n'est pas un oubli, c'est le calcul.
 
 ## Chantier 2 — remplir la loi-pont a rétréci H1, pas élargi
 

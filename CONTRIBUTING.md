@@ -12,6 +12,6 @@ Read `CLAUDE.md` first. This lab **falsifies** a conjecture; it does not defend 
 - Vocabulary: “compatible with” ≠ “demonstrates”. Do not write “proves that”.
 
 Useful entry points that are *not* “run another Allen session until S⁶ appears”:
-extract the declared IBL spontaneous block (`docs/17`; cannot restore Allen),
-a public spike wake/anesthesia corpus, structured low-rank RNN
-(Mastrogiuseppe & Ostojic 2018).
+a public spike wake/anesthesia corpus, mGPLVM (docs/09). IBL at 50 ms is
+INDECIDABLE under the frozen autocorrelation rule (docs/18–19). The structured
+low-rank RNN is in (`docs/20`); independent U,V and UUᵀ stay discarded.
