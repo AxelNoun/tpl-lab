@@ -205,8 +205,12 @@ NWB) : 6/6 aires `VIS*` réfutées. Deux fois S⁶ en tête du ranking (scores
 Première insertion VISp Brain-wide Map avec spontané ≥ 100 s et N ≥ 7
 (`docs/17`, `docs/18`) : eid `5ae68c54-2897-4d3a-8120-426150704385`, 600,1 s,
 17 good `VISp6a`. 12001 fenêtres, décimation 1/9 → **n = 1334 < 2000** →
-INDÉCIDABLE. RFM / replay / essais non collés. Ne restaure pas Allen. Un IBL
-puissant n'est pas ce test (il faudrait un intervalle plus long, déclaré avant).
+INDÉCIDABLE. RFM / replay / essais non collés. Ne restaure pas Allen.
+
+Session continue, même insertion (`docs/19`, déclarée avant l'extract) :
+horloge 97,5 min, 117049 fenêtres, décimation 1/1000 → **n = 118**.
+L'autocorrélation ne passe pas sous 0,1 en 1000 pas. Toujours INDÉCIDABLE.
+Ne pas desserrer le seuil.
 
 
 ### Cohérence et nuls affaiblis (F9 à F14, corrigés)

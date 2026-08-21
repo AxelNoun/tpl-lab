@@ -33,7 +33,8 @@ du labo, dans l’ordre utile.
 | [15-aires-supplementaires.md](15-aires-supplementaires.md) | Même bloc, autres aires VIS — 6/6, famille écrite avant |
 | [16-replication-session.md](16-replication-session.md) | Autre souris 766640955 — 6/6, déclarée avant le NWB |
 | [17-ibl.md](17-ibl.md) | IBL — autre jeu, déclaré avant les spikes ; pas un rattrapage Allen |
-| [18-ibl-visp.md](18-ibl-visp.md) | Première insertion VISp IBL — **INDÉCIDABLE** (n = 1334 < 2000) |
+| [18-ibl-visp.md](18-ibl-visp.md) | Première insertion VISp IBL, spontané 10 min — **INDÉCIDABLE** |
+| [19-ibl-session.md](19-ibl-session.md) | Même insertion, session continue 97 min — encore **INDÉCIDABLE** |
 
 Onboarding : [onboarding/PARCOURS.md](onboarding/PARCOURS.md),
 [onboarding/RESSOURCES.md](onboarding/RESSOURCES.md).

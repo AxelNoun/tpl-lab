@@ -16,7 +16,7 @@ from pathlib import Path
 
 import numpy as np
 
-from tpl.io.extract import (extract_block, longest_named_block, report_power,
+from tpl.io.extract import (Block, extract_block, longest_named_block, report_power,
                             MIN_RAW_DURATION_S, WARN_DURATION_S)
 
 
@@ -85,6 +85,12 @@ def extract_spontaneous(spike_times, units, area, presentations,
     return extract_block(spike_times, coarsen_to_area(units, area), area, block)
 
 
+def extract_interval(spike_times, units, area, t_start, t_stop, name="session"):
+    """One continuous clock interval. Not a union of trials."""
+    return extract_block(spike_times, coarsen_to_area(units, area), area,
+                         Block(name, float(t_start), float(t_stop)))
+
+
 def main(argv=None):
     p = argparse.ArgumentParser(description="IBL spikes -> run_id array")
     p.add_argument("--times", help="spikes.times.npy")
@@ -95,6 +101,9 @@ def main(argv=None):
     p.add_argument("--passive-csv", help="passivePeriods.intervalsTable.csv")
     p.add_argument("--area", help="CCF acronym, e.g. VISp (layers included)")
     p.add_argument("--stimulus", default="spontaneousActivity")
+    p.add_argument("--t-start", type=float,
+                   help="inclusive start (s); with --t-stop, one clock interval")
+    p.add_argument("--t-stop", type=float, help="exclusive-ish stop (s)")
     p.add_argument("--out")
     p.add_argument("--list", action="store_true")
     p.add_argument("--seed", type=int, default=42, help="accepted, unused")
@@ -102,7 +111,7 @@ def main(argv=None):
 
     print(f"[seed={a.seed}]  floor {MIN_RAW_DURATION_S:.0f} s (lag 1) ; "
           f"warning below {WARN_DURATION_S / 60:.0f} min")
-    print("IBL: spontaneousActivity only; trials/ITI/RFM/replay are not glued.")
+    print("IBL: one continuous interval; trials/ITI/RFM/replay are not glued.")
 
     presentations = None
     if a.passive_csv:
@@ -122,10 +131,13 @@ def main(argv=None):
         print("duration = LONGEST single block. Concatenation is off.")
         return
 
-    if not all([a.times, a.clusters, a.acronyms, a.labels, a.area, a.out,
-                presentations is not None]):
-        p.error("extract needs --times --clusters --acronyms --labels "
-                "--passive-csv --area --out")
+    interval = a.t_start is not None and a.t_stop is not None
+    if (a.t_start is None) ^ (a.t_stop is None):
+        p.error("--t-start and --t-stop must be given together")
+    if not all([a.times, a.clusters, a.acronyms, a.labels, a.area, a.out]):
+        p.error("extract needs --times --clusters --acronyms --labels --area --out")
+    if not interval and presentations is None:
+        p.error("named stimulus extract needs --passive-csv (or pass --t-start/--t-stop)")
     times = np.load(a.times)
     clus = np.load(a.clusters)
     acronyms = np.load(a.acronyms, allow_pickle=True)
@@ -134,14 +146,20 @@ def main(argv=None):
            else np.arange(len(acronyms)))
     spike_times = spike_times_by_cluster(times, clus)
     units = units_from_clusters(ids, acronyms, labels)
-    X, unit_ids = extract_spontaneous(spike_times, units, a.area, presentations,
-                                      stimulus=a.stimulus)
+    if interval:
+        X, unit_ids = extract_interval(spike_times, units, a.area,
+                                       a.t_start, a.t_stop, name="session")
+        stimulus = f"session [{a.t_start:.3f}, {a.t_stop:.3f}]"
+    else:
+        X, unit_ids = extract_spontaneous(spike_times, units, a.area, presentations,
+                                          stimulus=a.stimulus)
+        stimulus = a.stimulus
     out = Path(a.out)
     if out.name.startswith("synth_"):
         p.error("this is a real recording; do not prefix synth_")
     out.parent.mkdir(parents=True, exist_ok=True)
     np.save(out, X)
-    print(f"wrote {out}  shape {X.shape}  {a.area}  {a.stimulus}")
+    print(f"wrote {out}  shape {X.shape}  {a.area}  {stimulus}")
     print("next: python -m tpl.analysis.run_id --config configs/prereg_v1.json "
           f"--data {out}")
     return X, unit_ids

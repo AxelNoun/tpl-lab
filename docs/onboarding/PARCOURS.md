@@ -122,8 +122,8 @@ plus après le tag. Ne pas proposer de retuning.
 ## Après le parcours
 
 Choisir un chantier dans `docs/ETAT.md` et se signaler. Bons points d'entrée :
-- IBL spontané VISp est **INDÉCIDABLE** (docs/18) ; ne pas concaténer pour
-  forcer un verdict. Une autre famille IBL doit être déclarée avant.
+- IBL VISp est **INDÉCIDABLE** en spontané et en session continue (docs/18–19) ;
+  ne pas desserrer le seuil d'autocorrélation 0,1.
 - Nul RNN à rang faible *structuré* (Mastrogiuseppe & Ostojic) : U,V indépendants
   et UUᵀ ont déjà été mesurés et écartés.
 - H1-spontané Allen est déjà réfuté 12/12 (docs/14–16) ; ne pas retoucher un seuil.

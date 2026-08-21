@@ -3,9 +3,10 @@ import numpy as np
 import pytest
 
 from tpl.io.extract import longest_named_block
-from tpl.io.ibl import (coarsen_to_area, extract_spontaneous, ibl_area_matches,
-                        label_to_quality, presentations_from_passive,
-                        spike_times_by_cluster, units_from_clusters)
+from tpl.io.ibl import (coarsen_to_area, extract_interval, extract_spontaneous,
+                        ibl_area_matches, label_to_quality,
+                        presentations_from_passive, spike_times_by_cluster,
+                        units_from_clusters)
 
 
 def test_visp_does_not_swallow_vispm():
@@ -53,6 +54,15 @@ def test_extract_spontaneous_one_area_layers_folded():
         X, labels = extract_spontaneous(spikes, units, "VISp", presentations)
     assert X.shape[1] == 7  # VISpm and CA1 out; seven VISp* good units
     assert 3 not in set(labels) and 99 not in set(labels)
+
+
+def test_session_interval_is_one_clock_not_a_trial_union():
+    rng = np.random.default_rng(1)
+    units = units_from_clusters(range(8), ["VISp"] * 8, [1] * 8)
+    spikes = {i: np.sort(rng.uniform(0, 400.0, size=800)) for i in range(8)}
+    with pytest.warns(RuntimeWarning, match="INDECIDABLE"):
+        X, _ = extract_interval(spikes, units, "VISp", 0.0, 400.0)
+    assert X.shape == (8000, 8)
 
 
 def test_short_spontaneous_is_refused_not_glued_to_rfm():
