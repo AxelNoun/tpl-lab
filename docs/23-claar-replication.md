@@ -60,8 +60,11 @@ isoflurane :  75055 fenêtres -> 1/2 -> 37528
 ```
 
 Ni S⁶ en veille ni S⁶ sous isoflurane. Deuxième animal, même protocole,
-même réfutation. Allen n'est pas restauré. Le delta ponctuel
-25,98 − 21,35 n'est pas un IC : n_boot = 1000 du prereg n'est pas
-abaissé ; l'intervalle n'est pas publié tant qu'il n'est pas fini.
+même réfutation. Allen n'est pas restauré.
+
+Contraste `n_boot = 1000` (fini, ~11 h) : delta ID = 4,64,
+CI95 [3,93 ; 5,68] **exclut 0**. C'est un test de détection, pas une
+taille d'effet (docs/12). La clause « l'ID baisse sous isoflurane » tient ;
+la clause « S⁶ en veille » ne tient pas. H1 reste réfutée.
 
 

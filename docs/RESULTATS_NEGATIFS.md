@@ -178,8 +178,9 @@ isoflurane est dégénérée. Détail : `docs/21-claar-contraste.md`.
 
 MOs, 133 unités. Veille n = 5368, ID = 25,98, aucune géométrie (R6 28,92).
 Isoflurane n = 37528, ID = 21,35, aucune géométrie (R6 68,59), ~57 % de
-doublons TwoNN. GP secondaire : R6 des deux côtés. Même réfutation que
-`sub-551399`. Détail : `docs/23-claar-replication.md`.
+doublons TwoNN. GP secondaire : R6 des deux côtés. Contraste n_boot = 1000 :
+delta ID = 4,64, CI95 [3,93 ; 5,68] exclut 0 (détection, pas taille d'effet).
+La baisse d'ID ne sauve pas H1 : pas de S⁶. Détail : `docs/23-claar-replication.md`.
 
 ## Preuve géodésique-GP — T⁶ non récupéré (21 août 2026, synth_)
 
