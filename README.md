@@ -277,8 +277,8 @@ Well-known file for the replication session: `1026124293`
 | 11 | Wake vs anesthesia | Tool ready; no public spike set wired |
 | 12 | Power / calibration | TPR, noise, CI coverage measured |
 
-Open, if someone continues: IBL loader (a **different** dataset — declare
-before spikes), a wake/anesthesia *spike* corpus, structured low-rank RNN
+Open, if someone continues: run the declared IBL spontaneous extract (docs/17;
+cannot restore Allen), a wake/anesthesia *spike* corpus, structured low-rank RNN
 (independent \(U,V\) and \(UU^\top\) were tried and discarded).
 
 ---

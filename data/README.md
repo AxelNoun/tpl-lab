@@ -28,6 +28,8 @@ short trials. Isolation filter: `quality == good` only.
 
 ## Not yet in this repo
 
-- IBL Brain-wide Map — no loader; declare before spikes.
+- IBL Brain-wide Map — loader `python -m tpl.io.ibl` (docs/17). Spikes not in
+  git. Only `spontaneousActivity`; do not concatenate trials. Cannot restore
+  the Allen refute.
 - Wake / anesthesia spike contrast — no public set wired; OpenNeuro EEG would
   need a new bridge law (`docs/02-loi-pont.md`).

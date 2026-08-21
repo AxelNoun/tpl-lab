@@ -1,9 +1,8 @@
 """SDK-agnostic extraction: spikes + unit metadata -> population vectors.
 
-No Allen, no pandas. The optional `tpl.io.allen` adapter is the only place
-that talks to allensdk. Keeping this module numpy-only means the duration
-budget and the 'one area, no concatenation' rules are tested without a 2 GB
-dependency, and cannot drift when the SDK changes.
+No Allen, no pandas, no IBL. Optional adapters (`tpl.io.allen`, `tpl.io.ibl`)
+translate vendor tables into this duck type. Duration budget and
+'one area, no concatenation' cannot drift when an SDK changes.
 """
 from dataclasses import dataclass
 

@@ -6,7 +6,9 @@ Heavy dependencies are declared in `pyproject.toml` under
 ```bash
 pip install -e ".[dev]"    # pytest
 pip install -e ".[nwb]"    # h5py — local Allen NWB via python -m tpl.io.allen --nwb
-pip install -e ".[full]"   # allensdk, mne, giotto-tda, scikit-dimension (allensdk: Python 3.11)
+pip install -e ".[ibl]"    # ONE-api — optional; extract itself is numpy-only
+pip install -e ".[full]"   # allensdk, mne, giotto-tda, scikit-dimension, ONE-api
+                           # (allensdk: Python 3.11)
 ```
 
 The core (`numpy`, `scipy`, `ripser`) installs without this file.

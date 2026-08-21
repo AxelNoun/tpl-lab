@@ -122,8 +122,8 @@ plus après le tag. Ne pas proposer de retuning.
 ## Après le parcours
 
 Choisir un chantier dans `docs/ETAT.md` et se signaler. Bons points d'entrée :
-- Loader IBL Brain-wide Map — listé au prereg, pas encore écrit (autre jeu que
-  Allen, à déclarer avant les spikes).
+- Extraire un spontané IBL déjà déclaré (`docs/17`, `python -m tpl.io.ibl`) — ne
+  rétablit pas Allen.
 - Nul RNN à rang faible *structuré* (Mastrogiuseppe & Ostojic) : U,V indépendants
   et UUᵀ ont déjà été mesurés et écartés.
 - H1-spontané Allen est déjà réfuté 12/12 (docs/14–16) ; ne pas retoucher un seuil.

@@ -32,6 +32,7 @@ du labo, dans l’ordre utile.
 | [14-h1-spontane.md](14-h1-spontane.md) | Premier test déclaré — VISp, session 767871931, **réfuté** |
 | [15-aires-supplementaires.md](15-aires-supplementaires.md) | Même bloc, autres aires VIS — 6/6, famille écrite avant |
 | [16-replication-session.md](16-replication-session.md) | Autre souris 766640955 — 6/6, déclarée avant le NWB |
+| [17-ibl.md](17-ibl.md) | IBL — autre jeu, déclaré avant les spikes ; pas un rattrapage Allen |
 
 Onboarding : [onboarding/PARCOURS.md](onboarding/PARCOURS.md),
 [onboarding/RESSOURCES.md](onboarding/RESSOURCES.md).

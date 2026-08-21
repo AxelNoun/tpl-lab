@@ -14,7 +14,8 @@ Issues = "https://github.com/AxelNoun/tpl-lab/issues"
 [project.optional-dependencies]
 dev = ["pytest>=7.0", "h5py"]
 nwb = ["h5py"]
-full = ["giotto-tda", "mne", "scikit-dimension", "allensdk", "h5py"]
+ibl = ["ONE-api"]
+full = ["giotto-tda", "mne", "scikit-dimension", "allensdk", "h5py", "ONE-api"]
 
 [tool.setuptools.packages.find]
 where = ["src"]

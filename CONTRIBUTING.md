@@ -12,5 +12,6 @@ Read `CLAUDE.md` first. This lab **falsifies** a conjecture; it does not defend 
 - Vocabulary: “compatible with” ≠ “demonstrates”. Do not write “proves that”.
 
 Useful entry points that are *not* “run another Allen session until S⁶ appears”:
-IBL loader (declare the dataset first), a public spike wake/anesthesia corpus,
-structured low-rank RNN (Mastrogiuseppe & Ostojic 2018).
+extract the declared IBL spontaneous block (`docs/17`; cannot restore Allen),
+a public spike wake/anesthesia corpus, structured low-rank RNN
+(Mastrogiuseppe & Ostojic 2018).
