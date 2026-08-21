@@ -33,5 +33,8 @@ short trials. Isolation filter: `quality == good` only.
   spontaneous → `data/real_ibl_VISp.npy` (INDECIDABLE). Same insertion, full
   clock 97.5 min → `data/real_ibl_VISp_session.npy` (still INDECIDABLE;
   autocorr never < 0.1 in 1000 lags). See `docs/18` and `docs/19`.
-- Wake / anesthesia spike contrast — no public set wired; OpenNeuro EEG would
-  need a new bridge law (`docs/02-loi-pont.md`).
+- Wake / anesthesia: DANDI 000458 Claar et al. 2023. Loader
+  `python -m tpl.io.claar`. First session with Units:
+  `sub-551399_ses-20210128` (~11.7 GB, gitignored). Extracts
+  `data/real_claar_wake.npy` / `data/real_claar_iso.npy`. See `docs/21`.
+  EEG-only NWBs in that dandiset are refused.

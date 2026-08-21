@@ -126,7 +126,8 @@ Choisir un chantier dans `docs/ETAT.md` et se signaler. Bons points d'entrée :
   ne pas desserrer le seuil d'autocorrélation 0,1.
 - Nul RNN à rang faible *structuré* : mesuré, réfuté (`docs/20`). U,V
   indépendants et UUᵀ restent écartés.
-- H1-spontané Allen est déjà réfuté 12/12 (docs/14–16) ; ne pas retoucher un seuil.
+- Contraste Claar PL : H1 réfutée veille **et** isoflurane (`docs/21`) ; ne pas
+  jeter les doublons pour inventer un IC.
 
 ## Règles de la maison (rappel)
 

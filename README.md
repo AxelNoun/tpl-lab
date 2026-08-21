@@ -69,7 +69,7 @@ recording), most of the TOE is not estimable from a passive trajectory:
 |---|---|
 | Intrinsic dimension in \([5.5, 6.5)\) or \([7.5, 8.5)\) | Testable — TwoNN |
 | Geometry **named S⁶**, not T⁶, not R⁶, not “none” | Testable — fingerprint + cutoff |
-| Collapse under anesthesia | Testable **if** a spike dataset has both states (Allen does not) |
+| Collapse under anesthesia | DANDI 000458: H1 refuted on both wake and isoflurane (`docs/21`) |
 | Persistent \(b_1 = 0\) | Non-discriminating for \(d \ge 3\) at \(n \le 3000\) |
 | G₂ spectral multiplets \(1/7, 2/63, 1/63\) | Statement about S⁶ ⊂ ℝ⁷; **PCA to 7 is forbidden** |
 | An SU(3) *action* | Not a prediction (an action is a family of maps, not one path) |
@@ -274,12 +274,12 @@ Well-known file for the replication session: `1026124293`
 | 8 | Structural psychophysics | Protocol only |
 | 9 | Geometry ranking | Synthetic acc 1.0; mGPLVM still a TODO |
 | 10 | G₂ multiplets | Exact on S⁶ ⊂ ℝ⁷; not applicable to N-channel data |
-| 11 | Wake vs anesthesia | Tool ready; no public spike set wired |
+| 11 | Wake vs anesthesia | DANDI 000458 PL: H1 refuted on wake **and** isoflurane ([`docs/21`](docs/21-claar-contraste.md)) |
 | 12 | Power / calibration | TPR, noise, CI coverage measured |
 
-Open, if someone continues: a wake/anesthesia *spike* corpus (IBL at 50 ms
-is not decorrelatable under the frozen 0.1 autocorrelation rule; docs/18–19),
-mGPLVM (docs/09).
+Open, if someone continues: mGPLVM (docs/09). Do not retune the 0.1
+autocorrelation rule, and do not drop isoflurane duplicate windows to invent
+a contrast CI.
 
 ---
 
@@ -289,7 +289,8 @@ mGPLVM (docs/09).
 - It does not test a 10 s percept (underpowered; concatenation forbidden).
 - IBL 10 min spontaneous **and** the 97 min continuous session are
   INDECIDABLE (docs/18–19). Autocorrelation never fell below 0.1.
-- It does not test anesthesia or causal non-associativity.
+- Claar wake/isoflurane (docs/21): H1 refuted both sides; the isoflurane
+  50 ms counts are ~92 % duplicate windows. Not PCI.
 - Compatible / refuted \(\neq\) “proves that”. Vocabulary in `CLAUDE.md`.
 
 Scientific rules (non-negotiable): every confirmatory signature must beat a

@@ -19,7 +19,9 @@ ce que le dépôt utilise réellement, tout en accès ouvert ou standard.
 
 ## Neuroscience (données et nuls)
 
-- Siegle et al. (2021). *Survey of spiking in the mouse visual system*. Nature (Allen Neuropixels Visual Coding).
+- Claar, Rembado et al. (2023). Simultaneous EEG, Neuropixels, and cortical
+  stimulation in head-fixed mice. DANDI:000458. Contraste veille/isoflurane
+  (`docs/21`) ; ce n'est pas du PCI.
 - Casali et al. (2013). *A theoretically based index of consciousness*. Sci. Transl. Med. Benchmark PCI du contraste d'états — TMS-EEG, pas notre observable.
 - Gardner, Hermansen, Pachitariu et al. (2022). *Toroidal topology of population activity in grid cells*. Nature. T⁶ comme rival naturel.
 - Sompolinsky, Crisanti, Sommers (1988). Chaos in random neural networks. Nul RNN.

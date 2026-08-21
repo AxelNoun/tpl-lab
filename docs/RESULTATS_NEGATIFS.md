@@ -166,6 +166,14 @@ Le rang 6 de W n'est pas S⁶. Détail : `docs/20-nul-lowrank.md`.
 La circulation pure sans gain meurt à l'origine (valeurs propres −1 ± i gρ) :
 ce n'est pas un oubli, c'est le calcul.
 
+## Contraste Claar (DANDI 000458) — H1 réfutée veille et isoflurane (21 août 2026)
+
+`sub-551399_ses-20210128`, aire PL, 205 unités. Veille 1787 s (n = 5957) :
+ID = 39,20, aucune géométrie. Isoflurane 1659 s (n = 33188) : ID = 29,64,
+aucune géométrie, **92 % de fenêtres dupliquées**. Ni S⁶ en veille ni S⁶ sous
+isoflurane. Le CI du contraste n_boot = 1000 n'est pas un résultat : la série
+isoflurane est dégénérée. Détail : `docs/21-claar-contraste.md`.
+
 ## Chantier 2 — remplir la loi-pont a rétréci H1, pas élargi
 
 - [loi-pont] « Réduit à R⁷ » était le degré de liberté que le gabarit signalait. Il
