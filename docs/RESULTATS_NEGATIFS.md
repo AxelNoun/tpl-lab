@@ -174,6 +174,13 @@ aucune géométrie, **92 % de fenêtres dupliquées**. Ni S⁶ en veille ni S⁶
 isoflurane. Le CI du contraste n_boot = 1000 n'est pas un résultat : la série
 isoflurane est dégénérée. Détail : `docs/21-claar-contraste.md`.
 
+## Réplication Claar `sub-590479` — H1 réfutée veille et isoflurane (21 août 2026)
+
+MOs, 133 unités. Veille n = 5368, ID = 25,98, aucune géométrie (R6 28,92).
+Isoflurane n = 37528, ID = 21,35, aucune géométrie (R6 68,59), ~57 % de
+doublons TwoNN. GP secondaire : R6 des deux côtés. Même réfutation que
+`sub-551399`. Détail : `docs/23-claar-replication.md`.
+
 ## Preuve géodésique-GP — T⁶ non récupéré (21 août 2026, synth_)
 
 `manifold_evidence` (stand-in mGPLVM, docs/22) nomme S⁶ sur un vrai

@@ -15,4 +15,5 @@ Useful entry points that are *not* “run another Allen session until S⁶ appea
 geodesic-GP evidence (docs/22, secondary). IBL at 50 ms is INDECIDABLE
 (docs/18–19). The Claar wake / isoflurane contrast is in docs/21 (H1 refuted
 both sides; do not drop duplicate windows). A second Claar mouse is declared
-in docs/23 (`sub-590479`). The structured low-rank RNN is in docs/20.
+in docs/23 (`sub-590479`, H1 refuted; do not shop a third mouse for S⁶).
+The structured low-rank RNN is in docs/20.

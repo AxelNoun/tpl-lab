@@ -274,10 +274,10 @@ Well-known file for the replication session: `1026124293`
 | 8 | Structural psychophysics | Protocol only |
 | 9 | Geometry ranking | Synthetic acc 1.0; geodesic-GP stand-in in [`docs/22`](docs/22-mgplvm.md) |
 | 10 | G₂ multiplets | Exact on S⁶ ⊂ ℝ⁷; not applicable to N-channel data |
-| 11 | Wake vs anesthesia | DANDI 000458 PL: H1 refuted both sides ([`docs/21`](docs/21-claar-contraste.md)). Replication subject declared ([`docs/23`](docs/23-claar-replication.md)) |
+| 11 | Wake vs anesthesia | DANDI 000458: PL (`docs/21`) and MOs replication (`docs/23`) — H1 refuted both animals, both states |
 | 12 | Power / calibration | TPR, noise, CI coverage measured |
 
-Open, if someone continues: Claar replication on `sub-590479` (docs/23).
+Open, if someone continues: do not shop a third Claar mouse for S⁶.
 A variational mGPLVM remains an optional extra. Do not retune the 0.1
 autocorrelation rule, and do not drop isoflurane duplicate windows to invent
 a contrast CI.

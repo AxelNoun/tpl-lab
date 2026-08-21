@@ -43,3 +43,25 @@ ElectricalSeries, Units, spike sorting). Téléchargement : asset
 `8acbe845-…/download/`. Si le NWB n'a pas de groupe `units` malgré la
 métadonnée, le loader refuse et on passe au suivant par taille.
 
+## Extract (après la déclaration)
+
+Aire modale **MOs** (133 unités) — ce n'est pas PL, et on ne va pas
+chercher PL. Époques : veille 3489 s ; isoflurane maintained 3753 s ;
+induction 210 s non collée.
+
+```
+veille :      69782 fenêtres -> 1/13 -> 5368
+              ID = 25.98  géométrie AUCUNE (R6, 28.92)  -> RÉFUTÉE
+              GP secondaire : R6
+isoflurane :  75055 fenêtres -> 1/2 -> 37528
+              ID = 21.35  géométrie AUCUNE (R6, 68.59)  -> RÉFUTÉE
+              GP secondaire : R6
+              TwoNN jette 21295 / 37528 doublons (~57 %)
+```
+
+Ni S⁶ en veille ni S⁶ sous isoflurane. Deuxième animal, même protocole,
+même réfutation. Allen n'est pas restauré. Le delta ponctuel
+25,98 − 21,35 n'est pas un IC : n_boot = 1000 du prereg n'est pas
+abaissé ; l'intervalle n'est pas publié tant qu'il n'est pas fini.
+
+
