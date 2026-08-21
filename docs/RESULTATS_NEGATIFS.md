@@ -179,6 +179,28 @@ dynamique de basse dimension sans aucune géométrie S⁶. Testé avec 200 unit�
   n'autorise pas à parler de percept ; un réfutant là réfute aussi H1. Allen Visual
   Coding n'a pas d'anesthésie : le contraste d'états n'est pas testable sur ce jeu.
 
+## Premier test empirique — H1-spontané RÉFUTÉ (20 août 2026)
+
+Session Allen `767871931` (functional_connectivity), aire **VISp**, plus long
+bloc `spontaneous` continu 1802,5 s (pas la somme des 6 blocs), 201 unités
+`good`, fenêtres 50 ms → 36050 × 201, décimation 1/5 → n = 7210 ≥ 2000.
+
+- mesure 1 : ID = 37,07 ≥ 8,5 → réfutée
+- mesure 2 : aucun candidat (meilleur R6, score 41,68 > 3,0) → réfutée
+- verdict conjonctif : **RÉFUTÉE**
+
+Commandes et lecture : `docs/14-h1-spontane.md`. Seuils non retouchés.
+
+Batterie supplémentaire (docs/15, déclarée avant les verdicts) : VISal, VISam,
+VISpm, VISrl, VISli, même session et même bloc — **6/6 réfutées**, plus le
+surrogate de phase de VISp. Aucune ne nomme S⁶. Une autre session serait un
+nouveau test, pas un rattrapage.
+
+Réplication (docs/16, session `766640955`, autre animal, déclarée avant le
+NWB) : 6/6 aires `VIS*` réfutées. Deux fois S⁶ en tête du ranking (scores
+26,75 et 25,50) : le cutoff 3,0 tient. Total **12/12**.
+
+
 ### Cohérence et nuls affaiblis (F9 à F14, corrigés)
 - [audit v2] b1 direct meurt dès d = 3 (T³ : 0 détection sur 30 à n = 2000), pas d = 4
   comme l'annonçait la docstring de `calibration.py` ; docs/12 avait raison. Docstring

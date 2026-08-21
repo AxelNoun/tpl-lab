@@ -122,11 +122,11 @@ plus après le tag. Ne pas proposer de retuning.
 ## Après le parcours
 
 Choisir un chantier dans `docs/ETAT.md` et se signaler. Bons points d'entrée :
-- Chantier 6 : extraire un bloc Allen `spontaneous` (une aire) et passer `run_id`
-  — le premier test empirique déclaré, plus faible que H1 perceptif.
-- Loader IBL Brain-wide Map — listé au prereg, pas encore écrit.
+- Loader IBL Brain-wide Map — listé au prereg, pas encore écrit (autre jeu que
+  Allen, à déclarer avant les spikes).
 - Nul RNN à rang faible *structuré* (Mastrogiuseppe & Ostojic) : U,V indépendants
   et UUᵀ ont déjà été mesurés et écartés.
+- H1-spontané Allen est déjà réfuté 12/12 (docs/14–16) ; ne pas retoucher un seuil.
 
 ## Règles de la maison (rappel)
 

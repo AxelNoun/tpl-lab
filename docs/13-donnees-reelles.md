@@ -4,10 +4,11 @@ Rien n'est téléchargé ni commité ici. Le loader produit un `.npy`
 `(n_fenêtres, n_unités)` que `run_id` consomme. Il ne réduit pas à R⁷.
 
 ```bash
-pip install -e ".[full]"   # allensdk, optionnel
-python -m tpl.io.allen --manifest data/allen/manifest.json --session SESSION --list
-python -m tpl.io.allen --manifest data/allen/manifest.json \
-    --session SESSION --area VISp --stimulus spontaneous --out data/real_VISp.npy
+pip install -e ".[full]"   # allensdk, optionnel ; Python 3.11 (pas 3.14)
+# ou, NWB déjà sur disque (évite pynwb) :
+python -m tpl.io.allen --nwb data/allen/session_767871931/session_767871931.nwb --list
+python -m tpl.io.allen --nwb data/allen/session_767871931/session_767871931.nwb \
+    --session 767871931 --area VISp --stimulus spontaneous --out data/real_VISp.npy
 python -m tpl.analysis.run_id --config configs/prereg_v1.json --data data/real_VISp.npy
 ```
 
@@ -50,6 +51,10 @@ pas un substitut silencieux.
 Aires, une à la fois (jamais fusionnées) : VISp, VISl, VISal, VISpm, VISam, VISrl.
 Filtre d'isolation : le label `quality == 'good'` du SDK, rien d'autre (pas de
 coupure sur le taux, le SNR ou les violations ISI).
+
+Premier test déclaré (docs/14) : session `767871931`, VISp, bloc spontané 1803 s.
+Verdict **réfuté** (ID = 37, pas de géométrie sous 3,0). D'autres aires ne se
+lancent pas « jusqu'à trouver S⁶ ».
 
 ## Contraste veille / anesthésie
 

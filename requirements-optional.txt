@@ -5,8 +5,10 @@ Heavy dependencies are declared in `pyproject.toml` under
 
 ```bash
 pip install -e ".[dev]"    # pytest
-pip install -e ".[full]"   # allensdk, mne, giotto-tda, scikit-dimension
+pip install -e ".[nwb]"    # h5py — local Allen NWB via python -m tpl.io.allen --nwb
+pip install -e ".[full]"   # allensdk, mne, giotto-tda, scikit-dimension (allensdk: Python 3.11)
 ```
 
 The core (`numpy`, `scipy`, `ripser`) installs without this file.
-The Allen loader imports `allensdk` only inside `tpl.io.allen`.
+`tpl.io.allen.read_ecephys_nwb` needs h5py only. Do not import allensdk on
+Python 3.14; pass `--nwb` after downloading the file with curl.

@@ -1,0 +1,23 @@
+cff-version: 1.2.0
+title: TPL-Lab
+message: If you use this software or the frozen decision rule, please cite this repository and the prereg-v1 commit.
+type: software
+authors:
+  - family-names: Noun
+    given-names: Axel
+    alias: AxelNoun
+license: MIT
+repository-code: https://github.com/AxelNoun/tpl-lab
+abstract: >
+  Computational falsification lab for a speculative G2/SU(3) ≅ S⁶ geometry of
+  sustained perception. Pre-registered TwoNN + named-S6 tests on Allen Visual
+  Coding Neuropixels spontaneous blocks; H1-spontaneous refuted 12/12.
+keywords:
+  - neuroscience
+  - intrinsic-dimension
+  - neuropixels
+  - falsification
+  - S6
+  - G2
+version: 0.1.0
+date-released: "2026-08-21"

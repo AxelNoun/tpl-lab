@@ -50,9 +50,9 @@ Les 12 chantiers sont décrits dans `README.md`. L'état d'avancement est dans `
 
 ## Conventions de code
 
-- Python ≥ 3.11, numpy/scipy uniquement pour le cœur ; dépendances lourdes (giotto-tda,
-  MNE, allensdk) dans `pyproject.toml` extra `[full]` (`pip install -e ".[full]"` ;
-  pointeur dans `requirements-optional.txt`).
+- Python ≥ 3.11, numpy/scipy uniquement pour le cœur ; `pip install -e ".[nwb]"`
+  pour h5py ; extra `[full]` (allensdk, MNE, giotto-tda) dans `pyproject.toml`
+  (pointeur dans `requirements-optional.txt`). Allensdk : Python 3.11, pas 3.14.
 - Code et docstrings en anglais ; documentation `docs/` en français.
 - Tests pytest obligatoires pour tout module de `src/tpl/`. Lancer : `pytest -q`.
 - Style : `ruff format` avant commit. Pas de notebook dans `src/` (les notebooks vont

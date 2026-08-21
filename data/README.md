@@ -1,11 +1,33 @@
-# Données
-Rien n'est commité ici. Préfixe obligatoire `synth_` pour tout fichier simulé.
+# Data
 
-Jeux visés, par ordre de priorité du prereg :
-1. **Allen Brain Observatory — Visual Coding Neuropixels** (éveillé seulement).
-   Loader : `python -m tpl.io.allen --manifest data/allen/manifest.json ...`
-   Voir `docs/13-donnees-reelles.md` pour le constat de puissance (un percept de
-   10 s n'est pas puissant ; pas de concaténation d'essais).
-2. **IBL Brain-wide Map** — pas de loader encore.
-3. **Contraste veille / anesthésie** — pas de jeu spike public branché ; l'EEG
-   OpenNeuro n'est pas l'observable de la loi-pont (docs/02).
+Nothing in this folder is committed except this README. Simulated files must
+use the `synth_` prefix. Real extracts use names like `real_VISp.npy` and
+must not be prefixed `synth_`.
+
+## Allen Visual Coding Neuropixels (awake only)
+
+Public NWB files, not stored in git.
+
+| Session | Specimen | Well-known file | Role |
+|---|---|---|---|
+| 767871931 | 753795610 | 1026124194 | Declared first test + extra visual areas |
+| 766640955 | 744912849 | 1026124293 | Replication (declared before download) |
+
+```bash
+pip install -e ".[nwb]"
+python -m tpl.io.allen --nwb data/allen/session_SESSION/session_SESSION.nwb --list
+python -m tpl.io.allen --nwb data/allen/session_SESSION/session_SESSION.nwb \
+    --area VISp --stimulus spontaneous --out data/real_VISp.npy
+python -m tpl.analysis.run_id --config configs/prereg_v1.json --data data/real_VISp.npy
+```
+
+Download URLs: `http://api.brain-map.org/api/v2/well_known_file_download/FILE_ID`
+
+See `docs/13-donnees-reelles.md` and `docs/14-h1-spontane.md`. Do not concatenate
+short trials. Isolation filter: `quality == good` only.
+
+## Not yet in this repo
+
+- IBL Brain-wide Map — no loader; declare before spikes.
+- Wake / anesthesia spike contrast — no public set wired; OpenNeuro EEG would
+  need a new bridge law (`docs/02-loi-pont.md`).
