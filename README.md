@@ -272,12 +272,13 @@ Well-known file for the replication session: `1026124293`
 | 6 | ID = 6 or 8 | **H1-spontaneous refuted 12/12** (Allen). IBL VISp INDECIDABLE (spontaneous and full session) |
 | 7 | Preregistration | Frozen `prereg-v1` |
 | 8 | Structural psychophysics | Protocol only |
-| 9 | Geometry ranking | Synthetic acc 1.0; mGPLVM still a TODO |
+| 9 | Geometry ranking | Synthetic acc 1.0; geodesic-GP stand-in in [`docs/22`](docs/22-mgplvm.md) |
 | 10 | G₂ multiplets | Exact on S⁶ ⊂ ℝ⁷; not applicable to N-channel data |
 | 11 | Wake vs anesthesia | DANDI 000458 PL: H1 refuted on wake **and** isoflurane ([`docs/21`](docs/21-claar-contraste.md)) |
 | 12 | Power / calibration | TPR, noise, CI coverage measured |
 
-Open, if someone continues: mGPLVM (docs/09). Do not retune the 0.1
+Open, if someone continues: a variational mGPLVM remains an optional extra
+(docs/22 is a numpy geodesic-GP stand-in, secondary). Do not retune the 0.1
 autocorrelation rule, and do not drop isoflurane duplicate windows to invent
 a contrast CI.
 

@@ -12,6 +12,7 @@ Read `CLAUDE.md` first. This lab **falsifies** a conjecture; it does not defend 
 - Vocabulary: “compatible with” ≠ “demonstrates”. Do not write “proves that”.
 
 Useful entry points that are *not* “run another Allen session until S⁶ appears”:
-mGPLVM (docs/09). IBL at 50 ms is INDECIDABLE (docs/18–19). The Claar wake /
-isoflurane contrast is in docs/21 (H1 refuted both sides; do not drop duplicate
-windows). The structured low-rank RNN is in docs/20.
+geodesic-GP evidence (docs/22, secondary). IBL at 50 ms is INDECIDABLE
+(docs/18–19). The Claar wake / isoflurane contrast is in docs/21 (H1 refuted
+both sides; do not drop duplicate windows). The structured low-rank RNN is
+in docs/20.

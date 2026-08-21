@@ -5,9 +5,12 @@ Pragmatic, honest first pass: a 'shape fingerprint' per candidate =
 (Osada et al.'s shape distribution, scale-normalized), (c) top H1 persistences.
 Score = weighted 1D-Wasserstein / absolute differences, bootstrapped over
 candidate resamples. This is model *ranking*, not posterior probability.
-TODO (next step, documented): latent-variable manifold models with marginal
-likelihood (mGPLVM, Jensen et al. 2020) — see docs/09-geometries-candidates.md.
+TODO: a variational mGPLVM (Jensen et al. 2020) would still be an optional
+pytorch extra. The numpy geodesic-GP in `tpl.analysis.manifold_evidence`
+is SECONDARY: it does not replace `select_geometry` and does not retune
+MAX_FIT_SCORE. It also does not recover T6 (docs/22).
 """
+
 import numpy as np
 
 from tpl.analysis.intrinsic_dim import twonn
@@ -50,9 +53,11 @@ def fingerprint(pts, seed=0):
 def _score(fa, fb):
     h1a = np.pad(fa["h1"], (0, max(0, 10 - len(fa["h1"]))))[:10]
     h1b = np.pad(fb["h1"], (0, max(0, 10 - len(fb["h1"]))))[:10]
-    return (abs(fa["id"] - fb["id"])
-            + 10.0 * _wass1(fa["hist"], fb["hist"])
-            + 2.0 * float(np.abs(h1a - h1b).sum()))
+    return (
+        abs(fa["id"] - fb["id"])
+        + 10.0 * _wass1(fa["hist"], fb["hist"])
+        + 2.0 * float(np.abs(h1a - h1b).sum())
+    )
 
 
 def rank_candidates(data, n_boot=3, seed=0, candidates=None):
@@ -65,8 +70,12 @@ def rank_candidates(data, n_boot=3, seed=0, candidates=None):
     fd = fingerprint(np.asarray(data, float), seed=seed)
     out = {}
     for name, gen in candidates.items():
-        s = [_score(fd, fingerprint(gen(n=2000, noise=0.02, seed=seed + 7 * b), seed=seed))
-             for b in range(n_boot)]
+        s = [
+            _score(
+                fd, fingerprint(gen(n=2000, noise=0.02, seed=seed + 7 * b), seed=seed)
+            )
+            for b in range(n_boot)
+        ]
         out[name] = float(np.mean(s))
     return dict(sorted(out.items(), key=lambda kv: kv[1]))
 
@@ -95,9 +104,11 @@ def select_geometry(data, seed=0, candidates=None, max_score=MAX_FIT_SCORE, n_bo
     ranking = rank_candidates(data, n_boot=n_boot, seed=seed, candidates=candidates)
     best = next(iter(ranking))
     accepted = ranking[best] <= max_score
-    return {"geometry": best if accepted else None,
-            "best_candidate": best,
-            "score": ranking[best],
-            "accepted": accepted,
-            "max_score": max_score,
-            "ranking": ranking}
+    return {
+        "geometry": best if accepted else None,
+        "best_candidate": best,
+        "score": ranking[best],
+        "accepted": accepted,
+        "max_score": max_score,
+        "ranking": ranking,
+    }

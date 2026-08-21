@@ -20,6 +20,7 @@ du labo, dans l’ordre utile.
 | [05-protocole-non-associativite.md](05-protocole-non-associativite.md) | Exige un labo (TMS / optogénétique) |
 | [08-psychophysique.md](08-psychophysique.md) | Protocole seul |
 | [09-geometries-candidates.md](09-geometries-candidates.md) | S⁶ vs T⁶ vs R⁶ ; cutoff 3,0 |
+| [22-mgplvm.md](22-mgplvm.md) | GP géodésique (stand-in mGPLVM) ; secondaire ; T⁶ non récupéré |
 | [10-multiplets-spectraux.md](10-multiplets-spectraux.md) | Spectre à 4 niveaux, pas un « plateau de 27 » |
 | [11-contraste-etats.md](11-contraste-etats.md) | Outil PCI-like ; pas de jeu spike Allen |
 | [12-calibration.md](12-calibration.md) | Puissance, TPR, bruit, IC |

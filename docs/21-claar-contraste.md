@@ -55,8 +55,9 @@ d'une médiane de distances nulle. Ce n'est pas S⁶. Ce n'est pas un permis de
 filtrer les zéros.
 
 Le contraste à n_boot = 1000 du prereg n'est pas publié : 1000 TwoNN sur une
-série à 92 % de doublons n'est pas un IC, c'est un goulot. Le delta ponctuel
-39,20 − 29,64 n'est pas une barre d'erreur. La clause secondaire du prereg
-(géométrie ≠ S⁶ sous anesthésie) est tenue ; la clause « S⁶ en veille » ne l'est
-pas. Allen n'est pas restauré.
+série à 92 % de doublons n'est pas un IC, c'est un goulot. `contrast()` refuse
+désormais l'IC si la fraction de lignes distinctes est < 0,2 (docs/22) ; n_boot
+reste 1000. Le delta ponctuel 39,20 − 29,64 n'est pas une barre d'erreur. La
+clause secondaire du prereg (géométrie ≠ S⁶ sous anesthésie) est tenue ; la
+clause « S⁶ en veille » ne l'est pas. Allen n'est pas restauré.
 

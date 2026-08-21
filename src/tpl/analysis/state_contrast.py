@@ -5,6 +5,7 @@ TPL predicts geometric structure collapses when consciousness does
 (Casali et al. 2013). This module computes per-condition metrics and their
 subsampled contrast; loaders for real datasets plug into `metrics_for`.
 """
+
 import warnings
 
 import numpy as np
@@ -14,16 +15,30 @@ from tpl.analysis.topology import betti1
 from tpl.analysis.model_comparison import select_geometry
 
 
+UNIQUE_FRAC_MIN = 0.2
+
+
+def unique_fraction(pts):
+    """Share of distinct rows. 1.0 means no exact duplicate population vectors."""
+    arr = np.asarray(pts, float)
+    if len(arr) == 0:
+        return 0.0
+    return len(np.unique(arr, axis=0)) / len(arr)
+
+
 def metrics_for(pts, seed=0):
     """`best_geometry` is None when NO candidate actually fits — the collapse
     TPL predicts under anaesthesia should show up exactly that way, rather than
     as a winner named by default."""
     sel = select_geometry(pts, seed=seed, n_boot=2)
-    return {"id": twonn(pts), "b1": betti1(pts, seed=seed),
-            "best_geometry": sel["geometry"],
-            "best_candidate": sel["best_candidate"],
-            "fit_score": sel["score"],
-            "score_S6": sel["ranking"].get("S6", np.nan)}
+    return {
+        "id": twonn(pts),
+        "b1": betti1(pts, seed=seed),
+        "best_geometry": sel["geometry"],
+        "best_candidate": sel["best_candidate"],
+        "fit_score": sel["score"],
+        "score_S6": sel["ranking"].get("S6", np.nan),
+    }
 
 
 def contrast(pts_a, pts_b, n_boot=1000, frac=0.632, seed=0):
@@ -67,6 +82,28 @@ def contrast(pts_a, pts_b, n_boot=1000, frac=0.632, seed=0):
     rng = np.random.default_rng(seed)
     ma, mb = metrics_for(pts_a, seed), metrics_for(pts_b, seed)
     theta = float(ma["id"] - mb["id"])
+    frac_a = unique_fraction(pts_a)
+    frac_b = unique_fraction(pts_b)
+    # Claar isoflurane: ~92% duplicate 50 ms bins. A 1000-draw CI on that
+    # series is not an interval, it is a hang. Same n_boot as prereg.
+    if frac_a < UNIQUE_FRAC_MIN or frac_b < UNIQUE_FRAC_MIN:
+        warnings.warn(
+            f"contrast: unique-row fraction A={frac_a:.3f} B={frac_b:.3f} "
+            f"< {UNIQUE_FRAC_MIN}; CI skipped (degenerate cloud), n_boot "
+            f"unchanged",
+            RuntimeWarning,
+            stacklevel=2,
+        )
+        return {
+            "A": ma,
+            "B": mb,
+            "delta_id": theta,
+            "delta_id_ci95": None,
+            "delta_id_subsample_mean": None,
+            "n_boot": n_boot,
+            "subsample_frac": frac,
+            "ci_reason": "degenerate_duplicates",
+        }
     ma_sub, mb_sub = int(len(pts_a) * frac), int(len(pts_b) * frac)
     diffs = np.empty(n_boot)
     for k in range(n_boot):
@@ -74,8 +111,12 @@ def contrast(pts_a, pts_b, n_boot=1000, frac=0.632, seed=0):
         ib = rng.choice(len(pts_b), mb_sub, replace=False)
         diffs[k] = twonn(pts_a[ia]) - twonn(pts_b[ib])
     lo, hi = np.percentile(diffs, [2.5, 97.5])
-    return {"A": ma, "B": mb,
-            "delta_id": theta,
-            "delta_id_ci95": (float(lo), float(hi)),
-            "delta_id_subsample_mean": float(diffs.mean()),
-            "n_boot": n_boot, "subsample_frac": frac}
+    return {
+        "A": ma,
+        "B": mb,
+        "delta_id": theta,
+        "delta_id_ci95": (float(lo), float(hi)),
+        "delta_id_subsample_mean": float(diffs.mean()),
+        "n_boot": n_boot,
+        "subsample_frac": frac,
+    }

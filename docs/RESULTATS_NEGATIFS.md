@@ -174,6 +174,13 @@ aucune géométrie, **92 % de fenêtres dupliquées**. Ni S⁶ en veille ni S⁶
 isoflurane. Le CI du contraste n_boot = 1000 n'est pas un résultat : la série
 isoflurane est dégénérée. Détail : `docs/21-claar-contraste.md`.
 
+## Preuve géodésique-GP — T⁶ non récupéré (21 août 2026, synth_)
+
+`manifold_evidence` (stand-in mGPLVM, docs/22) nomme S⁶ sur un vrai
+échantillon sphérique et ne le nomme pas sur T⁶, R⁶ ou Kuramoto. Le noyau
+géodésique isotrope **ne récupère pas** l'immersion produit de `torus_flat`.
+Ce n'est pas Jensen 2020. Ce n'est pas H1. On ne force pas T⁶.
+
 ## Chantier 2 — remplir la loi-pont a rétréci H1, pas élargi
 
 - [loi-pont] « Réduit à R⁷ » était le degré de liberté que le gabarit signalait. Il
