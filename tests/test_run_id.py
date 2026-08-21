@@ -1,4 +1,5 @@
 """Regression tests for the preregistered pipeline (audit v2, F4/F5/F7)."""
+
 import json
 from pathlib import Path
 
@@ -48,20 +49,23 @@ def test_load_config_rejects_a_lowered_n_min():
         tmp.unlink()
 
 
-@pytest.mark.parametrize("value,expected", [
-    (4.0, "refutee"),    # below every prediction
-    (5.49, "refutee"),
-    (5.5, "compatible"), # window for d = 6 opens
-    (6.0, "compatible"),
-    (6.49, "compatible"),
-    (6.5, "refutee"),    # between the two predicted integers
-    (7.0, "refutee"),
-    (7.49, "refutee"),
-    (7.5, "compatible"), # window for d = 8 opens
-    (8.49, "compatible"),
-    (8.5, "refutee"),    # above every prediction
-    (11.0, "refutee"),
-])
+@pytest.mark.parametrize(
+    "value,expected",
+    [
+        (4.0, "refutee"),  # below every prediction
+        (5.49, "refutee"),
+        (5.5, "compatible"),  # window for d = 6 opens
+        (6.0, "compatible"),
+        (6.49, "compatible"),
+        (6.5, "refutee"),  # between the two predicted integers
+        (7.0, "refutee"),
+        (7.49, "refutee"),
+        (7.5, "compatible"),  # window for d = 8 opens
+        (8.49, "compatible"),
+        (8.5, "refutee"),  # above every prediction
+        (11.0, "refutee"),
+    ],
+)
 def test_decision_rule_at_every_boundary(value, expected):
     assert classify_id(value, TARGETS, TOL)[0] == expected
 
@@ -128,6 +132,7 @@ def test_a_fitted_euclidean_6d_refutes_tpl():
     It is a rival, not TPL."""
     pts = euclidean(2000, dim=6, noise=0.03, seed=1)
     from tpl.analysis.model_comparison import select_geometry
+
     d = twonn(pts)
     id_v, _ = classify_id(d, TARGETS, TOL)
     sel = select_geometry(pts, seed=1, n_boot=2)
@@ -139,9 +144,22 @@ def test_a_fitted_euclidean_6d_refutes_tpl():
 def test_true_s6_is_compatible_on_both_measures():
     pts = sample_s6_uniform(2000, seed=3)
     from tpl.analysis.model_comparison import select_geometry
+
     d = twonn(pts)
     id_v, _ = classify_id(d, TARGETS, TOL)
     sel = select_geometry(pts, seed=3, n_boot=2)
     assert id_v == "compatible"
     assert sel["geometry"] == "S6"
     assert h1_verdict(id_v, sel["geometry"]) == "compatible"
+
+
+def test_geodesic_gp_is_printed_after_h1_and_cannot_change_it():
+    """docs/22: secondary ranking is stored on the result, never passed to
+    h1_verdict. A true S6 stays compatible even if the GP names something else."""
+    pts = sample_s6_uniform(2000, seed=3)
+    res = run_condition(pts, load_config(CONFIG))
+    assert res["verdict"] == "compatible"
+    assert "evidence_geometry" in res
+    assert "evidence" in res
+    # The frozen conjunctive rule still only sees select_geometry.
+    assert h1_verdict(res["id_verdict"], res["geometry"]) == res["verdict"]

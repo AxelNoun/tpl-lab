@@ -38,6 +38,7 @@ du labo, dans l’ordre utile.
 | [19-ibl-session.md](19-ibl-session.md) | Même insertion, session continue 97 min — encore **INDÉCIDABLE** |
 | [20-nul-lowrank.md](20-nul-lowrank.md) | Nul RNN rang faible structuré (synth_) — réfuté, n = 8236 |
 | [21-claar-contraste.md](21-claar-contraste.md) | DANDI 000458, PL, veille/isoflurane — H1 réfutée des deux côtés |
+| [23-claar-replication.md](23-claar-replication.md) | Second sujet Claar, déclaré avant l'asset (`sub-590479`) |
 
 Onboarding : [onboarding/PARCOURS.md](onboarding/PARCOURS.md),
 [onboarding/RESSOURCES.md](onboarding/RESSOURCES.md).

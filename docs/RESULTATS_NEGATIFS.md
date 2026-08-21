@@ -180,6 +180,8 @@ isoflurane est dégénérée. Détail : `docs/21-claar-contraste.md`.
 échantillon sphérique et ne le nomme pas sur T⁶, R⁶ ou Kuramoto. Le noyau
 géodésique isotrope **ne récupère pas** l'immersion produit de `torus_flat`.
 Ce n'est pas Jensen 2020. Ce n'est pas H1. On ne force pas T⁶.
+Sur extraits déjà réfutés (seed 42) : Claar veille et Allen VISp sont
+nommés **R6**, pas S⁶. Le GP ne restaure pas H1.
 
 ## Chantier 2 — remplir la loi-pont a rétréci H1, pas élargi
 

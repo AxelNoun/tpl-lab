@@ -22,6 +22,7 @@ import numpy as np
 
 from tpl.analysis.bridge import prepare_population
 from tpl.analysis.intrinsic_dim import decorrelate, max_lag_for, twonn
+from tpl.analysis.manifold_evidence import select_evidence
 from tpl.analysis.model_comparison import select_geometry
 from tpl.analysis.state_contrast import contrast
 
@@ -160,6 +161,10 @@ def run_condition(points, cfg, label="A"):
         out["geometry"],
         required=cfg["geometry"].get("h1_geometry", H1_GEOMETRY),
     )
+    # Secondary (docs/22): printed after the frozen verdict, never fed to it.
+    ev = select_evidence(thinned, seed=cfg["seed"])
+    out["evidence_geometry"] = ev["geometry"]
+    out["evidence"] = ev["evidence"]
     return out
 
 
@@ -189,6 +194,13 @@ def _format(res, cfg):
         geom = f"{res['geometry']} (score {res['fit_score']:.2f})  -> compatible"
     lines.append(f"      mesure 2 (geometrie)  : {geom}")
     lines.append(f"      verdict H1 (les deux) : {res['verdict'].upper()}")
+    if "evidence_geometry" in res:
+        ev = res["evidence"]
+        ranked = ", ".join(f"{k}={v:.1f}" for k, v in ev.items())
+        lines.append(
+            f"      GP geodesique (secondaire, pas H1) : "
+            f"{res['evidence_geometry']}  ({ranked})"
+        )
     return lines
 
 

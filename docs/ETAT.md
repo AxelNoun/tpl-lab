@@ -11,6 +11,6 @@
 | 8 | Psychophysique | protocole seul | — | — |
 | 9 | Géométries candidates (ranking) | ✅ ranking + stand-in GP (docs/22) | mGPLVM variationnel = extra, secondaire | — |
 | 10 | Multiplets G2 + g2/su(3) calculés | ✅ synthétique ; inapplicable au réel N-canaux | — | — |
-| 11 | Contraste d'états | DANDI 000458 PL : veille et iso **H1 réfutée** | ne pas filtrer les doublons isoflurane | — |
+| 11 | Contraste d'états | DANDI 000458 PL : veille et iso **H1 réfutée** | réplication `sub-590479` déclarée (docs/23) | — |
 | 12 | Calibration | TPR(n) + bruit ; n_min inchangé | — | — |
 | — | Registered Report | REPORTÉ (décision utilisateur) | après premiers résultats réels | — |

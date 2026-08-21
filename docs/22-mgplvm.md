@@ -41,3 +41,16 @@ s'il arrive, il reste secondaire.
 est < 0,2 (`UNIQUE_FRAC_MIN`). n_boot du prereg inchangé. Ce n'est pas un
 seuil scientifique de H1 : c'est un garde-fou de validité (docs/21, ~92 %
 de doublons isoflurane). On ne jette pas les doublons pour inventer un IC.
+
+## Sur extraits déjà mesurés (secondaire, seed 42, n_sub=300)
+
+Pas une nouvelle H1. `select_geometry` a déjà refusé S⁶.
+
+| Série | GP géodésique |
+|---|---|
+| Claar veille PL `real_claar_wake.npy` | **R6** (R6=341, S6=190, T6=−208) |
+| Allen VISp `real_VISp.npy` | **R6** (R6=339, S6=197, T6=−213) |
+
+Le GP ne restaure pas H1. Il ne nomme pas S⁶ là où le fingerprint
+avait déjà dit « aucune ».
+
