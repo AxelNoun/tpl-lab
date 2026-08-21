@@ -269,7 +269,7 @@ Well-known file for the replication session: `1026124293`
 | 3 | Generative S⁶ / su(3) flow | Tool — pure holonomy is not a passive test |
 | 4 | Nulls (Kuramoto, surrogates, chaotic RNN) | Done |
 | 5 | Non-associativity | Protocol only — needs a lab |
-| 6 | ID = 6 or 8 | **H1-spontaneous refuted 12/12** |
+| 6 | ID = 6 or 8 | **H1-spontaneous refuted 12/12** (Allen). IBL VISp INDECIDABLE |
 | 7 | Preregistration | Frozen `prereg-v1` |
 | 8 | Structural psychophysics | Protocol only |
 | 9 | Geometry ranking | Synthetic acc 1.0; mGPLVM still a TODO |
@@ -277,9 +277,10 @@ Well-known file for the replication session: `1026124293`
 | 11 | Wake vs anesthesia | Tool ready; no public spike set wired |
 | 12 | Power / calibration | TPR, noise, CI coverage measured |
 
-Open, if someone continues: run the declared IBL spontaneous extract (docs/17;
-cannot restore Allen), a wake/anesthesia *spike* corpus, structured low-rank RNN
-(independent \(U,V\) and \(UU^\top\) were tried and discarded).
+Open, if someone continues: an IBL family with a long enough *continuous*
+interval (the declared 10 min spontaneous was INDECIDABLE; docs/18), a
+wake/anesthesia *spike* corpus, structured low-rank RNN (independent \(U,V\)
+and \(UU^\top\) were tried and discarded).
 
 ---
 
@@ -287,7 +288,8 @@ cannot restore Allen), a wake/anesthesia *spike* corpus, structured low-rank RNN
 
 - It does not show that “cortex has no manifold” in general.
 - It does not test a 10 s percept (underpowered; concatenation forbidden).
-- It does not test anesthesia, IBL behaviour, or causal non-associativity.
+- IBL 10 min spontaneous is INDECIDABLE after decimation (docs/18).
+- It does not test anesthesia or causal non-associativity.
 - Compatible / refuted \(\neq\) “proves that”. Vocabulary in `CLAUDE.md`.
 
 Scientific rules (non-negotiable): every confirmatory signature must beat a

@@ -28,8 +28,9 @@ short trials. Isolation filter: `quality == good` only.
 
 ## Not yet in this repo
 
-- IBL Brain-wide Map — loader `python -m tpl.io.ibl` (docs/17). Spikes not in
-  git. Only `spontaneousActivity`; do not concatenate trials. Cannot restore
-  the Allen refute.
+- IBL Brain-wide Map — loader `python -m tpl.io.ibl` (docs/17). First declared
+  extract: eid `5ae68c54-2897-4d3a-8120-426150704385`, VISp, 600.1 s
+  spontaneous → `data/real_ibl_VISp.npy` (gitignored). Verdict: INDECIDABLE
+  (`docs/18-ibl-visp.md`). Do not concatenate trials. Cannot restore Allen.
 - Wake / anesthesia spike contrast — no public set wired; OpenNeuro EEG would
   need a new bridge law (`docs/02-loi-pont.md`).

@@ -200,6 +200,14 @@ Réplication (docs/16, session `766640955`, autre animal, déclarée avant le
 NWB) : 6/6 aires `VIS*` réfutées. Deux fois S⁶ en tête du ranking (scores
 26,75 et 25,50) : le cutoff 3,0 tient. Total **12/12**.
 
+## IBL — spontaneousActivity INDÉCIDABLE (21 août 2026)
+
+Première insertion VISp Brain-wide Map avec spontané ≥ 100 s et N ≥ 7
+(`docs/17`, `docs/18`) : eid `5ae68c54-2897-4d3a-8120-426150704385`, 600,1 s,
+17 good `VISp6a`. 12001 fenêtres, décimation 1/9 → **n = 1334 < 2000** →
+INDÉCIDABLE. RFM / replay / essais non collés. Ne restaure pas Allen. Un IBL
+puissant n'est pas ce test (il faudrait un intervalle plus long, déclaré avant).
+
 
 ### Cohérence et nuls affaiblis (F9 à F14, corrigés)
 - [audit v2] b1 direct meurt dès d = 3 (T³ : 0 détection sur 30 à n = 2000), pas d = 4

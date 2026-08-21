@@ -6,7 +6,7 @@
 | 3 | Génératif | su(3) + bruit transverse OK | holonomie pure : pas un test passif | — |
 | 4 | Nuls | Kuramoto + surrogates + RNN chaotique ✅ | rang faible à recouvrement structuré | — |
 | 5 | Non-associativité | protocole seul | trouver labo partenaire | — |
-| 6 | Dimension | H1-spontané Allen réfuté 12/12 ; loader IBL prêt | extraire un spontané IBL ≥ 100 s | — |
+| 6 | Dimension | H1-spontané Allen réfuté 12/12 ; IBL VISp **INDÉCIDABLE** | ne pas concaténer ; autre famille à déclarer | — |
 | 7 | Prereg | **FIGÉ** tag `prereg-v1` (20 août 2026) | OSF du hash ; puis données | — |
 | 8 | Psychophysique | protocole seul | — | — |
 | 9 | Géométries candidates (ranking) | ✅ validé synthétique (acc 1,0) | mGPLVM | — |

@@ -122,8 +122,8 @@ plus après le tag. Ne pas proposer de retuning.
 ## Après le parcours
 
 Choisir un chantier dans `docs/ETAT.md` et se signaler. Bons points d'entrée :
-- Extraire un spontané IBL déjà déclaré (`docs/17`, `python -m tpl.io.ibl`) — ne
-  rétablit pas Allen.
+- IBL spontané VISp est **INDÉCIDABLE** (docs/18) ; ne pas concaténer pour
+  forcer un verdict. Une autre famille IBL doit être déclarée avant.
 - Nul RNN à rang faible *structuré* (Mastrogiuseppe & Ostojic) : U,V indépendants
   et UUᵀ ont déjà été mesurés et écartés.
 - H1-spontané Allen est déjà réfuté 12/12 (docs/14–16) ; ne pas retoucher un seuil.
