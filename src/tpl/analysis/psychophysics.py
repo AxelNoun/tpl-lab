@@ -9,6 +9,7 @@ import numpy as np
 
 from tpl.analysis.manifold_evidence import _mds
 from tpl.analysis.model_comparison import select_geometry
+from tpl.generative.manifolds import euclidean, sphere
 
 
 def dissimilarity_from_ratings(ratings):
@@ -52,3 +53,72 @@ def rival_fit(dissimilarity, seed=0):
         out["geometry"] = sel["geometry"]
         out["fit_score"] = sel["score"]
     return out
+
+
+def _format(fit, label):
+    lines = [
+        f"  [{label}] n_stim={fit['n_stim']}  "
+        f"stress euclidien={fit['stress_euclidean']:.4f}  "
+        f"sphere={fit['stress_sphere']:.4f}"
+    ]
+    if fit["stress_euclidean"] <= fit["stress_sphere"]:
+        lines.append("      nul euclidien / CIELAB-like gagne ou egale (H8-0)")
+    else:
+        lines.append("      sphere gagne le stress (H8-sphere) — ne restaure pas H1")
+    if "geometry" in fit:
+        geom = fit["geometry"] or "aucune"
+        lines.append(
+            f"      select_geometry secondaire : {geom}  "
+            f"score {fit['fit_score']:.2f}  (pas H8, pas H1)"
+        )
+    return "\n".join(lines)
+
+
+def synthetic_dissimilarity(kind, n=24, seed=0):
+    """kind 'sphere' = S^2 chordal; 'euclidean' = R^3. Both synth_."""
+    rng_kind = kind
+    if rng_kind == "sphere":
+        pts = sphere(n, dim=2, noise=0.0, seed=seed)
+    elif rng_kind == "euclidean":
+        pts = euclidean(n, dim=3, noise=0.02, seed=seed)
+    else:
+        raise ValueError("kind must be 'sphere' or 'euclidean'")
+    return np.linalg.norm(pts[:, None, :] - pts[None, :, :], axis=-1)
+
+
+def main(argv=None):
+    import argparse
+
+    p = argparse.ArgumentParser(
+        description="Chantier 8: sphere vs Euclidean stress (not H1)"
+    )
+    p.add_argument("--seed", type=int, default=42)
+    p.add_argument(
+        "--synthetic",
+        action="store_true",
+        help="dry-run on synth_ dissimilarities (sphere chordal + Euclidean)",
+    )
+    p.add_argument(
+        "--ratings",
+        help="(n_stim, n_stim) .npy of similarity ratings (higher = more similar)",
+    )
+    a = p.parse_args(argv)
+    print(f"[seed={a.seed}]  chantier 8  (ne restaure pas H1)")
+    if a.synthetic:
+        print("!! DONNEES SYNTHETIQUES (synth_) — pas des jugements humains !!")
+        for kind in ("sphere", "euclidean"):
+            d = synthetic_dissimilarity(kind, n=24, seed=a.seed)
+            fit = rival_fit(d, seed=a.seed)
+            print(_format(fit, f"synth_{kind}"))
+        return 0
+    if a.ratings:
+        ratings = np.load(a.ratings)
+        d = dissimilarity_from_ratings(ratings)
+        print(_format(rival_fit(d, seed=a.seed), a.ratings))
+        return 0
+    p.error("give --synthetic or --ratings")
+    return 2
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

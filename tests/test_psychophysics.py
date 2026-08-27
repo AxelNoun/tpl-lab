@@ -1,4 +1,5 @@
 """Chantier 8: MDS of synthetic similarity, CIELAB-like null."""
+
 import numpy as np
 
 from tpl.analysis.psychophysics import (
@@ -26,3 +27,13 @@ def test_euclidean_judgments_do_not_need_a_sphere():
     assert fit["stress_euclidean"] <= fit["stress_sphere"] + 0.02
     assert embed(d, dim=3).shape == (24, 3)
     assert stress(d, embed(d, dim=3)) < 0.3
+
+
+def test_synthetic_cli_is_labelled_synth(capsys):
+    from tpl.analysis.psychophysics import main
+
+    assert main(["--synthetic", "--seed", "42"]) == 0
+    out = capsys.readouterr().out
+    assert "SYNTHETIQUES" in out
+    assert "synth_sphere" in out
+    assert "ne restaure pas H1" in out

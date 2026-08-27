@@ -38,6 +38,11 @@ S⁶ neural n'est **pas** la mesure. 12–24 stimuli ne portent pas une
 
 ## Analyse (pas de HARKing)
 
+```bash
+python -m tpl.analysis.psychophysics --synthetic --seed 42
+python -m tpl.analysis.psychophysics --ratings data/real_similarity.npy --seed 42
+```
+
 ```python
 from tpl.analysis.psychophysics import dissimilarity_from_ratings, rival_fit
 fit = rival_fit(D, seed=42)
