@@ -17,14 +17,17 @@ du labo, dans l’ordre utile.
 | [01-hypothese.md](01-hypothese.md) | Ce qui reste testable après amputation de la TOE |
 | [02-loi-pont.md](02-loi-pont.md) | Un point = vecteur de comptage, pas un point de S⁶ ⊂ R⁷ |
 | [03-critique-tests-originaux.md](03-critique-tests-originaux.md) | Fermeture en triplets : tautologie / non-discriminante |
-| [05-protocole-non-associativite.md](05-protocole-non-associativite.md) | Exige un labo (TMS / optogénétique) |
-| [08-psychophysique.md](08-psychophysique.md) | Protocole seul |
+| [05-protocole-non-associativite.md](05-protocole-non-associativite.md) | Cahier TMS / opto ; nuls non-linéaires obligatoires |
+| [08-psychophysique.md](08-psychophysique.md) | Couleurs vs CIELAB ; ne restaure pas H1 |
 | [09-geometries-candidates.md](09-geometries-candidates.md) | S⁶ vs T⁶ vs R⁶ ; cutoff 3,0 |
-| [22-mgplvm.md](22-mgplvm.md) | GP géodésique (stand-in mGPLVM) ; secondaire ; T⁶ non récupéré |
+| [22-mgplvm.md](22-mgplvm.md) | GP géodésique + MAP latents ; secondaire ; T⁶ non récupéré |
 | [10-multiplets-spectraux.md](10-multiplets-spectraux.md) | Spectre à 4 niveaux, pas un « plateau de 27 » |
 | [11-contraste-etats.md](11-contraste-etats.md) | Outil PCI-like ; pas de jeu spike Allen |
 | [12-calibration.md](12-calibration.md) | Puissance, TPR, bruit, IC |
 | [13-donnees-reelles.md](13-donnees-reelles.md) | Loader, durée, interdiction de concaténer |
+| [24-osf.md](24-osf.md) | Dépôt du hash `0a5e794` ; `--upload` si jeton |
+| [25-registered-report.md](25-registered-report.md) | Pointeur vers `paper/registered-report.md` |
+| [26-appel-labos.md](26-appel-labos.md) | Texte à envoyer à un labo |
 
 ## Tests empiriques (Allen)
 

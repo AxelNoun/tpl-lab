@@ -45,10 +45,11 @@ avant de conclure quoi que ce soit d'un rejet. Le score est en revanche stable e
 ## Limites connues et upgrades
 - Le ranking Wasserstein est un CLASSEMENT, pas une probabilité postérieure.
   Un stand-in numpy (GP à noyau géodésique, latents MDS gelés) est dans
-  `tpl.analysis.manifold_evidence` — docs/22. Il nomme S⁶ sur un vrai
-  échantillon sphérique et ne le nomme pas sur T⁶ / R⁶ / Kuramoto. Il ne
-  récupère pas T⁶ (noyau isotrope mal spécifié pour l'immersion produit).
-  Ce n'est **pas** Jensen et al. 2020, et ce n'est **pas** la mesure H1.
+  `tpl.analysis.manifold_evidence` — docs/22 (`evidence` gelé MDS, `map_evidence`
+  MAP des latents). Il nomme S⁶ sur un vrai échantillon sphérique et ne le
+  nomme pas sur T⁶ / R⁶ / Kuramoto. Il ne récupère pas T⁶ (noyau isotrope
+  mal spécifié pour l'immersion produit). Ce n'est **pas** Jensen et al. 2020,
+  et ce n'est **pas** la mesure H1.
 - Détection topologique en dim 6 : envisager cohomologie persistante / coordonnées
   circulaires, ou n >> 10⁴ (chiffrer via calibration --full).
 - Sous-détermination : même un S⁶ confirmé ne prouverait pas les octonions — d'autres

@@ -2,7 +2,8 @@
 **Statut : FIGÉ — tag git `prereg-v1`, 20 août 2026.**
 Aucune modification des seuils, fenêtres, filtres ou de la règle de décision
 après ce tag. Le dépôt OSF du hash est à la charge de l'expérimentateur, pas
-du dépôt. Rejouer :
+du dépôt : `docs/24-osf.md` (`python -m tpl.io.osf_deposit --upload` si
+`OSF_TOKEN` est défini). Rejouer :
 
 ```bash
 git checkout prereg-v1

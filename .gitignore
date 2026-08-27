@@ -5,4 +5,5 @@ __pycache__/
 .venv-allen/
 data/*
 !data/README.md
+osf/prereg-v1-bundle/
 notebooks/**/*.ipynb_checkpoints

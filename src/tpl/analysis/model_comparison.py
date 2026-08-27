@@ -5,10 +5,9 @@ Pragmatic, honest first pass: a 'shape fingerprint' per candidate =
 (Osada et al.'s shape distribution, scale-normalized), (c) top H1 persistences.
 Score = weighted 1D-Wasserstein / absolute differences, bootstrapped over
 candidate resamples. This is model *ranking*, not posterior probability.
-TODO: a variational mGPLVM (Jensen et al. 2020) would still be an optional
-pytorch extra. The numpy geodesic-GP in `tpl.analysis.manifold_evidence`
-is SECONDARY: it does not replace `select_geometry` and does not retune
-MAX_FIT_SCORE. It also does not recover T6 (docs/22).
+TODO: variational mGPLVM remains optional. `map_evidence` in
+`tpl.analysis.manifold_evidence` is MAP latents on the manifold
+(docs/22). SECONDARY: not `select_geometry`, not MAX_FIT_SCORE.
 """
 
 import numpy as np

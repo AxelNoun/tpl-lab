@@ -114,3 +114,60 @@ def select_evidence(pts, seed=0, n_sub=300):
     ev = evidence(pts, seed=seed, n_sub=n_sub)
     best = next(iter(ev))
     return {"geometry": best, "evidence": ev, "score": ev[best]}
+
+
+def _project(z, kind):
+    z = np.asarray(z, float)
+    if kind == "S6":
+        nrm = np.linalg.norm(z, axis=1, keepdims=True)
+        return z / np.maximum(nrm, 1e-12)
+    if kind == "T6":
+        return (z + np.pi) % (2 * np.pi) - np.pi
+    return z
+
+
+def _nll(z, y, kind, med):
+    geo = _geodesic(_project(z, kind), kind)
+    return -_gp_loglik(y, _rbf(geo, med))
+
+
+def map_evidence(pts, seed=0, n_sub=80, n_steps=20, step=0.08):
+    """MAP latents on each candidate, then GP evidence (docs/22).
+
+    Stochastic ascent on the manifold (projected noise). Not Jensen ELBO,
+    not H1, still does not recover T6.
+    """
+    rng = np.random.default_rng(seed)
+    pts = rescale_to_unit(np.asarray(pts, float))
+    if len(pts) > n_sub:
+        pts = pts[rng.choice(len(pts), n_sub, replace=False)]
+    w = rng.standard_normal(pts.shape[1])
+    w /= np.linalg.norm(w)
+    y = pts @ w
+    y = y - y.mean()
+    d = _pairwise(pts)
+    inits = {
+        "S6": (_sphere_latents(_mds(d, 7)), "S6"),
+        "T6": (_torus_latents(_mds(d, 12)), "T6"),
+        "R6": (_mds(d, 6), "R6"),
+    }
+    out = {}
+    for name, (z, kind) in inits.items():
+        geo0 = _geodesic(z, kind)
+        med = float(np.median(geo0[np.triu_indices_from(geo0, k=1)]))
+        med = max(med, 1e-3)
+        best = -_nll(z, y, kind, med)
+        for _ in range(n_steps):
+            cand = _project(z + step * rng.standard_normal(z.shape), kind)
+            sc = -_nll(cand, y, kind, med)
+            if sc > best:
+                best, z = sc, cand
+        out[name] = float(best)
+    return dict(sorted(out.items(), key=lambda kv: -kv[1]))
+
+
+def select_map_evidence(pts, seed=0, n_sub=80, n_steps=20, step=0.08):
+    """MAP ranking only. Not an H1 verdict."""
+    ev = map_evidence(pts, seed=seed, n_sub=n_sub, n_steps=n_steps, step=step)
+    best = next(iter(ev))
+    return {"geometry": best, "evidence": ev, "score": ev[best]}

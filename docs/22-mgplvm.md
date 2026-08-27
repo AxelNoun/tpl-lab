@@ -33,7 +33,11 @@ Le noyau géodésique **isotrope** sur T⁶ ne récupère pas l'immersion produi
 RBF euclidien sur le MDS 6D gagne. Ce n'est pas un permis de « forcer T⁶ ».
 L'identification T⁶ vs R⁶ reste le fingerprint de `rank_candidates`
 (docs/09). Un mGPLVM variationnel (extra pytorch) n'est toujours pas là ;
-s'il arrive, il reste secondaire.
+s'il arrive, il reste secondaire. `map_evidence` (MAP stochastique des
+latents projetés sur la variété) est le stand-in numpy : toujours
+secondaire, toujours pas H1. Sur un vrai S⁶ il peut nommer R⁶ (noyau
+euclidien plus souple) : on ne s'en sert pas pour restaurer TPL. T⁶
+toujours non récupéré.
 
 ## Contraste dégénéré (leçon Claar)
 

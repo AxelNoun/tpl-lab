@@ -12,8 +12,7 @@ Read `CLAUDE.md` first. This lab **falsifies** a conjecture; it does not defend 
 - Vocabulary: “compatible with” ≠ “demonstrates”. Do not write “proves that”.
 
 Useful entry points that are *not* “run another Allen session until S⁶ appears”:
-geodesic-GP evidence (docs/22, secondary). IBL at 50 ms is INDECIDABLE
-(docs/18–19). The Claar wake / isoflurane contrast is in docs/21 (H1 refuted
-both sides; do not drop duplicate windows). A second Claar mouse is declared
-in docs/23 (`sub-590479`, H1 refuted; do not shop a third mouse for S⁶).
+geodesic-GP / MAP evidence (docs/22, secondary). IBL at 50 ms is INDECIDABLE
+(docs/18–19). Claar: docs/21 and docs/23 (do not shop a third mouse).
+OSF deposit: docs/24. Lab ask: docs/26. Manuscript: paper/registered-report.md.
 The structured low-rank RNN is in docs/20.

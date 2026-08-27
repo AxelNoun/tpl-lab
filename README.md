@@ -268,19 +268,20 @@ Well-known file for the replication session: `1026124293`
 | 2 | Bridge law | Done — PCA to 7 frozen OFF |
 | 3 | Generative S⁶ / su(3) flow | Tool — pure holonomy is not a passive test |
 | 4 | Nulls (Kuramoto, surrogates, chaotic RNN, structured low-rank) | Done — [`docs/20`](docs/20-nul-lowrank.md) |
-| 5 | Non-associativity | Protocol only — needs a lab |
+| 5 | Non-associativity | Lab protocol — [`docs/05`](docs/05-protocole-non-associativite.md), [`docs/26`](docs/26-appel-labos.md) |
 | 6 | ID = 6 or 8 | **H1-spontaneous refuted 12/12** (Allen). IBL VISp INDECIDABLE (spontaneous and full session) |
-| 7 | Preregistration | Frozen `prereg-v1` |
-| 8 | Structural psychophysics | Protocol only |
-| 9 | Geometry ranking | Synthetic acc 1.0; geodesic-GP stand-in in [`docs/22`](docs/22-mgplvm.md) |
+| 7 | Preregistration | Frozen `prereg-v1` (`0a5e794`). OSF upload: `python -m tpl.io.osf_deposit --upload` |
+| 8 | Structural psychophysics | Protocol + `rival_fit` — [`docs/08`](docs/08-psychophysique.md) |
+| 9 | Geometry ranking | Synthetic acc 1.0; geodesic-GP + MAP latents in [`docs/22`](docs/22-mgplvm.md) |
 | 10 | G₂ multiplets | Exact on S⁶ ⊂ ℝ⁷; not applicable to N-channel data |
 | 11 | Wake vs anesthesia | DANDI 000458: PL (`docs/21`) and MOs replication (`docs/23`) — H1 refuted both animals, both states |
 | 12 | Power / calibration | TPR, noise, CI coverage measured |
 
 Open, if someone continues: do not shop a third Claar mouse for S⁶.
-A variational mGPLVM remains an optional extra. Do not retune the 0.1
-autocorrelation rule, and do not drop isoflurane duplicate windows to invent
-a contrast CI.
+OSF: set `OSF_TOKEN` and run `python -m tpl.io.osf_deposit --upload`.
+The Stage-2 manuscript is [`paper/registered-report.md`](paper/registered-report.md).
+Do not retune the 0.1 autocorrelation rule, and do not drop isoflurane
+duplicate windows to invent a contrast CI.
 
 ---
 

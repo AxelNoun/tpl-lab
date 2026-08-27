@@ -3,7 +3,12 @@
 import numpy as np
 import pytest
 
-from tpl.analysis.manifold_evidence import evidence, select_evidence
+from tpl.analysis.manifold_evidence import (
+    evidence,
+    map_evidence,
+    select_evidence,
+    select_map_evidence,
+)
 from tpl.analysis.state_contrast import contrast, unique_fraction
 from tpl.generative.manifolds import euclidean, sphere, torus_flat
 from tpl.nulls.kuramoto import simulate_kuramoto
@@ -42,3 +47,17 @@ def test_duplicate_cloud_skips_ci_without_changing_n_boot():
     assert c["delta_id_ci95"] is None
     assert c["n_boot"] == 300
     assert c["ci_reason"] == "degenerate_duplicates"
+
+
+def test_map_evidence_is_a_ranking_not_h1():
+    """Stochastic MAP is more flexible than frozen MDS: a sphere may name R6.
+    That is not a reason to feed it to h1_verdict (docs/22)."""
+    ev = map_evidence(
+        sphere(400, dim=6, noise=0.02, seed=1), seed=1, n_sub=80, n_steps=12
+    )
+    assert set(ev) == {"S6", "T6", "R6"}
+    sel = select_map_evidence(
+        euclidean(300, dim=6, noise=0.02, seed=0), seed=0, n_sub=80, n_steps=8
+    )
+    assert "geometry" in sel and "evidence" in sel
+    assert sel["geometry"] != "S6"
