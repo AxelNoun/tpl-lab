@@ -270,7 +270,7 @@ Well-known file for the replication session: `1026124293`
 | 4 | Nulls (Kuramoto, surrogates, chaotic RNN, structured low-rank) | Done — [`docs/20`](docs/20-nul-lowrank.md) |
 | 5 | Non-associativity | Lab protocol — [`docs/05`](docs/05-protocole-non-associativite.md), [`docs/26`](docs/26-appel-labos.md) |
 | 6 | ID = 6 or 8 | **H1-spontaneous refuted 12/12** (Allen). IBL VISp INDECIDABLE (spontaneous and full session) |
-| 7 | Preregistration | Frozen `prereg-v1` (`0a5e794`). OSF upload: `python -m tpl.io.osf_deposit --upload` |
+| 7 | Preregistration | Frozen `prereg-v1` (`0a5e794`). OSF: https://osf.io/fgvpz/ |
 | 8 | Structural psychophysics | Protocol + `rival_fit` — [`docs/08`](docs/08-psychophysique.md) |
 | 9 | Geometry ranking | Synthetic acc 1.0; geodesic-GP + MAP latents in [`docs/22`](docs/22-mgplvm.md) |
 | 10 | G₂ multiplets | Exact on S⁶ ⊂ ℝ⁷; not applicable to N-channel data |
@@ -278,7 +278,7 @@ Well-known file for the replication session: `1026124293`
 | 12 | Power / calibration | TPR, noise, CI coverage measured |
 
 Open, if someone continues: do not shop a third Claar mouse for S⁶.
-OSF: set `OSF_TOKEN` and run `python -m tpl.io.osf_deposit --upload`.
+OSF project (same hash): https://osf.io/fgvpz/ (not yet a Registration/DOI).
 The Stage-2 manuscript is [`paper/registered-report.md`](paper/registered-report.md).
 Do not retune the 0.1 autocorrelation rule, and do not drop isoflurane
 duplicate windows to invent a contrast CI.

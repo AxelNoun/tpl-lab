@@ -129,9 +129,10 @@ controlled percept was tested (underpowered; concatenation forbidden);
 that octonions were tested; that PCI was tested (Claar is cortical
 electrical stimulation, not TMS-EEG).
 
-Remaining work that is not fishing: OSF registration of the same hash
-(docs/24); causal non-associativity and structural psychophysics need a
-lab (docs/05, docs/08); a variational mGPLVM remains secondary.
+Remaining work that is not fishing: click *Register* on
+https://osf.io/fgvpz/ for a DOI if wanted (irreversible; docs/24);
+causal non-associativity and structural psychophysics need a lab
+(docs/05, docs/08); a variational mGPLVM remains secondary.
 
 ## Data and code
 
