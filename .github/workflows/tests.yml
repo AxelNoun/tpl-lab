@@ -10,6 +10,10 @@ jobs:
         python-version: ["3.11", "3.12"]
     steps:
       - uses: actions/checkout@v4
+        with:
+          # tests/test_osf_deposit.py reads the frozen prereg-v1 commit
+          # (0a5e794) from git; the default depth-1 checkout lacks it.
+          fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
